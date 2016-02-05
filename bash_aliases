@@ -1,0 +1,7 @@
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -c -a emacs"
+alias semacs="sudo emacsclient -t"
+#alias emacs="XLIB_SKIP_ARGB_VISUALS=1 emacsclient --alternate-editor=\"\""
+alias emacs="XLIB_SKIP_ARGB_VISUALS=1 emacs"
+alias emacsclient="XLIB_SKIP_ARGB_VISUALS=1 emacsclient --alternate-editor=\"\""
