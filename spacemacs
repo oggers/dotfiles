@@ -23,18 +23,25 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ansible
      ;; auto-completion
      ;; better-defaults
+     dockerfile
      emacs-lisp
-     ;; git
+     git
+     html
+     javascript
      ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     org
+     ranger
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     python
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -244,7 +251,139 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  )
+  (defvar comint-password-prompt-regexp)
+  (setq comint-password-prompt-regexp
+
+        (concat
+         "\\("
+         "^ *"
+         "\\|"
+         "\\( SMB"
+         "\\|"
+         "'s"
+         "\\|"
+         "Bad"
+         "\\|"
+         "CVS"
+         "\\|"
+         "Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?"
+         "\\|"
+         "Kerberos"
+         "\\|"
+         "LDAP"
+         "\\|"
+         "New"
+         "\\|"
+         "Old"
+         "\\|"
+         "Repeat"
+         "\\|"
+         "UNIX"
+         "\\|"
+         "\\[sudo]"
+         "\\|"
+         "\\[SUDO]"  ;; '[SUDO]' prompt for ansible-playbook --ask-become-pass
+         "\\|"
+         "SUDO"
+         "\\|"
+         "SSH"  ;; 'SSH password:' prompt for ansible-playbook --ask-pass
+         "\\|"
+         "enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?"
+         "\\|"
+         "login"
+         "\\|"
+         "new"
+         "\\|"
+         "old\\) +\\)"
+         "\\("
+         "?:Pass\\(?: phrase\\|phrase\\|word\\)"
+         "\\|"
+         "Response"
+         "\\|"
+         "pass\\(?: phrase\\|phrase\\|word\\)\\)"
+         "\\("
+         "?:\\(?:, try\\)? *again"
+         "\\|"
+         " (empty for no passphrase)"
+         "\\|"
+         " (again)"
+         "\\|"
+         "\\[defaults to SSH password]" ;; 'SUDO password[defaults to SSH password]:' prompt for ansible-playbook --ask-become-pass
+         "\\)?\\(?: for [^:]+\\)?:\\s *\\'"  ))
+
+  (custom-set-variables
+   '(comint-scroll-to-bottom-on-input t)  ; always insert at the bottom
+   '(comint-scroll-to-bottom-on-output t) ; always add output at the bottom
+   '(comint-scroll-show-maximum-output t) ; scroll to show max possible output
+   '(comint-completion-autolist t)        ; show completion list when ambiguous
+   '(comint-input-ignoredups t)           ; no duplicates in command history
+   '(comint-completion-addsuffix t)       ; insert space/slash after file completion
+   )
+
+ )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(comint-completion-addsuffix t)
+ '(comint-completion-autolist t)
+ '(comint-input-ignoredups t)
+ '(comint-move-point-for-output t)
+ '(comint-scroll-show-maximum-output t)
+ '(comint-scroll-to-bottom-on-input t)
+ '(safe-local-variable-values
+   (quote
+    ((eval let
+           ((local-path
+             (dir-locals-find-file ".")))
+           (setq python-shell-interpreter
+                 (concat
+                  (if
+                      (stringp local-path)
+                      (file-name-directory local-path)
+                    (car local-path))
+                  "../../bin/zopepy")))
+     (eval let
+           ((local-path
+             (dir-locals-find-file ".")))
+           (setq python-shell-virtualenv-path
+                 (concat
+                  (if
+                      (stringp local-path)
+                      (file-name-directory local-path)
+                    (car local-path))
+                  "../../../Python-2.7")))
+     (eval let
+           ((local-path
+             (dir-locals-find-file ".")))
+           (setenv "PYTHONPATH"
+                   (shell-command-to-string
+                    (concat
+                     (concat
+                      (if
+                          (stringp local-path)
+                          (file-name-directory local-path)
+                        (car local-path))
+                      "../../bin/zopepy")
+                     " -c \"import sys; print ':'.join(sys.path)\""))))
+     (eval let
+           ((local-path
+             (dir-locals-find-file ".")))
+           (setq elpy-rpc-python-command
+                 (concat
+                  (if
+                      (stringp local-path)
+                      (file-name-directory local-path)
+                    (car local-path))
+                  "../../../Python-2.7/bin/python2.7")))
+     (python-plone-zopepy . "bin/zopepy")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
