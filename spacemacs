@@ -35,6 +35,7 @@ values."
      org
      ranger
      (shell :variables
+            shell-default-shell 'eshell
             shell-default-height 30
             shell-default-position 'bottom)
      python
@@ -245,12 +246,18 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  (setq-default
+   ;; Shell
+   shell-default-term-shell "/bin/zsh"
+   )
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  ;; Add a few more password patterns
   (defvar comint-password-prompt-regexp)
   (setq comint-password-prompt-regexp
 
@@ -320,6 +327,12 @@ layers configuration. You are free to put any user code."
    '(comint-completion-addsuffix t)       ; insert space/slash after file completion
    )
 
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
  )
 
 ;; Do not write anything past this comment. This is where Emacs will
