@@ -339,6 +339,13 @@ layers configuration. You are free to put any user code."
     (setq org-directory "~/Dropbox/org")
 
     (setq org-agenda-start-on-weekday 1)
+    (setq org-agenda-files (list "~/Dropbox/org/gtd.org"
+                                 "~/Dropbox/org/from-mobile.org"
+                                 "~/Dropbox/org/finances.org"
+                                 "~/Dropbox/org/notes.org"
+                                 "~/Dropbox/org/someday.org"))
+    (setq org-refile-targets (quote ((nil :maxlevel . 1)
+                                     (org-agenda-files :maxlevel . 1))))
     )
  )
 
