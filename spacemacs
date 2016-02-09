@@ -257,7 +257,11 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  ;; Add a few more password patterns
+  ;; html
+  ;; edit Zope PageTemplates using html-mode
+  (add-to-list 'auto-mode-alist '("\\.pt$" . html-mode))
+
+  ;; Shell Add a few more password patterns
   (defvar comint-password-prompt-regexp)
   (setq comint-password-prompt-regexp
 
