@@ -1,0 +1,3 @@
+# in order to skip UnicodeDecodeError with unicode char in author names
+[variables]
+author.name = oggers
