@@ -1,0 +1,13 @@
+[extensions]
+color=
+hightlight=
+graphlog=
+
+[ui]
+editor=emacsclient --alternate-editor=""
+username=oggers
+verbose=True
+merge=internal:merge
+
+[alias]
+clog=glog --style compact

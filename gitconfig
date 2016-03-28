@@ -1,0 +1,13 @@
+[core]
+editor=emacsclient --alternate-editor=""
+
+[color]
+ui=true
+
+[user]
+name=Juan Carlos Coruña
+email=oggers@gmail.com
+
+[github]
+user=oggers
+token=e3323e0c9d4f078b6a81677f9b3984ab
