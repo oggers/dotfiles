@@ -406,26 +406,55 @@ you should place your code here."
 
   ;; Org
   (when (file-exists-p "~/Dropbox/org")
-    (setq org-directory "~/Dropbox/org")
 
     (setq org-agenda-start-on-weekday 1)
 
     (setq org-agenda-files (quote ("~/Dropbox/org"
-                                   "~/Dropbox/apanymantel")))
+                                   "~/Dropbox/org/apanymantel")))
 
     (setq org-todo-keywords
-          (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-                  (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+          (quote ((sequence "PENDIENTE(p)" "SIGUIENTE(s)" "|" "FINALIZADA(f)")
+                  (sequence "ESPERANDO(e@/!)" "RETENIDA(r@/!)" "|" "CANCELADA(c@/!)" "TELEFONO" "REUNION"))))
 
     (setq org-todo-keyword-faces
-          (quote (("TODO" :foreground "red" :weight bold)
-                  ("NEXT" :foreground "blue" :weight bold)
-                  ("DONE" :foreground "forest green" :weight bold)
-                  ("WAITING" :foreground "orange" :weight bold)
-                  ("HOLD" :foreground "magenta" :weight bold)
-                  ("CANCELLED" :foreground "forest green" :weight bold)
-                  ("MEETING" :foreground "forest green" :weight bold)
-                  ("PHONE" :foreground "forest green" :weight bold))))
+          (quote (("PENDIENTE" :foreground "red" :weight bold)
+                  ("SIGUIENTE" :foreground "blue" :weight bold)
+                  ("FINALIZADA" :foreground "forest green" :weight bold)
+                  ("ESPERANDO" :foreground "orange" :weight bold)
+                  ("RETENIDA" :foreground "magenta" :weight bold)
+                  ("CANCELADA" :foreground "forest green" :weight bold)
+                  ("REUNION" :foreground "forest green" :weight bold)
+                  ("TELEFONO" :foreground "forest green" :weight bold))))
+
+    (setq org-todo-state-tags-triggers
+          (quote (("CANCELADA" ("CANCELADA" . t))
+                  ("ESPERANDO" ("ESPERANDO" . t))
+                  (done ("ESPERANDO") ("RETENIDA"))
+                  ("PENDIENTE" ("ESPERANDO") ("CANCELADA") ("RETENIDA"))
+                  ("SIGUIENTE" ("ESPERANDO") ("CANCELADA") ("RETENIDA"))
+                  ("FINALIZADA" ("ESPERANDO") ("CANCELADA") ("RETENIDA")))))
+
+    (setq org-directory "~/Dropbox/org")
+    (setq org-default-notes-file "~/Dropbox/org/refile.org")
+
+    ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+    (setq org-capture-templates
+          (quote (("t" "tarea" entry (file "~/Dropbox/org/refile.org")
+                   "* PENDIENTE %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                  ("r" "responder" entry (file "~/Dropbox/org/refile.org")
+                   "* SIGUIENTE Responder a %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+                  ("n" "nota" entry (file "~/Dropbox/org/refile.org")
+                   "* %? :NOTA:\n%U\n%a\n" :clock-in t :clock-resume t)
+                  ("j" "Journal" entry (file+datetree "~/Dropbox/org/diary.org")
+                   "* %?\n%U\n" :clock-in t :clock-resume t)
+                  ("w" "org-protocol" entry (file "~/Dropbox/org/refile.org")
+                   "* PENDIENTE Review %c\n%U\n" :immediate-finish t)
+                  ("m" "Meeting" entry (file "~/Dropbox/org/refile.org")
+                   "* REUNION with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                  ("p" "Phone call" entry (file "~/Dropbox/org/refile.org")
+                   "* TELEFONO %? :TELEFONO:\n%U" :clock-in t :clock-resume t)
+                  ("h" "Hábito" entry (file "~/Dropbox/org/refile.org")
+                   "* SIGUIENTE %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
     (setq org-refile-targets (quote ((nil :maxlevel . 1)
                                      (org-agenda-files :maxlevel . 1))))
