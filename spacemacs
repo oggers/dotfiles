@@ -491,6 +491,29 @@ you should place your code here."
 
     (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
+    ;; Tags with fast selection keys
+    (setq org-tag-alist (quote ((:startgroup)
+                                ("@errante" . ?e)
+                                ("@oficina" . ?o)
+                                ("@casa" . ?c)
+                                (:endgroup)
+                                ("ESPERANDO" . ?E)
+                                ("RETENIDA" . ?r)
+                                ("PERSONAL" . ?P)
+                                ("TRABAJO" . ?T)
+                                ("ORG" . ?O)
+                                ("JCN" . ?j)
+                                ("crypt" . ?E)
+                                ("NOTA" . ?n)
+                                ("CANCELADA" . ?C)
+                                ("MARCADA" . ??))))
+
+    ;; Allow setting single tags without the menu
+    (setq org-fast-tag-selection-single-key (quote expert))
+
+    ;; For tag searches ignore tasks with scheduled and deadline dates
+    (setq org-agenda-tags-todo-honor-ignore-options t)
+
     ;; Do not dim blocked tasks
     (setq org-agenda-dim-blocked-tasks nil)
 
