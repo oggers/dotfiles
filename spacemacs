@@ -421,7 +421,8 @@ you should place your code here."
     (setq org-agenda-start-on-weekday 1)
 
     (setq org-agenda-files (quote ("~/Dropbox/org"
-                                   "~/Dropbox/org/apanymantel")))
+                                   "~/Dropbox/org/apanymantel"
+                                   "~/Dropbox/org/bizak")))
 
     (setq org-todo-keywords
           (quote ((sequence "PENDIENTE(p)" "SIGUIENTE(s)" "|" "FINALIZADA(f)")
@@ -502,7 +503,8 @@ you should place your code here."
                                 ("PERSONAL" . ?P)
                                 ("TRABAJO" . ?T)
                                 ("ORG" . ?O)
-                                ("JCN" . ?j)
+                                ("APANYMANTEL" . ?a)
+                                ("BIZAK" . ?b)
                                 ("crypt" . ?E)
                                 ("NOTA" . ?n)
                                 ("CANCELADA" . ?C)
@@ -522,7 +524,7 @@ you should place your code here."
 
     ;; Custom agenda command definitions
     (setq org-agenda-custom-commands
-          (quote (("N" "Notes" tags "NOTA"
+          (quote (("N" "Notas" tags "NOTA"
                    ((org-agenda-overriding-header "Notas")
                     (org-tags-match-list-sublevels t)))
                   ("h" "Hábitos" tags-todo "STYLE=\"habit\""
@@ -585,6 +587,10 @@ you should place your code here."
                            (org-tags-match-list-sublevels nil)))
                     ))
                   )))
+
+    (defun oggers/test ()
+      (interactive)
+      (message "is a project %s" org-todo-keywords-1))
 
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask"
@@ -661,7 +667,7 @@ Callers of this function already widen the buffer view."
   (setq bh/hide-scheduled-and-waiting-next-tasks (not bh/hide-scheduled-and-waiting-next-tasks))
   (when  (equal major-mode 'org-agenda-mode)
     (org-agenda-redo))
-  (message "%s WAITING and SCHEDULED NEXT Tasks" (if bh/hide-scheduled-and-waiting-next-tasks "Hide" "Show")))
+  (message "%s tareas ESPERANDO y SIGUIENTES PROGRAMADAS" (if bh/hide-scheduled-and-waiting-next-tasks "Ocultar" "Mostrar")))
 
 (defun bh/skip-stuck-projects ()
   "Skip trees that are not stuck projects"
@@ -673,8 +679,8 @@ Callers of this function already widen the buffer view."
                  (has-next ))
             (save-excursion
               (forward-line 1)
-              (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ NEXT " subtree-end t))
-                (unless (member "WAITING" (org-get-tags-at))
+              (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ SIGUIENTE " subtree-end t))
+                (unless (member "ESPERANDO" (org-get-tags-at))
                   (setq has-next t))))
             (if has-next
                 nil
@@ -692,8 +698,8 @@ Callers of this function already widen the buffer view."
                  (has-next ))
             (save-excursion
               (forward-line 1)
-              (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ NEXT " subtree-end t))
-                (unless (member "WAITING" (org-get-tags-at))
+              (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ SIGUIENTE " subtree-end t))
+                (unless (member "ESPERANDO" (org-get-tags-at))
                   (setq has-next t))))
             (if has-next
                 next-headline
@@ -750,7 +756,7 @@ Skip project and sub-project tasks, habits, and project related tasks."
        ((org-is-habit-p)
         next-headline)
        ((and bh/hide-scheduled-and-waiting-next-tasks
-             (member "WAITING" (org-get-tags-at)))
+             (member "ESPERANDO" (org-get-tags-at)))
         next-headline)
        ((bh/is-project-p)
         next-headline)
@@ -778,7 +784,7 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
         subtree-end)
        ((and limit-to-project
              (bh/is-project-subtree-p)
-             (member (org-get-todo-state) (list "NEXT")))
+             (member (org-get-todo-state) (list "SIGUIENTE")))
         subtree-end)
        (t
         nil)))))
@@ -812,7 +818,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
        ((org-is-habit-p)
         subtree-end)
        ((and (bh/is-project-subtree-p)
-             (member (org-get-todo-state) (list "NEXT")))
+             (member (org-get-todo-state) (list "SIGUIENTE")))
         subtree-end)
        ((not (bh/is-project-subtree-p))
         subtree-end)
