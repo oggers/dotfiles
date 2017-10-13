@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bash_aliases gitconfig hgrc mrbob spacemacs zshrc oh-my-zsh/custom"    # list of files/folders to symlink in homedir
+files="bash_aliases gitconfig hgrc mrbob pylintrc spacemacs zshrc oh-my-zsh/custom"    # list of files/folders to symlink in homedir
 
 ##########
 
