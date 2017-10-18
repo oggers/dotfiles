@@ -325,8 +325,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; html
-  ;; edit Zope PageTemplates using html-mode
-  (add-to-list 'auto-mode-alist '("\\.pt$" . html-mode))
+  ;; edit Zope PageTemplates using web-mode
+  (add-to-list 'auto-mode-alist '("\\.pt$" . web-mode))
 
   ;; Shell Add a few more password patterns
   (defvar comint-password-prompt-regexp)
