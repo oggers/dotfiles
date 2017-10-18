@@ -328,6 +328,8 @@ you should place your code here."
   ;; edit Zope PageTemplates using web-mode
   (add-to-list 'auto-mode-alist '("\\.pt$" . web-mode))
 
+  (add-to-list 'auto-mode-alist '("\\.zcml$" . nxml-mode))
+
   ;; Shell Add a few more password patterns
   (defvar comint-password-prompt-regexp)
   (setq comint-password-prompt-regexp
