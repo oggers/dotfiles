@@ -1,0 +1,14 @@
+---
+# file: roles/emacs/tasks/main.yml
+
+- name: Install emacs
+  pacman:
+    name: emacs
+    state: present
+
+- name: Clone Spacemacs repository
+  git: repo="{{ spacemacs_repository }}" version="{{ spacemacs_branch }}" dest="{{ ansible_user_dir }}/.emacs.d" depth=1
+  tags: bootstrap
+
+- name: Copy .spacemacs
+  template: src="files/spacemacs" dest="{{ ansible_user_dir }}/.spacemacs"
