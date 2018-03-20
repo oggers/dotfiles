@@ -1,0 +1,28 @@
+---
+# file: roles/oh_my_zsh/tasks/main.yml
+
+- name: Install dependencies
+  package: name={{ item }} state=latest
+  with_items:
+  - git
+  - zsh
+
+- name: oh-my-zsh already installed?
+  stat: path="{{ ansible_user_dir }}/.oh-my-zsh"
+  register: oh_my_zsh
+
+- name: Download oh-my-zsh
+  git: repo="{{ oh_my_zsh_repository }}" dest="{{ ansible_user_dir }}/.oh-my-zsh"
+  when: oh_my_zsh.stat.exists == False
+
+- name: Create new .zshrc
+  copy:
+    src="{{ ansible_user_dir }}/.oh-my-zsh/templates/zshrc.zsh-template"
+    dest="{{ ansible_user_dir }}/.zshrc"
+
+- name: change default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+  become: true
+

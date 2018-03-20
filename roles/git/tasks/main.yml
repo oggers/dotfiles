@@ -1,0 +1,8 @@
+---
+# file: roles/git/tasks/main.yml
+
+- name: Installs git package
+  package: name=git state=latest
+
+- name: Copy .gitconfig
+  template: src="gitconfig.j2" dest="{{ ansible_user_dir }}/.gitconfig"
