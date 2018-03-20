@@ -2,10 +2,12 @@
   hosts: local
   gather_facts: yes
 
+
 - name: Set up local development environment
   hosts: local
   roles:
-    - emacs
+  - packages
+  - emacs
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
 #     - {role: zsh, tags: ['bootstrap']}

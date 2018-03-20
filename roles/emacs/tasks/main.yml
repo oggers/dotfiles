@@ -2,9 +2,9 @@
 # file: roles/emacs/tasks/main.yml
 
 - name: Install emacs
-  pacman:
+  package:
     name: emacs
-    state: present
+    state: latest
 
 - name: Clone Spacemacs repository
   git: repo="{{ spacemacs_repository }}" version="{{ spacemacs_branch }}" dest="{{ ansible_user_dir }}/.emacs.d" depth=1

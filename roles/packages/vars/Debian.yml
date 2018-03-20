@@ -1,0 +1,5 @@
+---
+packages:
+- curl
+- wget
+- youtube-dl
