@@ -5,10 +5,19 @@
   package:
     name: emacs
     state: latest
+    
+- name: spacemacs already installed?
+  stat: path="{{ ansible_user_dir }}/.emacs.d/spacemacs.mk"
+  register: spacemacs
+  tags: bootstrap
 
 - name: Clone Spacemacs repository
   git: repo="{{ spacemacs_repository }}" version="{{ spacemacs_branch }}" dest="{{ ansible_user_dir }}/.emacs.d" depth=1
+  when: spacemacs.stat.exists == False
   tags: bootstrap
 
 - name: Copy .spacemacs
   template: src="files/spacemacs" dest="{{ ansible_user_dir }}/.spacemacs"
+
+- name: Copy .emacs.d/private
+  copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"

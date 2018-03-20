@@ -14,12 +14,4 @@ git_user: oggers
 #  used on Github
 git_email: oggers@gmail.com
 
-# GPG Key ID used to sign git commits
-# See https://github.com/pstadler/keybase-gpg-github setup instructions
-git_signing_key: 631262B829DDB506
-
-# Utilities that don't get installed by a role
-arch_pacman_packages:
-  - curl
-  - wget
-  - youtube-dl
+github_token: e3323e0c9d4f078b6a81677f9b3984ab

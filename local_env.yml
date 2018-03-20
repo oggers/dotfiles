@@ -7,6 +7,8 @@
   hosts: local
   roles:
   - packages
+  - {role: oh_my_zsh, tags: ['bootstrap']} 
+  - git
   - emacs
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
