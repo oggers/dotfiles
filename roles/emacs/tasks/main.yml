@@ -17,7 +17,7 @@
   tags: bootstrap
 
 - name: Copy .spacemacs
-  template: src="files/spacemacs" dest="{{ ansible_user_dir }}/.spacemacs"
+  template: src="spacemacs.j2" dest="{{ ansible_user_dir }}/.spacemacs"
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"

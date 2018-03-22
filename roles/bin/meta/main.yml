@@ -1,0 +1,4 @@
+---
+# file: roles/bin/meta/main.yml
+dependencies:
+- { role: oh_my_zsh }

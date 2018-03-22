@@ -1,0 +1,11 @@
+---
+# file: roles/bin/tasks/main.yml
+
+- name: Create directory bin
+  file: path="{{ ansible_user_dir }}/bin" state=directory
+
+- name: Copy bin directory
+  copy:
+    src: "files/"
+    dest: "{{ ansible_user_dir }}/bin"
+    mode: 0755

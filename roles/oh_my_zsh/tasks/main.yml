@@ -15,10 +15,8 @@
   git: repo="{{ oh_my_zsh_repository }}" dest="{{ ansible_user_dir }}/.oh-my-zsh"
   when: oh_my_zsh.stat.exists == False
 
-- name: Create new .zshrc
-  copy:
-    src="{{ ansible_user_dir }}/.oh-my-zsh/templates/zshrc.zsh-template"
-    dest="{{ ansible_user_dir }}/.zshrc"
+- name: Configure .zshrc
+  template: src=zshrc.j2 dest="{{ ansible_user_dir }}/.zshrc"
 
 - name: change default shell
   user:
