@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ssh -p 22222 oggers@vps.oggers.com.es \
+    -L 18080:localhost:8080 `: client1` \
+    -L 19081:localhost:9081 `: client1` \
+    -N
