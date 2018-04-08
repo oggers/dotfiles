@@ -417,6 +417,11 @@ you should place your code here."
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  (setq evil-escape-key-sequence "jk")
+  (setq evil-escape-unordered-key-sequence t)
+  (setq evil-escape-excluded-major-modes '(dired-mode neotree-mode evil-visual-state help-mode ibuffer-mode))
+  (push 'visual evil-escape-excluded-states)
+  (push 'normal evil-escape-excluded-states)
 
   ;;; Setup Flycheck according to the current virtualenv
   (require 'flycheck)

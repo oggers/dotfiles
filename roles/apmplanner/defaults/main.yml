@@ -1,0 +1,4 @@
+---
+# file: roles/apmplanner/defaults/main.yml
+
+apmplanner_version: "v2.7.1"

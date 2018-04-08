@@ -1,0 +1,55 @@
+---
+# file: roles/apmplanner/tasks/main.yml
+
+- name: Install apmplanner
+  command: yaourt -S --noconfirm apm_planner
+
+# - name: Install dependencies
+#   package: name="{{ item }}" state=present
+#   with_items:
+#   - qtcreator
+#   - qt5-base
+#   - qt5-declarative
+#   - qt5-serialport
+#   - qt5-svg
+#   - qt5-webkit
+#   become: yes
+
+# - name: Install espeak
+#   package: name="espeak" state=present
+#   become: yes
+
+# - name: Install openscenegraph
+#   package: name="openscenegraph" state=present
+#   become: yes
+
+# - name: Create temp directory
+#   tempfile:
+#     state: directory
+#   register: temp_dir
+
+# - debug:
+#     msg: "temp_dir {{ temp_dir.path }}"
+
+# - name: Clone apmplanner from git repository
+#   git:
+#     # repo: 'https://github.com/ArduPilot/apm_planner.git'
+#     repo: 'https://github.com/diydrones/apm_planner'
+#     dest: "{{ temp_dir.path }}"
+# #    version: "{{ apmplanner_version }}"
+
+# - name: qmake
+#   command: qmake apm_planner.pro
+#   #command: qmake -r qgroundcontrol.pro
+#   args:
+#     chdir: "{{ temp_dir.path }}"
+
+# - name: make
+#   command: make
+#   args:
+#     chdir: "{{ temp_dir.path }}"
+
+# # - name: Remove temp directory
+# #   file:
+# #     path: "{{ temp_dir.path }}"
+# #     state: absent
