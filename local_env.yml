@@ -10,7 +10,7 @@
   - bin
   - {role: oh_my_zsh, tags: ['bootstrap']} 
   - git
-  - emacs
+  - {role: emacs, tags: ['emacs']}
   - {role: apmplanner, tags: ['apmplanner']}
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
