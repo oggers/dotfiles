@@ -5,6 +5,7 @@ ssh -p 22222 oggers@apymtest.apanymantel.com \
     -L 35432:localhost:5432 `: postgresql` \
     -L 35555:localhost:5555 `: flower` \
     -L 35672:localhost:15672 `: rabbitmq`\
+    -L 35081:localhost:5081 `: plone5` \
     -L 36081:localhost:6081 `: varnish` \
     -L 37080:localhost:7080 `: pentaho`\
     -L 38080:localhost:8080 `: haproxy`\
