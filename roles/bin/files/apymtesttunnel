@@ -2,7 +2,7 @@
 
 ssh -p 22222 oggers@apymtest.apanymantel.com \
     -L 31080:localhost:1080 `: haproxy stats` \
-    -L 34800:localhost:4800 `: ng-server` \
+    -L 34200:localhost:4200 `: ng-server` \
     -L 35432:localhost:5432 `: postgresql` \
     -L 35555:localhost:5555 `: flower` \
     -L 35672:localhost:15672 `: rabbitmq`\
