@@ -3,3 +3,5 @@ packages:
 - curl
 - wget
 - youtube-dl
+- nodejs
+- npm
