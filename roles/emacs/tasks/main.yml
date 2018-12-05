@@ -21,3 +21,13 @@
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"
+
+- name: Install desktop file
+  template: src="emacsclient.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/emacsclient.desktop"
+
+- name: Update EDITOR
+  lineinfile:
+    path: /etc/environment
+    regexp: '^EDITOR='
+    line: 'EDITOR=emacsclient'
+  become: yes
