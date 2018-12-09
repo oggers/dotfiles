@@ -24,6 +24,11 @@
 
 - name: Install desktop file
   template: src="emacsclient.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/emacsclient.desktop"
+  register: result
+
+- name: Refresh cache database of mime types handled by desktop files
+  command: update-desktop-database
+  when: result.changed
 
 - name: Update EDITOR
   lineinfile:
