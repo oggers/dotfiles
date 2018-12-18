@@ -6,6 +6,7 @@
   with_items:
   - git
   - zsh
+  become: yes
 
 - name: oh-my-zsh already installed?
   stat: path="{{ ansible_user_dir }}/.oh-my-zsh"

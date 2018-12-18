@@ -27,7 +27,7 @@
   register: result
 
 - name: Refresh cache database of mime types handled by desktop files
-  command: update-desktop-database
+  command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
   when: result.changed
 
 - name: Update EDITOR
