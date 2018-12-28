@@ -3,9 +3,16 @@
 
 - name: Install emacs
   package:
-    name: emacs
+    name: "{{ item }}"
     state: latest
-    
+  become: yes
+  with_items:
+    - emacs
+    - powerline-fonts
+
+- name: Install packages
+  command: yaourt -S ttf-symbola --noconfirm 
+ 
 - name: spacemacs already installed?
   stat: path="{{ ansible_user_dir }}/.emacs.d/spacemacs.mk"
   register: spacemacs
@@ -21,6 +28,9 @@
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"
+
+- name: Copy .vault_pass.txt
+  copy: src="files/.vault_pass.txt" dest="{{ ansible_user_dir }}"
 
 - name: Install desktop file
   template: src="emacsclient.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/emacsclient.desktop"

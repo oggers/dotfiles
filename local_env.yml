@@ -2,16 +2,25 @@
   hosts: local
   gather_facts: yes
   become: yes
+  vars_files: encrypted.yml
 
 - name: Set up local development environment
   hosts: local
   roles:
-  - packages
-  - bin
-  - {role: oh_my_zsh, tags: ['bootstrap']} 
-  - git
-  - {role: emacs, tags: ['emacs']}
-  - {role: apmplanner, tags: ['apmplanner']}
+  - role: packages
+    tags: office, home
+  - role: bin
+    tags: home.office
+  - role: oh_my_zsh
+    tags: bootstrap, home, office 
+  - role: git
+    tags: home, office
+  - role: emacs
+    tags: emacs, home, office
+  - role: apmplanner
+    tags: apmplanner, home
+  - role: i3
+    tags: home, office
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
 #     - {role: zsh, tags: ['bootstrap']}

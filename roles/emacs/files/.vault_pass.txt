@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for f in .vault*; do
+    if [ $f != ".vaut_pass.txt" ]; then
+        echo -e "$(cat $f)"
+        # printf '%s\n'
+        # paste /dev/null - < "$f"
+    fi
+done

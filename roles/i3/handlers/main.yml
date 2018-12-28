@@ -1,0 +1,8 @@
+---
+# file: handlers/main.yml
+
+- name: Restart i3
+  command: i3-msg -t command restart
+  # i3-msg has a bug and return 1 even if i3 is correctly retarted
+  # https://github.com/i3/i3/issues/3565
+  ignore_errors: yes
