@@ -16,6 +16,7 @@
     - ".config/i3"
     - ".config/i3status"
     - ".config/ranger"
+    - ".config/dunst"
 
 - name: Configure i3
   template:
@@ -28,6 +29,11 @@
     src: templates/i3status.conf.j2
     dest: "{{ ansible_user_dir }}/.config/i3status/config"
   notify: Restart i3
+
+- name: Configure dunst
+  template:
+    src: templates/dunstrc.j2
+    dest: "{{ ansible_user_dir }}/.config/dunst/dunstrc"
 
 - name: Config files
   copy:

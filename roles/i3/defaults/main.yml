@@ -42,4 +42,4 @@ i3_packages:
   # - ttf-font-awesome
   - w3m
   - ranger
-  #- flameshot
+  - flameshot
