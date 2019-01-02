@@ -19,7 +19,7 @@ general {
 order += "disk /"
 #order += "wireless _first_"
 #order += "ethernet _first_"
-{% if i3_battery | default(False) %}
+{% if i3_battery %}
 order += "battery all"
 {% endif %}
 order += "volume master"
