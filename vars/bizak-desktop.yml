@@ -27,3 +27,5 @@ i3_workspaces:
       - class: "Firefox-jcn"
     gaps: {'inner': 0, 'outer': 0}
   - name: 10
+
+i3_battery: yes

@@ -8,17 +8,24 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 5
+    colors = true
+    interval = 5
+    color_good = '#88b090'
+    color_degraded = '#ccdc90'
+    color_bad = '#e89393'
 }
 
 # order += "ipv6"
 order += "disk /"
-order += "wireless _first_"
-order += "ethernet _first_"
+#order += "wireless _first_"
+#order += "ethernet _first_"
+{% if i3_battery | default(False) %}
 order += "battery all"
-order += "load"
+{% endif %}
 order += "volume master"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "load"
 order += "tztime local"
 
 wireless _first_ {
@@ -33,20 +40,47 @@ ethernet _first_ {
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+    format = "%status %percentage %remaining"
+    format_down = ""
+    last_full_capacity = true
+    integer_battery_capacity = true
+    low_threshold = 11
+    threshold_type = percentage
+    hide_seconds = true
+    status_chr = " "
+    status_bat = " "
+    status_unk = " "
+    status_full = " "
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+    format = " %d/%m/%Y   %H:%M"
 }
 
 load {
-        format = "%1min"
+    format = " %1min"
 }
 
 disk "/" {
-        format = "%avail"
+    format = " %avail"
+    prefix_type	= custom
+    low_threshold = 20
+    threshold_type = percentage_avail
 }
 
 volume master {
+    format = "%volume  "
+    format_muted = " "
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
 }
+
+cpu_temperature 0 {
+    format = " %degrees°C"
+}
+
+cpu_usage {
+    format = " %usage"
+}
+
