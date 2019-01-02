@@ -1,0 +1,29 @@
+---
+# file: vars/bizak-laptop.yml
+
+i3_workspaces:
+  - name: "1: Firefox-oggers "
+    output: primary
+    assign:
+      - class: "Firefox-oggers"
+    gaps: {'inner': 0, 'outer': 0}
+  - name: "2: Emacs "
+    output: primary
+    assign:
+      - class: "Emacs"
+  - name: 3
+  - name: "4: Virtualbox "
+    assign:
+      - class: "VirtualBox"
+    output: primary
+    gaps: {'inner': 0, 'outer': 0}
+  - name: 5
+  - name: 6
+  - name: 7
+  - name: 8
+  - name: "9: Firefox-jcn "
+    output: primary
+    assign:
+      - class: "Firefox-jcn"
+    gaps: {'inner': 0, 'outer': 0}
+  - name: 10

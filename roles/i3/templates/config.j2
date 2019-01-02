@@ -97,34 +97,34 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Workspace
-# Install ttf-font-awesome and select from https://fontawesome.com/cheatsheets
-set $workspace1 "1: Emacs "
-set $workspace2 "2: Firefox "
-set $workspace3 "3: Virtualbox "
+# (obsolete) Install ttf-font-awesome and select from https://fontawesome.com/cheatsheets
+{% for ws in i3_workspaces %}
+set $ws{{ loop.index }} "{{ ws.name }}"
+{% endfor %}
 
 # switch to workspace
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace $workspace3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Workspace bindings
 bindsym $mod+Home		      workspace $ws1
@@ -137,16 +137,38 @@ bindsym $mod+Next         workspace next
 bindsym $mod+Shift+Next   move container to workspace next
 bindsym $mod+Tab          workspace back_and_forth
 
+# Output bindings (with Alt key)
+bindsym $mod+Mod1+h move workspace to output left
+bindsym $mod+Mod1+j move workspace to output down
+bindsym $mod+Mod1+k move workspace to output up
+bindsym $mod+Mod1+l move workspace to output right
+bindsym $mod+Mod1+Left move workspace to output left
+bindsym $mod+Mod1+Down move workspace to output down
+bindsym $mod+Mod1+Up move workspace to output up
+bindsym $mod+Mod1+Right move workspace to output right
+
+# workspace output
+{% for ws in i3_workspaces %}
+{% if 'output' in ws %}workspace $ws{{ loop.index }} output {{ ws.output }}
+{% endif %}
+{% endfor %}
+
 # apps workspace
 # use xprop to get the window class (2nd string)
-assign [class="Emacs"] $workspace1
-assign [class="Firefox"] $workspace2
+{% for ws in i3_workspaces %}{% set wsloop = loop %}
+{% if 'assign' in ws %}{% for assign in ws.assign %}
+assign [{% for key, value in assign.items() %}{{ key }}="{{ value }}" {% endfor %}] $ws{{ wsloop.index }}
+{% endfor %}
+{% endif %}
+{% endfor %}
 
-workspace $workspace2 gaps inner 0
-workspace $workspace2 gaps outer 0
-workspace $workspace3 gaps inner 0
-workspace $workspace3 gaps outer 0
-
+# workspace gaps
+{% for ws in i3_workspaces %}{% set wsloop = loop %}
+{% if 'gaps' in ws %}{% for key, value in ws.gaps.items() %}
+workspace $ws{{ wsloop.index }} gaps {{ key }} {{ value }}
+{% endfor %}
+{% endif %}
+{% endfor %}
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -211,7 +233,7 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status
+    status_command py3status
     font pango:monospace 9
 
 	colors {

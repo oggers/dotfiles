@@ -3,24 +3,36 @@
   gather_facts: yes
   become: yes
   #vars_files: "encrypted.yml"
+  pre_tasks:
+    - name: Load bizak-destop variables
+      include_vars: vars/bizak-desktop.yml
+      tags: bizak-desktop
+      
+    - name: Load bizak-laptop variables
+      include_vars: vars/bizak-laptop.yml
+      tags: bizak-laptop
+
+    - name: Load home variables
+      include_vars: vars/home.yml
+      tags: home
 
 - name: Set up local development environment
   hosts: local
   roles:
   - role: packages
-    tags: office, home
+    tags: home, bizak-desktop, bizak-laptop
   - role: bin
-    tags: home.office
+    tags: home, bizak-desktop, bizak-laptop
   - role: oh_my_zsh
-    tags: bootstrap, home, office 
+    tags: bootstrap, home, bizak-desktop, bizak-laptop
   - role: git
-    tags: home, office
+    tags: home, bizak-desktop, bizak-laptop
   - role: emacs
-    tags: emacs, home, office
+    tags: emacs, home, bizak-desktop, bizak-laptop
   - role: apmplanner
     tags: apmplanner, home
   - role: i3
-    tags: home, office
+    tags: home, bizak-desktop, bizak-laptop
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
 #     - {role: zsh, tags: ['bootstrap']}

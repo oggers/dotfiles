@@ -6,16 +6,7 @@
     name: "{{ item }}"
     state: present
   become: yes
-  with_items:
-    - antergos-i3-meta
-    - i3-gaps
-    - py3status
-    - rofi
-    - compton
-    - ttf-font-awesome
-    - w3m
-    - ranger
-    - flameshot
+  with_items: "{{ i3_packages }}"
 
 - name: i3 config directories
   file:
@@ -24,6 +15,7 @@
   with_items:
     - ".config/i3"
     - ".config/i3status"
+    - ".config/ranger"
 
 - name: Configure i3
   template:
