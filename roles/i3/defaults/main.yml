@@ -24,7 +24,8 @@ i3_packages:
   - networkmanager-openvpn
   - networkmanager-pptp
   - nitrogen
-  - notify-osd
+  # - notify-osd
+  - dunst
   - pcmanfm
   - polkit-gnome
   - python-pysmbc

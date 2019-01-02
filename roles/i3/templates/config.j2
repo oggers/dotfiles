@@ -44,7 +44,9 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec rofi -show drun
+# bindsym $mod+d exec rofi -modi "run.ssh" -show drun -show-icons
+bindsym $mod+d exec rofi -show drun -show-icons -theme solarized -font "hack 10"
+# bindsym $mod+d exec rofi -combi-modi window#drun#ssh -theme solarized -font "hack 10" -show combi
 
 # change focus
 bindsym $mod+h focus left
@@ -304,8 +306,8 @@ bindsym $mod+F7 exec mocp --previous
 bindsym $mod+F8 exec mocp --next
 
 # App shortcuts
-bindsym $mod+w exec "/usr/bin/chromium"
-bindsym $mod+n exec "/usr/bin/thunar"
+bindsym $mod+w exec "/usr/bin/firefox"
+bindsym $mod+n exec "/usr/bin/pcmanfm"
 
 # Redirect sound to headphones
 bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
@@ -313,7 +315,7 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 # Autostart apps
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id "compton -cCGf -i 0.75"
+exec --no-startup-id "compton -cCGf -i 0.85"
 exec --no-startup-id nm-applet
 exec --no-startup-id "nitrogen --restore"
 exec --no-startup-id "sleep 2s && kalu"

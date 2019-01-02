@@ -29,8 +29,8 @@
     tags: home, bizak-desktop, bizak-laptop
   - role: emacs
     tags: emacs, home, bizak-desktop, bizak-laptop
-  - role: apmplanner
-    tags: apmplanner, home
+  # - role: apmplanner
+  #   tags: apmplanner, home
   - role: i3
     tags: home, bizak-desktop, bizak-laptop
 #     - git

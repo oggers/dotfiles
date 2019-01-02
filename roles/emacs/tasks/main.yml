@@ -57,6 +57,6 @@
   service:
     enabled: yes
     name: emacs.service
-    scope: user
-    # user: yes
+    # scope: user
+    user: yes
 
