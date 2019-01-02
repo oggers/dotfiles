@@ -23,3 +23,5 @@ i3_workspaces:
   - name: 8
   - name: 9
   - name: 10
+
+i3_battery: yes
