@@ -2,7 +2,7 @@
   hosts: local
   gather_facts: yes
   become: yes
-  vars_files: encrypted.yml
+  #vars_files: "encrypted.yml"
 
 - name: Set up local development environment
   hosts: local

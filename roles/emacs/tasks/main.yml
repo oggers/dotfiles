@@ -10,9 +10,15 @@
     - emacs
     - powerline-fonts
 
+- name: Check ttf-symbola package
+  command: pacman -Qi ttf-symbola
+  register: pacman_check
+  changed_when: false
+
 - name: Install packages
   command: yaourt -S ttf-symbola --noconfirm 
- 
+  when: pacman_check.rc == 1
+
 - name: spacemacs already installed?
   stat: path="{{ ansible_user_dir }}/.emacs.d/spacemacs.mk"
   register: spacemacs
@@ -46,3 +52,10 @@
     regexp: '^EDITOR='
     line: 'EDITOR=emacsclient'
   become: yes
+
+- name: Enable systemd
+  service:
+    enabled: yes
+    name: emacs.service
+    user: yes
+

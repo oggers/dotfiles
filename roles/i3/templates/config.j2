@@ -18,6 +18,9 @@ font pango:monospace 9
 
 # thin borders
 hide_edge_borders both
+# for_window [class="^.*"] border pixel 0
+gaps inner 10
+gaps outer 10
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -40,7 +43,8 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec rofi -show drun
 
 # change focus
 bindsym $mod+h focus left
@@ -122,9 +126,27 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# Workspace bindings
+bindsym $mod+Home		      workspace $ws1
+bindsym $mod+Shift+Home		move container to workspace $ws1
+bindsym $mod+End		      workspace $ws10
+bindsym $mod+Shift+End		move container to workspace $ws10
+bindsym $mod+Prior		    workspace prev
+bindsym $mod+Shift+Prior  move container to workspace prev
+bindsym $mod+Next         workspace next
+bindsym $mod+Shift+Next   move container to workspace next
+bindsym $mod+Tab          workspace back_and_forth
+
 # apps workspace
 # use xprop to get the window class (2nd string)
 assign [class="Emacs"] $workspace1
+assign [class="Firefox"] $workspace2
+
+workspace $workspace2 gaps inner 0
+workspace $workspace2 gaps outer 0
+workspace $workspace3 gaps inner 0
+workspace $workspace3 gaps outer 0
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -146,10 +168,10 @@ mode "resize" {
     # Pressing right will grow the window’s width.
     # Pressing up will shrink the window’s height.
     # Pressing down will grow the window’s height.
-    bindsym j resize shrink width 10 px or 10 ppt
-    bindsym k resize grow height 10 px or 10 ppt
-    bindsym l resize shrink height 10 px or 10 ppt
-    bindsym ntilde resize grow width 10 px or 10 ppt
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
 
     # same bindings, but for the arrow keys
     bindsym Left resize shrink width 10 px or 10 ppt
@@ -163,6 +185,13 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# gaps
+bindsym $mod+g			gaps inner current plus 5
+bindsym $mod+Shift+g		gaps inner current minus 5
+
+# clear gaps
+bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
 
 set $bg-color            #2f343f
 set $inactive-bg-color   #2f343f
@@ -223,6 +252,13 @@ bindsym XF86AudioStop exec mocp --togle-pause
 bindsym XF86AudioNext exec mocp --next
 bindsym XF86AudioPrev exec mocp --previous
 
+# brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen bigthness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen bigthness
+
+# screenshot
+bindsym --release Print exec flameshot gui
+
 bindsym $mod+F5 exec mocp --toggle-pause
 bindsym $mod+F6 exec mocp --stop
 bindsym $mod+F7 exec mocp --previous
@@ -237,9 +273,14 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 
 # Autostart apps
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id "compton -cC"
+exec --no-startup-id "compton -cCGf -i 0.75"
 exec --no-startup-id nm-applet
 exec --no-startup-id "nitrogen --restore"
 exec --no-startup-id "sleep 2s && kalu"
+exec --no-startup-id flameshot
+# gnome-screen-saver
+# gnome-keyring-daemon
 
-exec emacsclient
+
+# swap ctrl caps
+exec "setxkbmap -option ctrl:swapcaps"
