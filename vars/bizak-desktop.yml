@@ -27,3 +27,41 @@ i3_workspaces:
       - class: "Firefox-jcn"
     gaps: {'inner': 0, 'outer': 0}
   - name: 10
+i3_autostart:
+  - command: "xrandr --output HDMI2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --mode 1680x1050 --pos 1920x0 --rotate normal --output DP2 --off --output DP1 --off --output VIRTUAL1 --off"
+    no_startup_id: yes
+
+ssh_config:
+  config:
+    - Host: luna.local.zabik
+      hostname: luna.local.zabik
+    - Host: srvdatamart.local.zabik
+      hostname: srvdatamart.local.zabik
+    - Host: srvedi.local.zabik
+      hostname: srvedi.local.zabik
+    - Host: mediacenter.local.zabik
+      hostname: mediacenter.local.zabik
+      user: root
+      # password: libreelec
+    - Host: www.bizak.es
+      hostname: ec2-35-180-183-246.eu-west-3.compute.amazonaws.com
+      port: 22222
+      user: ubuntu
+      identityfile: ~/.ssh/BizakWebSite.pem
+    - Host: www.tiendabizak.es
+      hostname: ec2-35-180-167-222.eu-west-3.compute.amazonaws.com
+      port: 22222
+      user: ubuntu
+      identityfile: ~/.ssh/BizakEcommerceSite.pem
+    - Host: ftp.bizak.es
+      hostname: ks26944.kimsufi.com
+      port: 22222
+      user: jcn
+    - Host: vps63405.ovh.net
+      hostname: vps63405.ovh.net
+      port: 22222
+      user: jcn
+    - Host: www.bizak.es_old
+      hostname: vps67550.ovh.net
+      port: 22222
+      user: jcn

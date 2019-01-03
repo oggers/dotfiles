@@ -25,3 +25,12 @@ i3_workspaces:
   - name: 10
 
 i3_battery: yes
+
+ssh_config:
+  config:
+    - Host: apymtest.apanymantel.com
+      hostname: apymtest.apanymantel.com
+      port: 22222
+    - Host: apym1.apanymantel.com
+      hostname: apym1.apanymantel.com
+      port: 22222
