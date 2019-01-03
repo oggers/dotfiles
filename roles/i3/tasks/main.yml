@@ -1,5 +1,8 @@
 ---
 # file: i3/tasks/main.yml
+# testing ssh-agent
+# ~/.bash_profile
+# ~/.xinitrc
 
 - name: Install antergos i3
   package:

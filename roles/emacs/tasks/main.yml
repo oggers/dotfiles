@@ -48,10 +48,10 @@
 
 - name: Update EDITOR
   lineinfile:
-    path: /etc/environment
+    path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^EDITOR='
-    line: 'EDITOR=emacsclient'
-  become: yes
+    line: 'EDITOR="emacsclient -c"'
+
 
 - name: Enable systemd
   service:
