@@ -316,6 +316,7 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 {% for autostart in i3_autostart | default([]) %}
 exec {% if autostart.no_startup_id %}--no-startup-id {% endif %}"{{ autostart.command }}"
 {% endfor %}
+#https://yashagarwal.in/posts/2017/12/setting-up-ssh-agent-in-i3/
 # exec --no-startup-id "eval `ssh-agent -s -t 6000`"
 # exec --no-startup-id "eval `gpg-agent -daemon`"
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
