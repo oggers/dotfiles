@@ -317,8 +317,9 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 exec {% if autostart.no_startup_id %}--no-startup-id {% endif %}"{{ autostart.command }}"
 {% endfor %}
 #https://yashagarwal.in/posts/2017/12/setting-up-ssh-agent-in-i3/
-# exec --no-startup-id "eval `ssh-agent -s -t 6000`"
+exec --no-startup-id "eval $(ssh-agent -s -t 6000)"
 # exec --no-startup-id "eval `gpg-agent -daemon`"
+exec_always ~/.config/i3/start-gnome-keyring.sh
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id "compton -cCGf -i 0.85"

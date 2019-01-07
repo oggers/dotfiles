@@ -21,6 +21,12 @@
     - ".config/ranger"
     - ".config/dunst"
 
+- name: Copy files
+  copy:
+    src: files/start-gnome-keyring.sh
+    dest: "{{ ansible_user_dir }}/.config/i3/start-gnomekeyring.sh"
+    mode: 0755
+
 - name: Configure i3
   template:
     src: templates/config.j2
