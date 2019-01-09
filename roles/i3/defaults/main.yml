@@ -37,6 +37,7 @@ i3_packages:
   - xfburn
   - xscreensaver
   - i3-gaps
+  - numlockx
   - py3status
   - rofi
   - compton

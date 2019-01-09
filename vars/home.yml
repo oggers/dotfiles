@@ -26,6 +26,8 @@ i3_workspaces:
 
 i3_battery: yes
 
+i3_numlock_on: yes
+
 ssh_config:
   config:
     - Host: apymtest.apanymantel.com

@@ -318,6 +318,9 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 exec {% if autostart.no_startup_id %}--no-startup-id {% endif %}"{{ autostart.command }}"
 {% endfor %}
 #https://yashagarwal.in/posts/2017/12/setting-up-ssh-agent-in-i3/
+{% if i3_numlock_on | default(false) %}
+exec --no-startup-id "numlockx on"
+{% endif %}
 exec --no-startup-id "eval $(ssh-agent -s -t 6000)"
 # exec --no-startup-id "eval `gpg-agent -daemon`"
 exec_always ~/.config/i3/start-gnome-keyring.sh
