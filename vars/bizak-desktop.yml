@@ -30,6 +30,8 @@ i3_workspaces:
 i3_autostart:
   - command: "xrandr --output HDMI2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --mode 1680x1050 --pos 1920x0 --rotate normal --output DP2 --off --output DP1 --off --output VIRTUAL1 --off"
     no_startup_id: yes
+  - command: "dropbox start"
+    no_startup_id: yes
 
 i3_numlock_on: yes
 

@@ -28,6 +28,10 @@ i3_workspaces:
     gaps: {'inner': 0, 'outer': 0}
   - name: 10
 
+i3_autostart:
+  - command: "dropbox start"
+    no_startup_id: yes
+
 i3_battery: yes
 
 ssh_config:
