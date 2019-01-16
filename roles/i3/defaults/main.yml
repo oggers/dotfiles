@@ -46,4 +46,4 @@ i3_packages:
   - ranger
   - flameshot
   - pacman-contrib # py3status arch_updates
-  - cover # py3status arch_updates aur
+  - cower # py3status arch_updates aur
