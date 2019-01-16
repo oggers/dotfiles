@@ -26,7 +26,18 @@ order += "volume master"
 order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "load"
+order += "arch_updates"
+order += "scratchpad_counter"
 order += "tztime local"
+
+arch_updates {
+    format = " {total}"
+    hide_if_zero = true
+}
+
+scratchpad_counter {
+    hide_when_none = true
+}
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
