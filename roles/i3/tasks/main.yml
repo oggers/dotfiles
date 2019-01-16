@@ -24,7 +24,7 @@
 - name: Copy files
   copy:
     src: files/start-gnome-keyring.sh
-    dest: "{{ ansible_user_dir }}/.config/i3/start-gnomekeyring.sh"
+    dest: "{{ ansible_user_dir }}/.config/i3/start-gnome-keyring.sh"
     mode: 0755
 
 - name: Configure i3
