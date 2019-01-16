@@ -82,9 +82,9 @@ bindsym $mod+minus split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Shift+s layout stacking
-bindsym $mod+Shift+w layout tabbed
-bindsym $mod+Shift+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -97,6 +97,10 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+# Scratchpad
+bindsym $mod+Shift+BackSpace move scratchpad
+bindsym $mod+BackSpace scratchpad show
 
 # Workspace
 # (obsolete) Install ttf-font-awesome and select from https://fontawesome.com/cheatsheets
@@ -269,6 +273,9 @@ bar {
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Kalu"] floating enable
 for_window [class="VirtualBox Manager"] floating enable
+
+# scratchpad windows
+for_window [class="keepassxc|Keepassx"] move scratchpad, scratchpad show
 
 ## Multimedia Keys
 
