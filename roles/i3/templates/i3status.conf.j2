@@ -33,6 +33,7 @@ order += "tztime local"
 arch_updates {
     format = " {total}"
     hide_if_zero = true
+    on_click 1 = "exec pamac-updater"
 }
 
 scratchpad_counter {
@@ -77,6 +78,7 @@ disk "/" {
     prefix_type	= custom
     low_threshold = 20
     threshold_type = percentage_avail
+    on_click 1 = "exec pcmanfm"
 }
 
 volume master {
@@ -85,6 +87,7 @@ volume master {
     device = "default"
     mixer = "Master"
     mixer_idx = 0
+    on_click 1 = "exec pavucontrol"
 }
 
 cpu_temperature 0 {
