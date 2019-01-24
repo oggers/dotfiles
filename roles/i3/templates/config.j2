@@ -48,6 +48,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec rofi -show drun -show-icons -theme solarized -font "hack 10" -ssh-command "{terminal} -e '{ssh-client} {host}'"
 # bindsym $mod+d exec rofi -combi-modi window#drun#ssh -theme solarized -font "hack 10" -show combi
 
+bindsym $mod+u [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -275,9 +277,13 @@ for_window [class="Kalu"] floating enable
 for_window [class="VirtualBox Manager"] floating enable
 for_window [class="Pamac-updater"] floating enable
 for_window [class="Pamac-manager"] floating enable
+for_window [class="org.remmina.Remmina"] floating enable
 
 # scratchpad windows
 for_window [class="keepassxc|Keepassx"] move scratchpad, scratchpad show
+
+for_window [instance="dropdown"] floating enable, move scratchpad, border pixel 5
+exec --no-startup-id $term --name dropdown
 
 ## Multimedia Keys
 
