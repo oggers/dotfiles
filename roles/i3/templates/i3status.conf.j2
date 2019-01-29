@@ -16,13 +16,16 @@ general {
 }
 
 # order += "ipv6"
+order += "file_status voicenotes"
 order += "disk /"
 #order += "wireless _first_"
 #order += "ethernet _first_"
 {% if i3_battery | default(False) %}
 order += "battery all"
 {% endif %}
-order += "volume master"
+# order += "volume master"
+order += "volume_status master"
+order += "volume_status microphone"
 order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "load"
@@ -81,9 +84,32 @@ disk "/" {
     on_click 1 = "exec pcmanfm"
 }
 
+file_status voicenotes {
+    paths = "~/Dropbox/org/voicenotes/*"
+    format = "\?color=path [\?if=path |]"
+    thresholds = [(0, 'bad'), (1, 'bad')]
+    on_click 1 = "exec pcmanfm ~/Dropbox/org/voicenotes"
+}
+
+volume_status master {
+    cache_timeout = 1
+    #format = "♪ {percentage}%"
+    format = " {percentage}%"
+    #format_muted = "  "
+    format_muted = "  "
+    on_click 3 = "exec pavucontrol"
+}
+
+volume_status microphone {
+    is_input = true
+    format = " {percentage}%"
+    format_muted = "  "
+    on_click 3 = "exec pavucontrol"
+}
+
 volume master {
-    format = "%volume  "
-    format_muted = " "
+    format = " %volume"
+    format_muted = "  "
     device = "default"
     mixer = "Master"
     mixer_idx = 0
