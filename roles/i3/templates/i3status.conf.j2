@@ -86,7 +86,7 @@ disk "/" {
 
 file_status voicenotes {
     paths = "~/Dropbox/org/voicenotes/*"
-    format = "\?color=path [\?if=path |]"
+    format = "\?color=path [\?if=path  {path}|]"
     thresholds = [(0, 'bad'), (1, 'bad')]
     on_click 1 = "exec pcmanfm ~/Dropbox/org/voicenotes"
 }
