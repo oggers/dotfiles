@@ -32,6 +32,13 @@ order += "load"
 order += "arch_updates"
 order += "scratchpad_counter"
 order += "tztime local"
+order += "xrandr"
+
+xrandr {
+    format = "{output}" #   
+    hide_if_single_combination = true
+    HDMI1_pos = "right-of LVDS1"
+}
 
 arch_updates {
     format = " {total}"
