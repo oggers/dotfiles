@@ -16,3 +16,10 @@
   - "{{ packages }}"
   become: true
 
+- name: Install aur packages
+  aur:
+    name: "{{ item }}"
+    skip_installed: true
+  become: yes
+  with_items:
+  - "{{ aur_packages }}"

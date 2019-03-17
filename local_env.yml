@@ -20,7 +20,7 @@
   hosts: local
   roles:
   - role: packages
-    tags: home, bizak-desktop, bizak-laptop
+    tags: packages, home, bizak-desktop, bizak-laptop
   - role: bin
     tags: home, bizak-desktop, bizak-laptop
   - role: oh_my_zsh
@@ -32,7 +32,9 @@
   # - role: apmplanner
   #   tags: apmplanner, home
   - role: i3
-    tags: home, bizak-desktop, bizak-laptop
+    tags: i3, home, bizak-desktop, bizak-laptop
+  - role: openbox
+    tags: openbox
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
 #     - {role: zsh, tags: ['bootstrap']}

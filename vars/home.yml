@@ -32,6 +32,10 @@ i3_battery: yes
 
 i3_numlock_on: yes
 
+openbox_autostart:
+  - "dropbox start &"
+
+
 ssh_config:
   config:
     - Host: apymtest.apanymantel.com

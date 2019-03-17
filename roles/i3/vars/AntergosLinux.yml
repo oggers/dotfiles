@@ -1,0 +1,20 @@
+---
+# file: i3/vars/AntergosLinux.yml
+
+i3_packages_distrib:
+  - i3lock
+  - awesome-terminal-fonts
+  - file-roller
+  - kalu
+  - lxappearance-gtk3
+  - lxinput-gtk3
+  - mpv
+  - nitrogen
+  - dunst
+  - xdg-user-dirs-gtk
+  - xscreensaver
+  - py3status
+  - rofi
+  - compton
+  - pacman-contrib # py3status arch_updates
+  - cower # py3status arch_updates aur

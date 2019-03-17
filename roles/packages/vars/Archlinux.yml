@@ -1,10 +1,13 @@
 ---
 packages:
+- yay
 - curl
 - wget
 - youtube-dl
 - nodejs
 - npm
-- yaourt
 - keepassxc
 - keepassx
+- kicad
+aur_packages:
+- dropbox

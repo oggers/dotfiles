@@ -10,14 +10,18 @@
     - emacs
     - powerline-fonts
 
-- name: Check ttf-symbola package
-  command: pacman -Qi ttf-symbola
-  register: pacman_check
-  changed_when: false
+#- name: Check ttf-symbola package
+#  command: pacman -Qi ttf-symbola
+#  register: pacman_check
+#  changed_when: false
 
-- name: Install packages
-  command: yaourt -S ttf-symbola --noconfirm 
-  when: pacman_check.rc == 1
+#- debug:
+#    msg: "{{ pacman_check }}"
+
+#- name: Install packages
+#  command: pamac build ttf-symbola 
+#  command: yaourt -S ttf-symbola --noconfirm 
+#  when: pacman_check.get('rc', 0) == 1
 
 - name: spacemacs already installed?
   stat: path="{{ ansible_user_dir }}/.emacs.d/spacemacs.mk"
@@ -38,13 +42,19 @@
 - name: Copy .vault_pass.txt
   copy: src="files/.vault_pass.txt" dest="{{ ansible_user_dir }}"
 
+- name: Check desktop directory
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.local/share/applications/"
+  register: desktop_dir
+
 - name: Install desktop file
   template: src="emacsclient.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/emacsclient.desktop"
   register: result
+  when: desktop_dir.stat.exists == true
 
 - name: Refresh cache database of mime types handled by desktop files
   command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
-  when: result.changed
+  when: desktop_dir.stat.exists and result.changed
 
 - name: Update EDITOR
   lineinfile:
@@ -57,6 +67,6 @@
   service:
     enabled: yes
     name: emacs.service
-    # scope: user
-    user: yes
+    scope: user
+    # user: yes
 

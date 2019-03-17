@@ -4,12 +4,24 @@
 # ~/.bash_profile
 # ~/.xinitrc
 
-- name: Install antergos i3
+- name: Set specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+  - "{{ ansible_lsb.id }}.yml"
+
+- name: Install i3
   package:
     name: "{{ item }}"
     state: present
   become: yes
   with_items: "{{ i3_packages }}"
+
+- name: Install distribution specific i3
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items: "{{ i3_packages_distrib }}"
 
 - name: i3 config directories
   file:
