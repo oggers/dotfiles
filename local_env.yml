@@ -7,7 +7,7 @@
     - name: Load bizak-destop variables
       include_vars: vars/bizak-desktop.yml
       tags: bizak-desktop
-      
+
     - name: Load bizak-laptop variables
       include_vars: vars/bizak-laptop.yml
       tags: bizak-laptop
@@ -23,18 +23,18 @@
     tags: packages, home, bizak-desktop, bizak-laptop
   - role: bin
     tags: home, bizak-desktop, bizak-laptop
-  - role: oh_my_zsh
-    tags: bootstrap, home, bizak-desktop, bizak-laptop
+#  - role: oh_my_zsh
+#    tags: bootstrap, home, bizak-desktop, bizak-laptop
   - role: git
     tags: home, bizak-desktop, bizak-laptop
   - role: emacs
     tags: emacs, home, bizak-desktop, bizak-laptop
   # - role: apmplanner
   #   tags: apmplanner, home
-  - role: i3
-    tags: i3, home, bizak-desktop, bizak-laptop
-  - role: openbox
-    tags: openbox
+#  - role: i3
+#    tags: i3, home, bizak-desktop, bizak-laptop
+#  - role: openbox
+#    tags: openbox
 #     - git
 #     - {role: package_manager, tags: ['bootstrap']}
 #     - {role: zsh, tags: ['bootstrap']}

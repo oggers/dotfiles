@@ -9,7 +9,14 @@
   with_items:
     - emacs
     - powerline-fonts
+    - adobe-source-code-pro-fonts
 
+- name: Install ttf-symbola
+  aur:
+    name: "{{ item }}"
+    skip_installed: yes
+  with_items:
+    - ttf-symbola
 #- name: Check ttf-symbola package
 #  command: pacman -Qi ttf-symbola
 #  register: pacman_check

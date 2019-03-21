@@ -9,5 +9,7 @@ packages:
 - keepassxc
 - keepassx
 - kicad
+- firefox-i18n-es-es
+- python2-virtualenv
 aur_packages:
 - dropbox
