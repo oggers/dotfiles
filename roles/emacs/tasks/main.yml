@@ -17,6 +17,8 @@
     skip_installed: yes
   with_items:
     - ttf-symbola
+    - emacs-all-the-icons
+
 #- name: Check ttf-symbola package
 #  command: pacman -Qi ttf-symbola
 #  register: pacman_check

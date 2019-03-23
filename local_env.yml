@@ -16,8 +16,15 @@
       include_vars: vars/home.yml
       tags: home
 
+
 - name: Set up local development environment
   hosts: local
+  tasks:
+    - name: Swap ctrl caps
+      lineinfile:
+        path: ~/.xinitrc
+        line: "setxkbmap -option ctrl:swapcaps"
+      tags: home, bizak-desktop, bizak-laptop
   roles:
   - role: packages
     tags: packages, home, bizak-desktop, bizak-laptop
