@@ -12,5 +12,6 @@ packages:
 - firefox-i18n-es-es
 - python2-virtualenv
 - docker
+- tigervnc
 aur_packages:
 - dropbox
