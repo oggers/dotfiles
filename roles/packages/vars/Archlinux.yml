@@ -13,5 +13,6 @@ packages:
 - python2-virtualenv
 - docker
 - tigervnc
+- virtualbox
 aur_packages:
 - dropbox
