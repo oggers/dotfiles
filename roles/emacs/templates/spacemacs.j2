@@ -32,35 +32,34 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     haskell
-     typescript
-     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
      ansible
      auto-completion
      ;; better-defaults
+     clojure
      docker
      (elfeed :variables
              rmh-elfeed-org-files (list "~/.emacs.d/private/elfeed.org"))
      emacs-lisp
      git
+     helm
      html
      javascript
-     ;; markdown
+     markdown
      org
+     python
      ranger
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
             shell-default-position 'bottom)
-     python
      ;; spell-checking
      syntax-checking
+     typescript
      ;; version-control
      yaml
      )
