@@ -16,3 +16,4 @@ packages:
 - virtualbox
 aur_packages:
 - dropbox
+- slic3r
