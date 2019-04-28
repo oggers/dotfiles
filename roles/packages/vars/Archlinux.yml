@@ -9,6 +9,8 @@ packages:
 - keepassxc
 - keepassx
 - kicad
+- kicad-library
+- kicad-library-3d
 - firefox-i18n-es-es
 - python2-virtualenv
 - docker
