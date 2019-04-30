@@ -17,9 +17,8 @@
     skip_installed: yes
   with_items:
     - ttf-symbola
-    - emacs-all-the-icons
+    # - emacs-all-the-icons
     - nodejs-tern
-    # - ttf-material-design-icons-git  # conflicts with adobe-source-code-pro-fonts
 
 #- name: Check ttf-symbola package
 #  command: pacman -Qi ttf-symbola

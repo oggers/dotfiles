@@ -17,6 +17,7 @@ packages:
 - tigervnc
 - virtualbox
 - chromium
+- mc
 aur_packages:
 - dropbox
 - slic3r
