@@ -22,3 +22,8 @@
     skip_installed: true
   with_items:
   - "{{ aur_packages }}"
+
+- name: Configure setxkbmap
+  copy:
+    src: "files/swap_ctrl_caps.desktop"
+    dest: "~/config/autostart/"

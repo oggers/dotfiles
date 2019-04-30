@@ -18,6 +18,7 @@ packages:
 - virtualbox
 - chromium
 - mc
+- xorg-setxkbmap
 aur_packages:
 - dropbox
 - slic3r
