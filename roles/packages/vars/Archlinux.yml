@@ -19,6 +19,7 @@ packages:
 - chromium
 - mc
 - xorg-setxkbmap
+- simple-scan
 aur_packages:
 - dropbox
 - slic3r
