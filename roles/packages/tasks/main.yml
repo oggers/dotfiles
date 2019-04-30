@@ -26,4 +26,4 @@
 - name: Configure setxkbmap
   copy:
     src: "files/swap_ctrl_caps.desktop"
-    dest: "~/config/autostart/"
+    dest: "~/.config/autostart/"
