@@ -20,6 +20,8 @@ packages:
 - mc
 - xorg-setxkbmap
 - simple-scan
+- arduino
+- arduino-avr-core
 aur_packages:
 - dropbox
 - slic3r
