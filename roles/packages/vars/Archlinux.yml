@@ -23,7 +23,9 @@ packages:
 - arduino
 - arduino-avr-core
 - rsnapshot
+- openscad
 aur_packages:
 - dropbox
 - slic3r
 - modelio-bin
+- freecad
