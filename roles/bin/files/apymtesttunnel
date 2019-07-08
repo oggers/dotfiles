@@ -13,4 +13,6 @@ ssh -p 22222 oggers@apymtest.apanymantel.com \
     -L 38081:localhost:8081 `: client1` \
     -L 38082:localhost:8082 `: client2` \
     -L 39081:localhost:9081 `: client1` \
+    -L 39380:localhost:9380 `: airflow` \
+    -L 39999:localhost:9999 `: jupyter` \
     -N
