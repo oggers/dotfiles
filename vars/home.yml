@@ -41,6 +41,9 @@ ssh_config:
     - Host: apymtest.apanymantel.com
       hostname: apymtest.apanymantel.com
       port: 22222
+    - Host: apymtest2.apanymantel.com
+      hostname: apymtest2.apanymantel.com
+      port: 22222
     - Host: apym1.apanymantel.com
       hostname: apym1.apanymantel.com
       port: 22222
