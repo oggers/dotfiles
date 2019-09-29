@@ -443,8 +443,8 @@ you should place your code here."
   (add-hook 'python-mode-hook #'flycheck-virtualenv-setup)
 
   ;; Org
-  (when (file-exists-p "~/Dropbox/org")
-    (load-file "~/Dropbox/org/setup/my-org-mode.el"))
+  (when (file-exists-p "~/org")
+    (load-file "~/org/setup/my-org-mode.el"))
   )
 
 (setq custom-file "~/.emacs.d/custom.el")
