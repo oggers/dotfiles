@@ -27,3 +27,11 @@
   copy:
     src: "files/swap_ctrl_caps.desktop"
     dest: "~/.config/autostart/"
+
+- name: Update .bashrc
+  blockinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
