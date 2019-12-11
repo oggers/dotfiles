@@ -25,6 +25,7 @@ packages:
 - rsnapshot
 - openscad
 - pyenv
+- yarn
 aur_packages:
 - dropbox
 - slic3r
