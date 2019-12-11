@@ -43,8 +43,10 @@
   when: spacemacs.stat.exists == False
   tags: bootstrap
 
-- name: Copy .spacemacs
-  template: src="spacemacs.j2" dest="{{ ansible_user_dir }}/.spacemacs"
+- name: Clone .spacemacs.d
+  git:
+    repo: git@gitlab.com:oggers/spacemacs.d.git
+    dest: "{{ ansible_user_dir }}/.spacemacs.d
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"
