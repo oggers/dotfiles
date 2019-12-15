@@ -25,6 +25,7 @@ packages:
 - rsnapshot
 - openscad
 - pyenv
+- pyenv-virtualenv
 - yarn
 aur_packages:
 - dropbox
