@@ -64,16 +64,20 @@
   register: result
   when: desktop_dir.stat.exists == true
 
+- name: Install org-protocol desktop file
+  template: src="org-protocol.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/org-protocol.desktop"
+  register: result_org_protocol
+  when: desktop_dir.stat.exists == true
+
 - name: Refresh cache database of mime types handled by desktop files
   command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
-  when: desktop_dir.stat.exists and result.changed
+  when: desktop_dir.stat.exists and (result.changed or result_org_protocol.changed)
 
 - name: Update EDITOR
   lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^EDITOR='
     line: 'EDITOR="emacsclient -c"'
-
 
 - name: Enable systemd
   service:
