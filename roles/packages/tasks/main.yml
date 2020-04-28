@@ -30,7 +30,7 @@
 
 - name: Update .bashrc
   blockinfile:
-    dest: "{{ ansible_env.HOME }}/.bashrc
+    path: "{{ ansible_env.HOME }}/.bashrc"
     block: |
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$PATH"

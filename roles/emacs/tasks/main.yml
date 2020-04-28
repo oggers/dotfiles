@@ -9,7 +9,7 @@
   with_items:
     - emacs
     - powerline-fonts
-    - adobe-source-code-pro-fonts
+    # - adobe-source-code-pro-fonts
 
 - name: Install ttf-symbola
   aur:
@@ -46,7 +46,7 @@
 - name: Clone .spacemacs.d
   git:
     repo: git@gitlab.com:oggers/spacemacs.d.git
-    dest: "{{ ansible_user_dir }}/.spacemacs.d
+    dest: "{{ ansible_user_dir }}/.spacemacs.d"
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"
