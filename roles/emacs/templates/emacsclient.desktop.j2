@@ -5,9 +5,10 @@ Name=Emacsclient
 GenericName=Text Editor
 Comment=View and edit files
 MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-Exec=/usr/bin/env XLIB_SKIP_ARGB_VISUALS=1 /usr/sbin/emacsclient --alternate-editor="" -c %F
+#Exec=/usr/bin/env XLIB_SKIP_ARGB_VISUALS=1 /usr/sbin/emacsclient --alternate-editor="" -c %F
+Exec=/usr/sbin/emacsclient --alternate-editor="" -c %F
 TryExec=emacsclient
-Icon=/usr/share/icons/Numix-Square/48/apps/emacs.svg
+Icon=/usr/share/icons/hicolor/scalable/apps/emacs.svg
 Type=Application
 Terminal=false
 StartupWMClass=emacs
@@ -17,5 +18,6 @@ Actions=Sudo;
 X-Desktop-File-Install-Version=0.22
 
 [Desktop Action Sudo]
-Exec=gksudo “/usr/bin/env XLIB_SKIP_ARGB_VISUALS=1 /usr/sbin/emacsclient --alternate-editor="" -c --socket-name /tmp/emacs1000/server %F”
+#Exec=gksudo “/usr/bin/env XLIB_SKIP_ARGB_VISUALS=1 /usr/sbin/emacsclient --alternate-editor="" -c --socket-name /tmp/emacs1000/server %F”
+Exec=gksudo “/usr/sbin/emacsclient --alternate-editor="" -c --socket-name /tmp/emacs1000/server %F”
 Name=sudo Emacsclient
