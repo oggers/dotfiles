@@ -10,6 +10,7 @@
     - emacs
     - powerline-fonts
     # - adobe-source-code-pro-fonts
+    - the_silver_searcher
 
 - name: Install ttf-symbola
   aur:

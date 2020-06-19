@@ -19,6 +19,7 @@ packages:
 - prusa-slicer
 - pyenv
 - pyenv-virtualenv
+- python-docker
 - python2-virtualenv
 - rsnapshot
 - simple-scan
