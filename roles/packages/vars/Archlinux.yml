@@ -1,36 +1,39 @@
 ---
 packages:
-- arduino
-- arduino-avr-core
-- chromium
-- curl
-- docker
-- firefox-i18n-es-es
-- keepassx
-- keepassxc
-- kicad
-- kicad-library
-- kicad-library-3d
-- mc
-#- nodejs
-- npm
-- obs-studio
-- openscad
-- prusa-slicer
-- pyenv
-- pyenv-virtualenv
-- python-docker
-- python2-virtualenv
-- rsnapshot
-- simple-scan
-- tigervnc
-- virtualbox
-- wget
-- xorg-setxkbmap
-- yarn
-- yay
-- youtube-dl
+  - chromium
+  - curl
+  - docker
+  - fakeroot
+  - firefox-i18n-es-es
+  - freecad
+  - freerdp
+  - guvcview
+  - keepassxc
+  - kicad
+  - kicad-library
+  - kicad-library-3d
+  - libvncserver
+  - mc
+  #- nodejs
+  #- npm
+  - obs-studio
+  - openscad
+  - prusa-slicer
+  - pyenv
+  - python-docker
+#  - python2-virtualenv
+  - remmina
+  - rsnapshot
+  - simple-scan
+  - tigervnc
+  - virtualbox
+  - wget
+#  - xorg-setxkbmap
+  - yarn
+  - yay
+  - youtube-dl
 aur_packages:
-- dropbox
-- freecad
-- modelio-bin
+  - gstm
+  - pyenv-virtualenv
+#  - dropbox
+#  - modelio-bin

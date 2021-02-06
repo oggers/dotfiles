@@ -1,0 +1,18 @@
+---
+# file: roles/syncthing/tasks/main.yml
+
+- name: Set linux distribution specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install syncthing and dependency packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - "{{ packages }}"
+

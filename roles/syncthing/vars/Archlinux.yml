@@ -1,0 +1,5 @@
+---
+packages:
+  - syncthing
+  - syncthing-gtk
+

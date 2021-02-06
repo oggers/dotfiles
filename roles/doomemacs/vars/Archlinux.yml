@@ -1,0 +1,7 @@
+---
+packages:
+  - emacs
+  - ripgrep
+  - fd
+  - shellcheck
+  - cmake  # needed to compile vterm-module

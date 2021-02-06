@@ -1,0 +1,78 @@
+---
+# file: roles/doomemacs/tasks/main.yml
+
+- name: Set linux distribution specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install emacs and dependency packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - "{{ packages }}"
+
+- name: doom already installed?
+  stat: path="{{ ansible_user_dir }}/.config/doom"
+  register: result_doom_installed
+  tags: bootstrap
+
+- name: Clone Doom repository
+  git: repo="{{ doom_repository }}" dest="{{ ansible_user_dir }}/.config/emacs" depth=1
+  when: result_doom_installed.stat.exists == False
+  tags: bootstrap
+
+- name: Clone doom
+  git:
+    repo: git@gitlab.com:oggers/doom.git
+    dest: "{{ ansible_user_dir }}/.config/doom"
+  register: result_clone_doom
+
+- name: Install doom
+  command: "{{ ansible_user_dir }}/.config/emacs/bin/doom --yes install"
+  when: result_doom_installed.stat.exists == False
+  
+- name: Sync doom
+  command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
+  when: result_clone_doom,changed
+  
+- name: Create desktop directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.local/share/applications"
+    state: directory
+
+- name: Install doomemacs desktop file
+  template: src="doomemacs.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/doomemacs.desktop"
+  register: result_doom_emacs
+
+- name: Install org-protocol desktop file
+  template: src="org-protocol.desktop.j2" dest="{{ lookup('env', 'HOME') }}/.local/share/applications/org-protocol.desktop"
+  register: result_org_protocol
+
+- name: Refresh cache database of mime types handled by desktop files
+  command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
+  when: result_doom_emacs.changed or result_org_protocol.changed
+
+- name: Update EDITOR
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^EDITOR='
+    line: 'EDITOR="emacs"'
+
+- name: ~./emacs and ~/.emacs.d not present
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ansible_user_dir }}/.emacs"
+    - "{{ ansible_user_dir }}/.emacs.d"
+
+- name: link org directory
+  file:
+    src: "{{ ansible_user_dir }}/Sync/org"
+    dest: "{{ ansible_user_dir}}/org"
+    state: link

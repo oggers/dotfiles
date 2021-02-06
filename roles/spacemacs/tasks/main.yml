@@ -1,5 +1,5 @@
 ---
-# file: roles/emacs/tasks/main.yml
+# file: roles/spacemacs/tasks/main.yml
 
 - name: Install emacs
   package:
@@ -51,9 +51,6 @@
 
 - name: Copy .emacs.d/private
   copy: src="files/emacs.d/private" dest="{{ ansible_user_dir }}/.emacs.d/"
-
-- name: Copy .vault_pass.txt
-  copy: src="files/.vault_pass.txt" dest="{{ ansible_user_dir }}"
 
 - name: Check desktop directory
   stat:

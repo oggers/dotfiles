@@ -16,49 +16,31 @@
       include_vars: vars/home.yml
       tags: home
 
+    - name: Copy .vault_pass.txt
+      copy: src="files/.vault_pass.txt" dest="{{ ansible_user_dir }}"
+
 
 - name: Set up local development environment
   hosts: local
   tasks:
-    - name: Set trim for SSD
-      systemd:
-        name: fstrim.timer
-        enabled: yes
-      become: yes
-      tags: home, bizak-desktop, bizak-laptop
+#    - name: Set trim for SSD
+#      systemd:
+#        name: fstrim.timer
+#        enabled: yes
+#      become: yes
+#      tags: home, bizak-desktop, bizak-laptop
 
   roles:
-  - role: packages
-    tags: packages, home, bizak-desktop, bizak-laptop
-  - role: bin
-    tags: home, bizak-desktop, bizak-laptop
-#  - role: oh_my_zsh
-#    tags: bootstrap, home, bizak-desktop, bizak-laptop
-  - role: git
-    tags: home, bizak-desktop, bizak-laptop
-  - role: emacs
-    tags: emacs, home, bizak-desktop, bizak-laptop
-  # - role: apmplanner
-  #   tags: apmplanner, home
-#  - role: i3
-#    tags: i3, home, bizak-desktop, bizak-laptop
-#  - role: openbox
-#    tags: openbox
-#     - git
-#     - {role: package_manager, tags: ['bootstrap']}
-#     - {role: zsh, tags: ['bootstrap']}
-#     - vim
-#     - python
-#     - node
-#     - ruby
-#     - hub
-#     - zsh-autoenv
-#     - rg
-#     - exa
-#     - ccat
-#     - tmux
-#     - git-flow
-#     - fzf
-#     - kubernetes
-#     - jrnl
-# - {role: macos, when: ansible_os_family == "Darwin"}
+    - role: git
+      tags: home, bizak-desktop, bizak-laptop
+    - role: packages
+      tags: packages, home, bizak-desktop, bizak-laptop
+#    - role: bin
+#      tags: home, bizak-desktop, bizak-laptop
+#    - role: spacemacs
+#      tags: emacs, home, bizak-desktop, bizak-laptop
+    - role: doomemacs
+      tags: emacs, home, bizak-desktop, bizak-laptop
+    - role: syncthing
+      tags: home, bizak-desktop, bizak-laptop
+

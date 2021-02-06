@@ -1,0 +1,3 @@
+---
+# file: roles/doomemacs/default/main.yml
+doom_repository: "https://github.com/hlissner/doom-emacs"
