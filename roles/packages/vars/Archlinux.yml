@@ -3,6 +3,7 @@ packages:
   - chromium
   - curl
   - docker
+  - docker-compose
   - fakeroot
   - firefox-i18n-es-es
   - freecad
