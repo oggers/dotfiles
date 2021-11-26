@@ -1,13 +1,6 @@
 ---
 # file: roles/packages/tasks/main.yml
 
-- name: Set specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-
 - name: Install packages
   package:
     name: "{{ item }}"
@@ -16,17 +9,17 @@
     - "{{ packages }}"
   become: true
 
-- name: Install aur packages
-  aur:
-    name: "{{ item }}"
-  with_items: "{{ aur_packages }}"
-  when: aur_packages
+#- name: Install aur packages
+#  aur:
+#    name: "{{ item }}"
+#  with_items: "{{ aur_packages }}"
+#  when: aur_packages
 
-- name: Update .bashrc
-  blockinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
-    block: |
-      export PYENV_ROOT="$HOME/.pyenv"
-      export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
-      eval "$(pyenv virtualenv-init -)"
+#- name: Update .bashrc
+#  blockinfile:
+#    path: "{{ ansible_env.HOME }}/.bashrc"
+#    block: |
+#      export PYENV_ROOT="$HOME/.pyenv"
+#      export PATH="$PYENV_ROOT/bin:$PATH"
+#      eval "$(pyenv init -)"
+#      eval "$(pyenv virtualenv-init -)"

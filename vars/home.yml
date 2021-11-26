@@ -1,40 +1,10 @@
 ---
 # file: vars/home.yml
 
-i3_workspaces:
-  - name: "1: Firefox "
-    output: primary
-    assign:
-      - class: "Firefox"
-    gaps: {'inner': 0, 'outer': 0}
-  - name: "2: Emacs "
-    output: primary
-    assign:
-      - class: "Emacs"
-  - name: 3
-  - name: "4: Virtualbox "
-    assign:
-      - class: "VirtualBox"
-    output: primary
-    gaps: {'inner': 0, 'outer': 0}
-  - name: 5
-  - name: 6
-  - name: 7
-  - name: 8
-  - name: 9
-  - name: 10
-
-i3_autostart:
-  - command: "dropbox start"
-    no_startup_id: yes
-
-i3_battery: yes
-
-i3_numlock_on: yes
-
-openbox_autostart:
-  - "dropbox start &"
-
+packages:
+  - curl
+  - keepassxc
+  - youtube-dl
 
 ssh_config:
   config:

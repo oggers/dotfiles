@@ -1,7 +1,5 @@
 - name: Collecting Facts
   hosts: local
-  gather_facts: yes
-  become: yes
   #vars_files: "encrypted.yml"
   pre_tasks:
     - name: Load bizak-destop variables
@@ -20,8 +18,6 @@
       copy: src="files/.vault_pass.txt" dest="{{ ansible_user_dir }}"
 
 
-- name: Set up local development environment
-  hosts: local
   tasks:
 #    - name: Set trim for SSD
 #      systemd:
@@ -39,8 +35,8 @@
 #      tags: home, bizak-desktop, bizak-laptop
 #    - role: spacemacs
 #      tags: emacs, home, bizak-desktop, bizak-laptop
-    - role: doomemacs
-      tags: emacs, home, bizak-desktop, bizak-laptop
-    - role: syncthing
-      tags: home, bizak-desktop, bizak-laptop
+#    - role: doomemacs
+#      tags: emacs, home, bizak-desktop, bizak-laptop
+#    - role: syncthing
+#      tags: home, bizak-desktop, bizak-laptop
 
