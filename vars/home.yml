@@ -1,11 +1,6 @@
 ---
 # file: vars/home.yml
 
-packages:
-  - curl
-  - keepassxc
-  - youtube-dl
-
 ssh_config:
   config:
     - Host: apymtest.apanymantel.com

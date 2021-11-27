@@ -1,0 +1,21 @@
+---
+# file: roles/pyenv/tasks/main.yml
+
+- name: Install pyenv package
+  package:
+    name: pyenv
+    state: latest
+  become: true
+
+- name: Install pyenv-virtualenv
+  aur:
+    name: pyenv-virtualenv
+
+- name: Update .bashrc
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"

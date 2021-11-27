@@ -1,4 +1,0 @@
-* Blogs :elfeed:
-** https://cointelegraph.com/rss                           :cryptocurrencies:
-** Emacs
-*** http://planet.emacs-es.org/rss20.xml

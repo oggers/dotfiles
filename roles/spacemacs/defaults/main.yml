@@ -1,4 +1,0 @@
----
-# file: roles/spacemacs/default/main.yml
-spacemacs_repository: "https://github.com/syl20bnr/spacemacs.git"
-spacemacs_branch: master

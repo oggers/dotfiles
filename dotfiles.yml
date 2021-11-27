@@ -33,10 +33,10 @@
       tags: packages, home, bizak-desktop, bizak-laptop
 #    - role: bin
 #      tags: home, bizak-desktop, bizak-laptop
-#    - role: spacemacs
-#      tags: emacs, home, bizak-desktop, bizak-laptop
-#    - role: doomemacs
-#      tags: emacs, home, bizak-desktop, bizak-laptop
+    - role: syncthing
+      tags: home, bizak-desktop, bizak-laptop
+    - role: doomemacs
+      tags: emacs, home, bizak-desktop, bizak-laptop
 #    - role: syncthing
 #      tags: home, bizak-desktop, bizak-laptop
 

@@ -16,7 +16,7 @@
   with_items:
     - "{{ packages }}"
 
-- name: doom already installed?
+- name: oggers-doom already installed?
   stat: path="{{ ansible_user_dir }}/.config/doom"
   register: result_doom_installed
   tags: bootstrap
@@ -26,9 +26,9 @@
   when: result_doom_installed.stat.exists == False
   tags: bootstrap
 
-- name: Clone doom
+- name: Clone/Update oggers-doom
   git:
-    repo: git@gitlab.com:oggers/doom.git
+    repo: https://gitlab.com/oggers/doom.git
     dest: "{{ ansible_user_dir }}/.config/doom"
   register: result_clone_doom
 
@@ -38,7 +38,7 @@
   
 - name: Sync doom
   command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
-  when: result_clone_doom,changed
+  when: result_clone_doom.changed
   
 - name: Create desktop directory
   file:
@@ -61,7 +61,7 @@
   lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^EDITOR='
-    line: 'EDITOR="emacs"'
+    line: 'EDITOR="emacs"  # ansible_managed'
 
 - name: ~./emacs and ~/.emacs.d not present
   file:
@@ -75,4 +75,5 @@
   file:
     src: "{{ ansible_user_dir }}/Sync/org"
     dest: "{{ ansible_user_dir}}/org"
+    force: yes
     state: link

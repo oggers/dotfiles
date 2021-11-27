@@ -1,5 +1,0 @@
----
-# file: roles/oh_my_zsh/defaults/main.yml
-oh_my_zsh_repository: "git://github.com/robbyrussell/oh-my-zsh.git"
-oh_my_zsh_paths:
-- '$HOME/bin'
