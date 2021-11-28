@@ -1,5 +1,6 @@
 ---
 packages:
   - syncthing
-  - syncthing-gtk
 
+aur_packages:
+  - syncthing-gtk-python3

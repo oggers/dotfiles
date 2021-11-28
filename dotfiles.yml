@@ -19,12 +19,11 @@
 
 
   tasks:
-#    - name: Set trim for SSD
-#      systemd:
-#        name: fstrim.timer
-#        enabled: yes
-#      become: yes
-#      tags: home, bizak-desktop, bizak-laptop
+    - name: Set ssh config
+      template:
+        src: templates/ssh_config.j2
+        dest: "{{ ansible_user_dir }}/.ssh/config"
+      tags: always
 
   roles:
     - role: git

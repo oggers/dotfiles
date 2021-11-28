@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+AddKeysToAgent yes
+{% for h in ssh_config.config %}
+{%   for key, value in h.items() %}
+{%     if key|lower == "host" %}
+
+Host {{ value|e }}
+{%     endif %}
+{%     if key|lower != "host" %}
+  {{ key|e }} {{ value|e }}
+{%     endif %}
+{%   endfor %}
+{% endfor %}

@@ -1,6 +1,13 @@
 ---
 # file: roles/packages/tasks/main.yml
 
+- name: Set specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
 - name: Install packages
   package:
     name: "{{ item }}"
@@ -9,11 +16,11 @@
     - "{{ packages }}"
   become: true
 
-#- name: Install aur packages
-#  aur:
-#    name: "{{ item }}"
-#  with_items: "{{ aur_packages }}"
-#  when: aur_packages
+- name: Install aur packages
+  aur:
+    name: "{{ item }}"
+  with_items: "{{ aur_packages }}"
+  when: aur_packages
 
 #- name: Update .bashrc
 #  blockinfile:

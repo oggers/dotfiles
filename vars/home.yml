@@ -3,15 +3,15 @@
 
 ssh_config:
   config:
-    - Host: apymtest.apanymantel.com
-      hostname: apymtest.apanymantel.com
-      port: 22222
-    - Host: apymtest2.apanymantel.com
+    - host: apymtest2
       hostname: apymtest2.apanymantel.com
       port: 22222
-    - Host: apym1.apanymantel.com
-      hostname: apym1.apanymantel.com
+    - host: apym3
+      hostname: apym3.apanymantel.com
       port: 22222
-    - Host: vps.oggers.com.es
+    - host: vps.oggers.com.es
       hostname: vps.oggers.com.es
       port: 22222
+    - host: bitbucket.org
+      HostkeyAlgorithms: +ssh-rsa
+      PubkeyAcceptedAlgorithms: +ssh-rsa

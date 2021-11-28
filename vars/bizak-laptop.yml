@@ -1,70 +1,46 @@
 ---
 # file: vars/bizak-laptop.yml
 
-i3_workspaces:
-  - name: "1: Firefox-oggers "
-    output: primary
-    assign:
-      - class: "Firefox-oggers"
-    gaps: {'inner': 0, 'outer': 0}
-  - name: "2: Emacs "
-    output: primary
-    assign:
-      - class: "Emacs"
-  - name: 3
-  - name: "4: Virtualbox "
-    assign:
-      - class: "VirtualBox"
-    output: primary
-    gaps: {'inner': 0, 'outer': 0}
-  - name: 5
-  - name: 6
-  - name: 7
-  - name: 8
-  - name: "9: Firefox-jcn "
-    output: primary
-    assign:
-      - class: "Firefox-jcn"
-    gaps: {'inner': 0, 'outer': 0}
-  - name: 10
-
-i3_autostart:
-  - command: "dropbox start"
-    no_startup_id: yes
-
-i3_battery: yes
-
 ssh_config:
   config:
-    - Host: luna.local.zabik
+    - host: luna.local.zabik
       hostname: luna.local.zabik
-    - Host: srvdatamart.local.zabik
+      user: jcn
+    - host: srvdatamart.local.zabik
       hostname: srvdatamart.local.zabik
-    - Host: srvedi.local.zabik
+      user: jcn
+    - host: srvedi.local.zabik
       hostname: srvedi.local.zabik
-    - Host: mediacenter.local.zabik
+      user: jcn
+    - host: mediacenter.local.zabik
       hostname: mediacenter.local.zabik
-      user: root
+      user: jcn
+      remote_user: root
       # password: libreelec
-    - Host: www.bizak.es
+    - host: www.bizak.es
       hostname: ec2-35-180-183-246.eu-west-3.compute.amazonaws.com
       port: 22222
-      user: ubuntu
-      identityfile: ~/.ssh/BizakWebSite.pem
-    - Host: www.tiendabizak.es
+      user: jcn
+      remote_user: ubuntu
+      identity_file: ~/.ssh/BizakWebSite.pem
+    - host: www.tiendabizak.es
       hostname: ec2-35-180-167-222.eu-west-3.compute.amazonaws.com
       port: 22222
-      user: ubuntu
-      identityfile: ~/.ssh/BizakEcommerceSite.pem
-    - Host: ftp.bizak.es
+      user: jcn
+      remote_user: ubuntu
+      identity_file: ~/.ssh/BizakEcommerceSite.pem
+    - host: ftp.bizak.es
       hostname: ks26944.kimsufi.com
       port: 22222
       user: jcn
-    - Host: vps63405.ovh.net
+      remote_user: jcn
+    - host: vps63405.ovh.net
       hostname: vps63405.ovh.net
       port: 22222
       user: jcn
-    - Host: www.bizak.es_old
+      remote_user: jcn
+    - host: www.bizak.es_old
       hostname: vps67550.ovh.net
       port: 22222
       user: jcn
+      remote_user: jcn

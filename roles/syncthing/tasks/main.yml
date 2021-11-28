@@ -16,3 +16,8 @@
   with_items:
     - "{{ packages }}"
 
+- name: Install aur packages
+  aur:
+    name: "{{ item }}"
+  with_items: "{{ aur_packages }}"
+  when: aur_packages
