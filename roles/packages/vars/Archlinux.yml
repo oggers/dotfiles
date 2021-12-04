@@ -2,8 +2,6 @@
 packages:
   - chromium
   - curl
-  - docker
-  - docker-compose
   - fakeroot
   - firefox-i18n-es-es
   - freecad
@@ -20,8 +18,6 @@ packages:
   - obs-studio
   - openscad
   - prusa-slicer
-  - pyenv
-  - python-docker
 #  - python2-virtualenv
   - remmina
   - rsnapshot
