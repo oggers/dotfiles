@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+[Desktop Entry]
+Version=1.0
+Name=pgAdmin4
+GenericName=pgadmin4
+Comment=postgresql manager
+Exec={{ pyenv_root.stdout }}/versions/pgadmin4/bin/pgadmin4_desktop_mode
+#Icon=
+Type=Application
+Terminal=false
+StartupWMClass=pgadmin4
+Categories=Utility;Development;Database;
+
+X-Desktop-File-Install-Version=0.22

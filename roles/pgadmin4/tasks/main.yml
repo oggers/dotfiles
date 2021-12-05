@@ -1,0 +1,52 @@
+---
+# file: roles/pgadmin4/tasks/main.yml
+- name: Check pgadmin4 virtualenv
+  stat:
+    path: "{{ ansible_user_dir }}/bin/pgadmin4"
+  register: virtualenv_dir
+
+- name: Create virtualenv directory
+  file:
+    path: "{{ ansible_user_dir }}/bin/pgadmin4"
+    state: directory
+  when: not virtualenv_dir.stat.exists
+
+- name: Check python version installed with pyenv
+  command: "pyenv versions"
+  register: python_version
+  changed_when: False
+
+- name: Install pyenv python
+  command: "pyenv install {{ pgadmin4_python_version }}"
+  when: "pgadmin4_python_version not in python_version.stdout_lines | map('trim') | list"
+
+- name: Check virtualenv version installed with pyenv
+  command: "pyenv virtualenvs"
+  register: python_virtualenvs
+  changed_when: False
+
+- name: Install virtualenv
+  command: "pyenv virtualenv {{ pgadmin4_python_version }} pgadmin4"
+  when: "'pgadmin4' not in python_virtualenvs.stdout"
+
+- name: Check pip pgadmin4 package
+  shell:
+    cmd: "$(pyenv root)/versions/pgadmin4/bin/pip list --disable-pip-version-check | grep pgadmin4_desktop_mode"
+  register: pip_packages
+  changed_when: False
+
+- name: Install pip pgadmin4 package
+  command: "$(pyenv root)/versions/pgadmin4/bin/pip install pgadmin4_desktop_mode"
+  when: "'pgadmin4_desktop_mode' not in pip_packages.stdout"
+
+- name: Get pyenv root
+  command: "pyenv root"
+  register: pyenv_root
+
+- name: Install pgadmin4 desktop file
+  template: src="pgadmin4.desktop.j2" dest="{{ ansible_user_dir }}/.local/share/applications/pgadmin4.desktop"
+  register: result_pgadmin4_desktop
+
+- name: Refresh cache database of mime types handled by desktop files
+  command: update-desktop-database "{{ ansible_user_dir }}/.local/share/applications"
+  when: result_pgadmin4_desktop.changed

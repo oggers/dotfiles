@@ -1,0 +1,4 @@
+---
+# file: roles/pgadmin4/default/main.yml
+
+pgadmin4_python_version: "3.9.7"

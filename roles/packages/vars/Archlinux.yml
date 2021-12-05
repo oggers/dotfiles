@@ -13,7 +13,7 @@ packages:
   - kicad-library-3d
   - libvncserver
   - mc
-  #- nodejs
+  - nodejs-lts-fermium
   #- npm
   - obs-studio
   - openscad
