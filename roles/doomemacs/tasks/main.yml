@@ -73,7 +73,10 @@
 
 - name: link org directory
   file:
-    src: "{{ ansible_user_dir }}/Sync/org"
-    dest: "{{ ansible_user_dir}}/org"
+    src: "{{ ansible_user_dir }}/Sync/{{ item }}"
+    dest: "{{ ansible_user_dir}}/{{ item }}"
     force: yes
     state: link
+  with_items:
+    - org
+    - org-roam
