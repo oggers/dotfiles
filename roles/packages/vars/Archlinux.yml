@@ -1,5 +1,6 @@
 ---
 packages:
+  - calibre
   - chromium
   - curl
   - fakeroot
