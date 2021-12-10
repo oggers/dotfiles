@@ -5,3 +5,6 @@ packages:
   - fd
   - shellcheck
   - cmake  # needed to compile vterm-module
+  - texlive-bin
+  - texlive-core
+  - texlive-science
