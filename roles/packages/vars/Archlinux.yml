@@ -12,6 +12,7 @@ packages:
   - kicad
   - kicad-library
   - kicad-library-3d
+  - libreoffice-still
   - libvncserver
   - mc
   - nodejs-lts-fermium
@@ -24,6 +25,7 @@ packages:
   - rsnapshot
   - simple-scan
   - tigervnc
+  - transmission-gtk
   - virtualbox
   - wget
 #  - xorg-setxkbmap
