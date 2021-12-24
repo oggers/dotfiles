@@ -35,7 +35,7 @@ packages:
   - youtube-dl
 aur_packages:
   - gstm
-  - megasync
+  - megasync-bin
   - pyenv-virtualenv
 #  - dropbox
 #  - modelio-bin
