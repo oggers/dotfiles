@@ -13,6 +13,7 @@ packages:
   - kicad-library
   - kicad-library-3d
   - libreoffice-still
+  - libreoffice-still-es
   - libvncserver
   - mc
   - nodejs-lts-fermium
