@@ -1,0 +1,7 @@
+qtile_packages:
+- qtile
+- compton
+- rofi
+- volumeicon
+- cbatticon
+- lsd

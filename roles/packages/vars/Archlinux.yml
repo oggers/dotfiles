@@ -22,6 +22,7 @@ packages:
   - openscad
   - prusa-slicer
 #  - python2-virtualenv
+  - python-jmespath
   - rclone
   - remmina
   - rsnapshot

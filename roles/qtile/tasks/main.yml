@@ -1,0 +1,22 @@
+---
+# roles/qtile/tasks/main.yml
+- name: Install qtile and dependencies
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - "{{ qtile_packages }}"
+
+- name: Create qtile config dir
+  file:
+    path: "{{ ansible_user_dir }}/.config/qtile"
+    state: directory
+
+- name: Copy config.py
+  copy:
+    src: "files/{{ item }}"
+    dest: "{{ ansible_user_dir }}/.config/qtile/{{ item }}"
+  with_items:
+  - config.py
+  - autostart.sh
