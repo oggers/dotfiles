@@ -5,3 +5,5 @@ qtile_packages:
 - volumeicon
 - cbatticon
 - lsd
+- python-dbus-next
+- ttf-nerd-fonts-symbols

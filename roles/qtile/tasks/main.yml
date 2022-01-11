@@ -8,15 +8,18 @@
   with_items:
     - "{{ qtile_packages }}"
 
-- name: Create qtile config dir
-  file:
-    path: "{{ ansible_user_dir }}/.config/qtile"
-    state: directory
-
 - name: Copy config.py
   copy:
-    src: "files/{{ item }}"
-    dest: "{{ ansible_user_dir }}/.config/qtile/{{ item }}"
-  with_items:
-  - config.py
-  - autostart.sh
+    src: "files/config.py"
+    dest: "{{ ansible_user_dir }}/.config/qtile"
+
+- name: Copy autostart
+  copy:
+    src: "files/autostart.sh"
+    dest: "{{ ansible_user_dir }}/.config/qtile/"
+    mode: 0755
+
+- name: Config rofi
+  copy:
+    src: "files/config.rasi"
+    dest: "{{ ansible_user_dir }}/.config/rofi/"

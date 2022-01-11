@@ -27,7 +27,6 @@
 
 # Cosas que faltan
 # notificación cuando la batería está baja
-# notificaciones en general dunst
 # capturador de pantalla
 
 
@@ -110,17 +109,24 @@ keys = [
     Key([mod, "shift"], "e", lazy.to_screen(0)), 
 ]
 
-groups = [Group(i) for i in "123456789"]
 
-for i in groups:
+# https://www.nerdfonts.com
+#  nf-linux-archlinux
+#  nf-mdi-email
+#  nf-fa-firefox
+#  nf-oct-terminal
+#  nf-dev-windows
+groups = [Group(i) for i in ["1  ", "2  ", "3  ", "4  ", "5  ", "6", "7", "8", "9"]]
+
+for i, group in enumerate(groups, 1):
     keys.extend([
         # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+        Key([mod], str(i), lazy.group[group.name].toscreen(),
+            desc="Switch to group {}".format(group.name)),
 
         # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name)),
+        Key([mod, "shift"], str(i), lazy.window.togroup(group.name, switch_group=True),
+            desc="Switch to & move focused window to group {}".format(group.name)),
         # Or, use below if you prefer not to switch to that group.
         # # mod1 + shift + letter of group = move focused window to group
         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
@@ -129,7 +135,7 @@ for i in groups:
 
 layouts = [
     layout.Columns(
-        margin=6,
+        margin=3,
         border_focus_stack=['#d75f5f', '#8f3d3d'], border_width=4),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
@@ -148,7 +154,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='sans',
+    font='Noto Sans Regular',
+    #font='sans',
     fontsize=12,
     padding=3,
 )
@@ -158,8 +165,13 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
+                widget.CurrentLayoutIcon(),
                 widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    disable_drag=True,
+                    other_current_screen_border="#44475a",
+                    other_screen_border="#44475a",
+                ),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
@@ -182,8 +194,13 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
+                widget.CurrentLayoutIcon(),
                 widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    disable_drag=True,
+                    other_current_screen_border="#44475a",
+                    other_screen_border="#44475a",
+                ),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(

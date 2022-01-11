@@ -57,6 +57,10 @@
   command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
   when: result_doom_emacs.changed or result_org_protocol.changed
 
+- name: Refresh org-protocol handler
+  command: xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+  when: result_org_protocol.changed
+
 - name: Update EDITOR
   lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"

@@ -42,4 +42,5 @@
       tags: emacs, home, bizak-desktop, bizak-laptop
 #    - role: syncthing
 #      tags: home, bizak-desktop, bizak-laptop
-
+    - role: qtile
+      tags: qtile, home
