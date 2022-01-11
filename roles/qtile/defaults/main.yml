@@ -7,3 +7,4 @@ qtile_packages:
 - lsd
 - python-dbus-next
 - ttf-nerd-fonts-symbols
+- autorandr
