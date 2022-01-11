@@ -245,6 +245,8 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
+    Match(wm_class='polkit-gnome-authentication-agent-1'),  # Gnome
+    Match(wm_class='forticlient'),  # forticlient
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
