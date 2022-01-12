@@ -1,10 +1,6 @@
 #!/bin/sh
 
-monitors=`xrandr --listmonitors | grep "+" | awk {'print $4'} | wc -l`
-if [ $monitors -eq "2" ]; then
-    xrandr --output eDP --auto --output HDMI-A-0 --auto --left-of eDP
-fi
-
+xrandr --output eDP --auto --output HDMI-A-0 --auto --left-of eDP
 nm-applet &
 volumeicon &
 picom &
