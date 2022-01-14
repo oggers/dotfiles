@@ -254,7 +254,7 @@ def init_widgets_list():
         ),
         widget.CheckUpdates(
             update_interval = 1800,
-            distro = "Manjaro",
+            distro = "Arch_checkupdates",
             display_format = "Updates: {updates} ",
             no_update_string = '',
             foreground = colors[1],
@@ -289,9 +289,9 @@ def init_widgets_list():
             foreground = colors[1],
             background = colors[7],
             #emoji = True,
-            fontsize = 20,
-            #fmt = 'Vol: {}',
-            theme_path='/usr/share/icons/Papirus/24x24/status/',
+            fontsize = 12,
+            fmt = 'Vol: {}',
+            #theme_path='/usr/share/icons/Papirus/24x24/status/',
             mouse_callbacks={
                 'Button2': lambda : qtile.cmd_spawn('pavucontrol')},
             padding = 5
