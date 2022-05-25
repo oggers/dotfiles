@@ -34,8 +34,8 @@
       tags: home, bizak-desktop, bizak-laptop
     - role: docker
       tags: home, bizak-desktop, bizak-laptop
-    - role: pgadmin4
-      tags: home, bizak-desktop, bizak-laptop, pgadmin4
+#    - role: pgadmin4
+#      tags: home, bizak-desktop, bizak-laptop, pgadmin4
     - role: syncthing
       tags: home, bizak-desktop, bizak-laptop
     - role: doomemacs

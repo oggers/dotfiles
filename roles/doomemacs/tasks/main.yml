@@ -84,3 +84,10 @@
   with_items:
     - org
     - org-roam
+
+- name: Enable and start emacs server
+  systemd:
+    name: emacs
+    enabled: yes
+    state: started
+    scope: user

@@ -5,42 +5,33 @@ ssh_config:
   config:
     - host: luna.local.zabik
       hostname: luna.local.zabik
-      user: jcn
     - host: srvdatamart.local.zabik
       hostname: srvdatamart.local.zabik
-      user: jcn
     - host: srvedi.local.zabik
       hostname: srvedi.local.zabik
-      user: jcn
     - host: mediacenter.local.zabik
       hostname: mediacenter.local.zabik
       user: jcn
-      remote_user: root
       # password: libreelec
     - host: www.bizak.es
       hostname: ec2-35-180-183-246.eu-west-3.compute.amazonaws.com
       port: 22222
       user: jcn
-      remote_user: ubuntu
-      identity_file: ~/.ssh/BizakWebSite.pem
+      identityfile: ~/.ssh/BizakWebSite.pem
     - host: www.tiendabizak.es
       hostname: ec2-35-180-167-222.eu-west-3.compute.amazonaws.com
       port: 22222
       user: jcn
-      remote_user: ubuntu
-      identity_file: ~/.ssh/BizakEcommerceSite.pem
+      identityfile: ~/.ssh/BizakEcommerceSite.pem
     - host: ftp.bizak.es
       hostname: ks26944.kimsufi.com
       port: 22222
       user: jcn
-      remote_user: jcn
     - host: vps63405.ovh.net
       hostname: vps63405.ovh.net
       port: 22222
       user: jcn
-      remote_user: jcn
     - host: www.bizak.es_old
       hostname: vps67550.ovh.net
       port: 22222
       user: jcn
-      remote_user: jcn

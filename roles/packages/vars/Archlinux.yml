@@ -3,6 +3,7 @@ packages:
   - calibre
   - chromium
   - curl
+  - dbeaver
   - fakeroot
   - firefox-i18n-es-es
   - freecad
@@ -23,6 +24,7 @@ packages:
   - prusa-slicer
 #  - python2-virtualenv
   - python-jmespath
+  - ranger
   - rclone
   - remmina
   - rsnapshot
