@@ -1,0 +1,15 @@
+---
+# file nvm/tasks/main.yml
+
+- name: Install nvm package
+  package:
+    name: nvm
+    state: latest
+  become: true
+
+- name: Update .bashrc
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - nvm"
+    block: |
+      source /usr/share/nvm/init-nvm.sh

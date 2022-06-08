@@ -32,6 +32,8 @@
       tags: packages, home, bizak-desktop, bizak-laptop
     - role: pyenv
       tags: home, bizak-desktop, bizak-laptop
+    - role: nvm
+      tags: home, bizak-desktop, bizak-laptop
     - role: docker
       tags: home, bizak-desktop, bizak-laptop
 #    - role: pgadmin4
