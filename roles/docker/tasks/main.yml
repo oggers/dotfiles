@@ -6,6 +6,7 @@
     - docker
     - docker-compose
     - python-docker
+    - bash-completion
   become: yes
 
 - name: Enable and start docker
@@ -20,4 +21,37 @@
     name: "{{ ansible_user_id }}"
     groups: docker
     append: yes
+  become: yes
+
+- name: Create bash completion directory
+  file:
+    path: /etc/bash_completion.d
+    mode: 0755
+    state: directory
+  become: yes
+
+- name: Get docker version
+  command: "docker version --format {%raw%}'{{.Server.Version}}'{%endraw%}"  #" | sed 's/-.*//'"
+  changed_when: false
+  register: docker_version
+
+- debug:
+    msg: "docker version {{ docker_version }}"
+
+- name: Install docker command line completion
+  get_url:
+    url: "https://raw.githubusercontent.com/docker/cli/v{{ docker_version.stdout }}/contrib/completion/bash/docker"
+    dest: /etc/bash_completion.d/docker
+  become: yes
+
+# - name: Get docker-compose version
+#   command: "docker-compose version --short"
+#   changed_when: false
+#   register: docker_compose_version
+
+- name: Install docker-compose command line completion
+  get_url:
+    # url: "https://raw.githubusercontent.com/docker/compose/v{{ docker_compose_version.stdout }}/contrib/completion/bash/docker-compose"
+    url: "https://raw.githubusercontent.com/docker/compose/master/contrib/completion/bash/docker-compose"
+    dest: /etc/bash_completion.d/docker-compose
   become: yes
