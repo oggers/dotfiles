@@ -85,6 +85,25 @@
     - org
     - org-roam
 
+# https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
+- name: Config keychain .bash_profile
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bash_profile"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
+    block: |
+      # keychain manages ssh-agents
+      type keychain >&/dev/null \
+        && keychain --agents ssh
+
+- name: Config keychain .bashrc
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
+    block: |
+      # keychain keeps track of ssh-agents
+      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
+        && . $HOME/.keychain/$HOSTNAME-sh
+
 - name: Enable and start emacs server
   systemd:
     name: emacs

@@ -9,3 +9,4 @@ packages:
   - texlive-bin
   - texlive-core
   - texlive-science
+  - keychain
