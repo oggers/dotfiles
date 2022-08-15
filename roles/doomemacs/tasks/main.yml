@@ -110,3 +110,8 @@
     enabled: yes
     state: started
     scope: user
+
+- name: Add alias for emacsclient
+  lineinfile:
+    path: ~/.bashrc
+    line: "alias e=\"emacsclient -t -a ''\""

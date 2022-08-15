@@ -10,3 +10,5 @@ packages:
   - texlive-core
   - texlive-science
   - keychain
+  - haskell-language-server  # haskell
+  - hoogle  # haskell
