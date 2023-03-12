@@ -5,6 +5,7 @@ packages:
   - fd
   - shellcheck
   - cmake  # needed to compile vterm-module
+  - noto-fonts-emoji
   - python-lsp-server
   - python-pylint
   - flake8
