@@ -8,3 +8,4 @@ qtile_packages:
 - python-dbus-next
 - ttf-nerd-fonts-symbols
 - autorandr
+- python-libcst

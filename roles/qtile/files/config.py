@@ -261,7 +261,7 @@ def init_widgets_list():
             colour_have_updates = colors[1],
             colour_no_updates = colors[1],
             mouse_callbacks = {
-                'Button1': lambda: qtile.cmd_spawn(terminal + ' -e sudo pacman -Syu')},
+                'Button1': lambda: qtile.spawn(terminal + ' -e sudo pacman -Syu')},
             padding = 5,
             background = colors[5]
         ),
@@ -293,7 +293,7 @@ def init_widgets_list():
             fmt = 'Vol: {}',
             #theme_path='/usr/share/icons/Papirus/24x24/status/',
             mouse_callbacks={
-                'Button2': lambda : qtile.cmd_spawn('pavucontrol')},
+                'Button2': lambda : qtile.spawn('pavucontrol')},
             padding = 5
         ),
         widget.TextBox(
@@ -367,7 +367,7 @@ def set_screens(qtile, event):
     Called when the output configuration is changed (e.g. via randr in X11).
     """
     subprocess.run(["autorandr", "--change"])
-    qtile.cmd_restart()
+    qtile.restart()
 
 
 dgroups_key_binder = None
