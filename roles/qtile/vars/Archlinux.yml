@@ -1,0 +1,16 @@
+---
+packages:
+  - flameshot
+  # - nerd-fonts  # optional dependency for rofimoji
+  # - otf-font-awesome  # optional dependency for rofimoji
+  - python-iwlib  # needed for wlan widget
+  - python-psutil  # needed for memory widget
+  - qalculate-gtk
+  - rofi
+  - rofimoji
+  - qtile
+  # 'tt-font-awesome  # optional dependency for rofimoji'
+  - xclip
+
+aur_packages:
+  - qtile-extras

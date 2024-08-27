@@ -1,0 +1,27 @@
+---
+# file: roles/qtile/tasks/main.yml
+
+- name: Qtile | Set linux distribution specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Qtile | Install qtile and dependency packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - "{{ packages }}"
+
+- name: Qtile | Install aur packages
+  kewlfft.aur.aur:
+    name: "{{ aur_packages }}"
+  when: aur_packages is defined
+
+- name: Qtile | Link dir
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.config/qtile"
+    state: link
