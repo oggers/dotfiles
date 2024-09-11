@@ -1,0 +1,13 @@
+import = [
+    "~/.config/alacritty/themes/themes/doom_one.toml"
+]
+[font]
+normal.family = "Source Code Pro"
+normal.style = "Regular"
+bold.family = "Source Code Pro"
+bold.style = "Bold"
+italic.family = "Source Code Pro"
+italic.style = "Italic"
+bold_italic.family = "Source Code Pro"
+bold_italic.style = "Bold Italic"
+size = 10.0

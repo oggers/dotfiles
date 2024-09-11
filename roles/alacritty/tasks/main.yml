@@ -1,0 +1,17 @@
+---
+# file: alacritty/tasks/main.yml
+- name: "Alacritty | Get themes"
+  ansible.builtin.git:
+    repo: https://github.com/alacritty/alacritty-theme
+    dest: "{{ ansible_user_dir }}/.config/alacritty/themes"
+
+- name: "Alacritty | Create config directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/alacritty"
+    state: directory
+
+- name: "Alacritty | setconfig file"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/alacritty.toml"
+    dest: "{{ ansible_user_dir }}/.config/alacritty/"
+    force: yes
