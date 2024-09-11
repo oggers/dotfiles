@@ -432,6 +432,10 @@ def init_widgets_list(screen: int) -> List:
         widget.CPU(
             format=' Cpu: {load_percent}%',
             foreground=colors[4],
+            mouse_callbacks={
+               'Button1': lambda: qtile.spawn(my_term + ' -e htop'),  # Left click opens xterm
+               #'Button3': lambda: qtile.spawn('htop'),   # Right click opens htop
+            },
             decorations=[
                 BorderDecoration(
                     colour=colors[4],
