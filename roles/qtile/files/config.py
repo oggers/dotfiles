@@ -547,7 +547,8 @@ def init_widgets_list(screen: int) -> List:
             padding=5,
             text=" ",
             fontsize=20,
-            mouse_callbacks={"Button1": lambda: qtile.spawn(home + "/.config/qtile/scripts/powermenu.sh")},
+            # mouse_callbacks={"Button1": lambda: qtile.spawn(home + "/.config/qtile/scripts/powermenu.sh")},
+            mouse_callbacks={"Button1": lambda: qtile.spawn("dm-logout -r")},
         ),
 
     ]
