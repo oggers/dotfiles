@@ -640,6 +640,7 @@ def unplugged():
 @hook.subscribe.resume
 def resume():
     subprocess.run(["xrandr", "--auto"])  # to activate all connected devices
+    sleep(3)
     subprocess.run(["autorandr", "--change"])
     qtile.restart()
 
@@ -658,18 +659,18 @@ def set_screens(qtile, event):
 
 
 # https://docs.qtile.org/en/latest/manual/faq.html#how-can-i-get-my-groups-to-stick-to-screens
-@hook.subscribe.screens_reconfigured
-async def _():
-    logger.error('screens_reconfigured %s', qtile.screens)
-    for w in widgets_screen1:
-        if isinstance(widget.GroupBox, w):
-            if len(qtile.screens) > 1:
-                w.visible_groups = '12345'
-            else:
-                w.visible_groups = None  # show all
-            if hasattr(w, 'bar'):
-                w.bar.draw()
-    qtile.restart()
+# @hook.subscribe.screens_reconfigured
+# async def _():
+#     logger.error('screens_reconfigured %s', qtile.screens)
+#     for w in widgets_screen1:
+#         if isinstance(widget.GroupBox, w):
+#             if len(qtile.screens) > 1:
+#                 w.visible_groups = '12345'
+#             else:
+#                 w.visible_groups = None  # show all
+#             if hasattr(w, 'bar'):
+#                 w.bar.draw()
+#     qtile.restart()
 
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),

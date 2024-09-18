@@ -10,6 +10,7 @@ packages:
   - rofimoji
   - qtile
   # 'tt-font-awesome  # optional dependency for rofimoji'
+  # - ttf-nerd-fonts-symbols
   - xclip
 
 aur_packages:
