@@ -22,47 +22,54 @@
     state: link
   register: result_doom_dir
 
+- name: Download doom
+  ansible.builtin.git:
+    repo: "https://github.com/doomemacs/doomemacs"
+    depth: 1
+    dest: "{{ ansible_user_dir }}/.config/emacs"
+  register: result_download_doom
+
 - name: Emacs | Install doom
-  command: "{{ ansible_user_dir }}/.config/emacs/bin/doom --force install"
+  ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom --force install"
   when: result_doom_dir.changed
 
 - name: Emacs | Sync doom
-  command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
-  when: result_doom_dir.changed
+  ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
+  when: result_doom_dir.changed or result_download_doom.changed
 
 - name: Emacs | Create desktop directory
-  file:
+  ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/.local/share/applications"
     state: directory
 
 - name: Emacs | Install doomemacs desktop file
-  template:
+  ansible.builtin.template:
     src: "{{ role_path }}/templates/doomemacs.desktop.j2"
     dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/doomemacs.desktop"
   register: result_doom_emacs
 
 - name: Emacs | Install org-protocol desktop file
-  template:
+  ansible.builtin.template:
     src: "{{ role_path }}/templates/org-protocol.desktop.j2"
     dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/org-protocol.desktop"
   register: result_org_protocol
 
 - name: Emacs | Refresh cache database of mime types handled by desktop files
-  command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
+  ansible.builtin.command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
   when: result_doom_emacs.changed or result_org_protocol.changed
 
 - name: Emacs | Refresh org-protocol handler
-  command: xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+  ansible.builtin.command: xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
   when: result_org_protocol.changed
 
 - name: Emacs | Update EDITOR
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^EDITOR='
     line: 'EDITOR="emacs"  # ansible_managed'
 
 - name: Emacs | ~./emacs and ~/.emacs.d not present
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items:
@@ -70,7 +77,7 @@
     - "{{ ansible_user_dir }}/.emacs.d"
 
 - name: Emacs | link org directory
-  file:
+  ansible.builtin.file:
     src: "{{ ansible_user_dir }}/Sync/{{ item }}"
     dest: "{{ ansible_user_dir}}/{{ item }}"
     force: yes
@@ -81,7 +88,7 @@
 
 # https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
 - name: Emacs | Config keychain .bash_profile
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.bash_profile"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
     block: |
@@ -90,7 +97,7 @@
         && keychain --agents ssh
 
 - name: Emacs | Config keychain .bashrc
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
     block: |
@@ -98,14 +105,16 @@
       [ -f $HOME/.keychain/$HOSTNAME-sh ] \
         && . $HOME/.keychain/$HOSTNAME-sh
 
-- name: Emacs | Enable and start emacs server
-  systemd:
-    name: emacs
-    enabled: yes
-    state: started
-    scope: user
+- block:
+  - name: Emacs | Enable and start emacs server
+    ansible.builtin.systemd:
+      name: emacs
+      enabled: yes
+      state: started
+      scope: user
 
-- name: Emacs | Add alias for emacsclient
-  lineinfile:
-    path: ~/.bashrc
-    line: "alias e=\"emacsclient -t -a ''\""
+  - name: Emacs | Add alias for emacsclient
+    ansible.builtin.lineinfile:
+      path: ~/.bashrc
+      line: "alias e=\"emacsclient -t -a ''\""
+  when: ansible_os_family == 'Archlinux'
