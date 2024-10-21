@@ -33,11 +33,11 @@
   ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom --force install"
   when: result_doom_dir.changed
 
-- name: Emacs | Sync doom
-  ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
-  when: result_doom_dir.changed or result_download_doom.changed
-
 - block:
+  - name: Emacs | Sync doom
+    ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
+    when: result_doom_dir.changed or result_download_doom.changed
+
   - name: Emacs | Create desktop directory
     ansible.builtin.file:
       path: "{{ lookup('env', 'HOME') }}/.local/share/applications"
@@ -94,6 +94,7 @@
 - name: Emacs | Config keychain .bash_profile
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.bash_profile"
+    create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
     block: |
       # keychain manages ssh-agents
