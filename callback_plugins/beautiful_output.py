@@ -40,6 +40,10 @@ in your project, and set the ``stdout_callback`` option on the
 
 # Make coding more python3-ish
 from __future__ import absolute_import, division, print_function
+try:
+    basestring
+except NameError:
+    basestring = str
 
 __metaclass__ = type
 
