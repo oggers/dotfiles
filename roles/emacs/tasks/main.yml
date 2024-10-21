@@ -12,8 +12,7 @@
   ansible.builtin.package:
     name: "{{ item }}"
   become: yes
-  with_items:
-    - "{{ packages }}"
+  with_items: "{{ packages }}"
 
 - name: Emacs | Link oggers-doom
   ansible.builtin.file:
