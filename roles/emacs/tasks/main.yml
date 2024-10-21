@@ -11,6 +11,7 @@
 - name: Emacs | Install emacs and dependency packages
   ansible.builtin.package:
     name: "{{ item }}"
+    state: present
   become: yes
   with_items: "{{ packages }}"
 
@@ -36,30 +37,33 @@
   ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
   when: result_doom_dir.changed or result_download_doom.changed
 
-- name: Emacs | Create desktop directory
-  ansible.builtin.file:
-    path: "{{ lookup('env', 'HOME') }}/.local/share/applications"
-    state: directory
+- block:
+  - name: Emacs | Create desktop directory
+    ansible.builtin.file:
+      path: "{{ lookup('env', 'HOME') }}/.local/share/applications"
+      state: directory
 
-- name: Emacs | Install doomemacs desktop file
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/doomemacs.desktop.j2"
-    dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/doomemacs.desktop"
-  register: result_doom_emacs
+  - name: Emacs | Install doomemacs desktop file
+    ansible.builtin.template:
+      src: "{{ role_path }}/templates/doomemacs.desktop.j2"
+      dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/doomemacs.desktop"
+    register: result_doom_emacs
 
-- name: Emacs | Install org-protocol desktop file
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/org-protocol.desktop.j2"
-    dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/org-protocol.desktop"
-  register: result_org_protocol
+  - name: Emacs | Install org-protocol desktop file
+    ansible.builtin.template:
+      src: "{{ role_path }}/templates/org-protocol.desktop.j2"
+      dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/org-protocol.desktop"
+    register: result_org_protocol
 
-- name: Emacs | Refresh cache database of mime types handled by desktop files
-  ansible.builtin.command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
-  when: result_doom_emacs.changed or result_org_protocol.changed
+  - name: Emacs | Refresh cache database of mime types handled by desktop files
+    ansible.builtin.command: update-desktop-database "{{ lookup('env', 'HOME') }}/.local/share/applications"
+    when: result_doom_emacs.changed or result_org_protocol.changed
 
-- name: Emacs | Refresh org-protocol handler
-  ansible.builtin.command: xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
-  when: result_org_protocol.changed
+  - name: Emacs | Refresh org-protocol handler
+    ansible.builtin.command: xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+    when: result_org_protocol.changed
+
+  when: ansible_os_family == 'Archlinux'
 
 - name: Emacs | Update EDITOR
   ansible.builtin.lineinfile:
@@ -84,6 +88,7 @@
   with_items:
     - org
     - org-roam
+  when: ansible_os_family == 'Archlinux'
 
 # https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
 - name: Emacs | Config keychain .bash_profile
