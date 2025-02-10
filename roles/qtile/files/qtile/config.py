@@ -27,6 +27,7 @@
 import os
 from pathlib import Path
 import subprocess
+from time import sleep
 from typing import Callable, List  # noqa: F401
 
 from libqtile import bar, hook, extension, layout, qtile, widget
@@ -41,6 +42,12 @@ from qtile_extras.widget.decorations import BorderDecoration
 from qtile_extras.widget.decorations import PowerLineDecoration
 
 import colors
+
+
+# https://github.com/m-col/qtile-config/blob/master/config.py
+IS_WAYLAND: bool = qtile.core.name == "wayland"
+IS_XEPHYR: bool = int(os.environ.get("QTILE_XEPHYR", 0)) > 0
+
 
 mod = "mod4"  # Sets mod key to SUPER/WINDOW
 my_term = "alacritty"  # My terminal of choice
@@ -654,8 +661,15 @@ def set_screens(qtile, event):
     """
     logger.info('set_screens %s', qtile)
     subprocess.run(["autorandr", "--change"])
-    qtile.restart()
-    # qtile.reload_config()
+    # qtile.restart()
+    qtile.reload_config()
+    # qtile.reconfigure_screens()
+    # qtile.reconfigure_screens()
+
+
+@hook.subscribe.screens_reconfigured
+def _():
+    send_notification("qtile", "Screens have been reconfigured.")
 
 
 # https://docs.qtile.org/en/latest/manual/faq.html#how-can-i-get-my-groups-to-stick-to-screens

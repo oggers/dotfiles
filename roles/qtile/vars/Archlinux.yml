@@ -1,5 +1,7 @@
 ---
 packages:
+  - arandr
+  - autorandr
   - flameshot
   # - nerd-fonts  # optional dependency for rofimoji
   # - otf-font-awesome  # optional dependency for rofimoji

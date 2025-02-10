@@ -23,5 +23,5 @@
 - name: Qtile | Link dir
   ansible.builtin.file:
     src: "{{ role_path }}/files/"
-    dest: "{{ ansible_user_dir }}/.config/qtile"
+    dest: "{{ ansible_user_dir }}/.config"
     state: link

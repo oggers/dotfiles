@@ -19,6 +19,7 @@ syncthing-gtk &
 #xrandr --output eDP --auto --output HDMI-A-0 --auto --left-of eDP
 #xrandr --output HDMI-A-0 --auto --primary --output eDP --auto --right-of HDMI-A-0
 #xrandr --output HDMI-A-0 2560x1440 --primary --output eDP 1280x720+2560 --right-of HDMI-A-0
-"$HOME"/.screenlayout/dualmonitor.sh &
+#"$HOME"/.screenlayout/dualmonitor.sh &
+autorandr --change
 sleep 1
 conky -c "$HOME"/.config/conky/qtile/01/"$COLORSCHEME".conf || echo "Couldn't start conky."
