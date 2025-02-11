@@ -1,0 +1,5 @@
+#!/bin/bash -x
+
+notify-send "Conmutado al perfíl $AUTORANDR_CURRENT_PROFILE"
+killall -USR1 qtile
+nitrogen --restore &
