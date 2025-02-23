@@ -30,7 +30,7 @@ from typing import Callable, List  # noqa: F401
 
 from groups import groups
 import hooks
-from keys import mod, keys, home
+from keys import mod, my_term, keys, home
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Match, Screen
 from libqtile.lazy import lazy
