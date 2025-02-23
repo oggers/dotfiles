@@ -48,21 +48,21 @@ async def resume():
 
 # from https://github.com/ramnes/qtile-config/blob/98e097cfd8d5dd1ab1858c70babce141746d42a7/config.py#L108
 # https://docs.qtile.org/en/latest/manual/ref/hooks.html#libqtile.hook.subscribe.screen_change
-@hook.subscribe.screen_change
-def set_screens(qtile, event):
+#@hook.subscribe.screen_change
+def set_screens(event):
     """
     Called when the output configuration is changed (e.g. via randr in X11).
     """
     logger.info('set_screens %s', qtile)
-    subprocess.run(["autorandr", "--change"])
+    # subprocess.run(["autorandr", "--change"])
     # qtile.restart()
     qtile.reload_config()
     # qtile.reconfigure_screens()
     # qtile.reconfigure_screens()
 
 
-@hook.subscribe.screens_reconfigured
-async def ouputs_changed():
+#@hook.subscribe.screens_reconfigured
+async def outputs_changed():
     logger.warning('Screens reconfigured')
     await asyncio.sleep(1)
     logger.warning('Reloading config...')
