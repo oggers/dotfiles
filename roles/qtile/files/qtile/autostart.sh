@@ -6,6 +6,7 @@ COLORSCHEME=DoomOne
 ### AUTOSTART PROGRAMAS ###
 setxkbmap -layout es
 picom --daemon &
+xfce4-power-manager &
 nm-applet &
 volumeicon &
 megasync &
@@ -23,3 +24,5 @@ syncthing-gtk &
 autorandr --change
 sleep 1
 conky -c "$HOME"/.config/conky/qtile/01/"$COLORSCHEME".conf || echo "Couldn't start conky."
+python3 /usr/share/slimbookamdcontroller/src/slimbookamdcontrollerindicator.py
+python3 /usr/share/slimbookbattery/src/slimbookbatteryindicator.py

@@ -2,6 +2,7 @@
 packages:
   - arandr
   - autorandr
+  - brightnessctl
   - flameshot
   # - nerd-fonts  # optional dependency for rofimoji
   # - otf-font-awesome  # optional dependency for rofimoji

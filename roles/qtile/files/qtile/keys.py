@@ -131,6 +131,10 @@ keys = [
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse set Master 5%+")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse set Master 5%-")),
 
+    # Brightness
+    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl -q s +20%')),
+    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl -q s 20%-')),
+
     # ScratchPad
     KeyChord([mod], "s", [
         Key([], "k", lazy.group["scratchpad"].dropdown_toggle("keepass")),
