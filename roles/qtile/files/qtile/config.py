@@ -30,7 +30,7 @@ from typing import Callable, List  # noqa: F401
 
 from groups import groups
 import hooks
-from keys import mod, my_term, keys, home
+from keys import mod, keys, home
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Match, Screen
 from libqtile.lazy import lazy
@@ -45,6 +45,7 @@ import colors
 IS_WAYLAND: bool = qtile.core.name == "wayland"
 IS_XEPHYR: bool = int(os.environ.get("QTILE_XEPHYR", 0)) > 0
 
+my_term = "alacritty"  # My terminal of choice
 
 
 if qtile.core.name == 'x11':
@@ -263,7 +264,7 @@ def init_widgets_list(screen: int) -> List:
             distro='Arch_yay',
             foreground=colors[4],
             execute=my_term + " -e yay -Syu --confirm",
-            #mouse_callbacks={'Button1': lazy.spawn(my_term + " -e sudo pacman -Syu --confirm")},
+            # mouse_callbacks={'Button1': lazy.spawn(my_term + " -e sudo pacman -Syu --confirm")},
             decorations=[
                 BorderDecoration(
                     colour=colors[4],
@@ -286,6 +287,8 @@ def init_widgets_list(screen: int) -> List:
         widget.Clock(
             foreground=colors[8],
             format="⏱  %a, %b %d - %H:%M",
+            mouse_callbacks={
+                "Button1": lazy.group['scratchpad'].dropdown_toggle('khal')},
             decorations=[
                 BorderDecoration(
                     colour=colors[8],
@@ -323,23 +326,38 @@ def init_widgets_list(screen: int) -> List:
     ]
     return widgets_list
 
+
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list(0)
     return widgets_screen1
 
-# All other monitors' bars will display everything but widgets 22 (systray) and 23 (spacer).
+
+# All other monitors' bars will display everything but widgets 22 (systray)
+# and 23 (spacer).
 def init_widgets_screen2():
     widgets_screen2 = [w for w in init_widgets_list(1)
                        if not isinstance(w, widget.Systray)]
     return widgets_screen2
 
-# For adding transparency to your bar, add (background="#00000000") to the "Screen" line(s)
-# For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
+# For adding transparency to your bar, add (background="#00000000")
+# to the "Screen" line(s)
+# For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(),
+# background="#00000000", size=24)),
+
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_list(0), size=26)),
-            Screen(top=bar.Bar(widgets=init_widgets_list(1), size=26)),
-            ]
+    return [
+        Screen(
+            top=bar.Bar(
+                widgets=init_widgets_list(0),
+                size=26,
+                background="#00000000")),
+        Screen(
+            top=bar.Bar(
+                widgets=init_widgets_list(1),
+                size=26,
+                background="#00000000")),
+        ]
 
 
 if __name__ in ["config", "__main__"]:
@@ -347,6 +365,7 @@ if __name__ in ["config", "__main__"]:
     widgets_list = init_widgets_list(0)
     widgets_screen1 = init_widgets_list(0)
     widgets_screen2 = init_widgets_list(1)
+
 
 def window_to_prev_group(qtile):
     if qtile.currentWindow is not None:

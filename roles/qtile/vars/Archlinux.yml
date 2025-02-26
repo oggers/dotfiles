@@ -4,6 +4,7 @@ packages:
   - autorandr
   - brightnessctl
   - flameshot
+  - khal
   # - nerd-fonts  # optional dependency for rofimoji
   # - otf-font-awesome  # optional dependency for rofimoji
   - python-iwlib  # needed for wlan widget

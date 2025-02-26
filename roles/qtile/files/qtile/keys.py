@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from config import my_term
 from libqtile import qtile
 from libqtile.config import Key, KeyChord
 from libqtile.layout import TreeTab
@@ -7,7 +8,6 @@ from libqtile.lazy import lazy
 
 
 mod = "mod4"  # Sets mod key to SUPER/WINDOW
-my_term = "alacritty"  # My terminal of choice
 my_browser = "firefox"  # My browser of choice
 my_emacs = "emacsclient -c -a 'emacs' "  # The space at the end is IMPORTANT!
 # Get home path

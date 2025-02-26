@@ -1,5 +1,6 @@
 from typing import Callable
 
+from config import my_term
 from keys import keys, mod
 from libqtile.config import DropDown, Group, Key, ScratchPad
 from libqtile.lazy import lazy
@@ -29,6 +30,8 @@ groups.append(
         DropDown('keepass', ['keepassxc'], opacity=0.9, height=0.8, width=0.7),
         DropDown('gstm', ['gstm'], on_focus_lost_hide=True, warp_pointer=True,
                  opacity=0.9, height=0.8, width=0.4),
+        DropDown('khal', my_term + " -t ikhal -e ikhal", x=0.6785, width=0.32,
+                 height=0.997, opacity=1),
     ])
 )
 
