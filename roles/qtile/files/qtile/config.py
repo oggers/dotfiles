@@ -407,6 +407,7 @@ floating_layout = layout.Floating(
         Match(wm_class='kdenlive'),       # kdenlive
         Match(wm_class="makebranch"),     # gitk
         Match(wm_class="maketag"),        # gitk
+        Match(wm_class="megasync"),       # megasync
         Match(wm_class="notification"),   # notifications
         Match(wm_class="pavucontrol"),    # pavucontrol
         Match(wm_class='pinentry-gtk-2'), # GPG key password entry
