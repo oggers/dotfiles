@@ -122,3 +122,6 @@ TomorrowNight = [
     ["#b294bb", "#b294bb"],  # color06
     ["#70c0ba", "#70c0ba"],  # color15
     ]
+
+
+colors = DoomOne

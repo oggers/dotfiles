@@ -3,7 +3,7 @@ import os
 import subprocess
 import time
 
-from groups import groups
+from .groups import groups
 from libqtile import hook, qtile
 from libqtile.log_utils import logger
 from libqtile.utils import send_notification
