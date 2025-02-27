@@ -176,3 +176,20 @@ keys = [
         # Key([], "t", lazy.spawn("dm-translate -r"), desc='Translate text')
     ])
 ]
+
+
+help_key = 'slash'
+help_desc = 'Show qtile keys in rofi'
+keys_str = ''
+for key in keys:
+    keypress = key.modifiers + [key.key]
+    keypress_str = '-'.join(keypress)
+    keys_str += keypress_str + ': ' + key.desc + '\n'
+keys_str += f'{mod}-{help_key}: {help_desc}'
+
+launcher = 'rofi -show run -matching fuzzy'
+keys.extend([
+    Key([mod], help_key,
+        lazy.spawn(f"echo -en '{keys_str}' | {launcher} -dmenu -p 'Qtile keys'"),
+        desc=help_desc)
+])
