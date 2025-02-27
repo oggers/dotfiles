@@ -18,4 +18,5 @@ packages:
   - xclip
 
 aur_packages:
+  - python-pulsectl-asyncio
   - qtile-extras

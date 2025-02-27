@@ -42,8 +42,6 @@ from modules.widgets import widget_defaults
 IS_WAYLAND: bool = qtile.core.name == "wayland"
 IS_XEPHYR: bool = int(os.environ.get("QTILE_XEPHYR", 0)) > 0
 
-my_term = "alacritty"  # My terminal of choice
-
 
 if qtile.core.name == 'x11':
     pass

@@ -1,7 +1,6 @@
 from typing import Callable
 
-from config import my_term
-from .keys import keys, mod
+from .keys import keys, mod, my_term
 from libqtile.config import DropDown, Group, Key, ScratchPad
 from libqtile.lazy import lazy
 

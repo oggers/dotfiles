@@ -1,6 +1,6 @@
 import subprocess
 
-from config import my_term
+from .keys import my_term
 from libqtile import qtile, widget
 from libqtile.lazy import lazy
 from .colors import colors
