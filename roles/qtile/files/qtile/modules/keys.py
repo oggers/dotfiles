@@ -43,7 +43,7 @@ def maximize_by_switching_layout(qtile) -> None:
 keys = [
     # The essentials
     Key([mod], "Return", lazy.spawn(my_term), desc="Terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun"), desc='Run Launcher'),
+    Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
     Key([mod], "b", lazy.spawn(my_browser), desc='Web browser'),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
