@@ -21,7 +21,7 @@ def battery_critical():
         "Power HQ", "Battery is critically low. Plug in power cable.")
 
 
-@hook.subscribe.startup
+#@hook.subscribe.startup
 def run_every_startup():
     send_notification("Qtile", "Config reloading is done.")
 
@@ -40,6 +40,7 @@ def unplugged():
 # https://docs.qtile.org/en/latest/manual/ref/hooks.html#libqtile.hook.subscribe.resume
 @hook.subscribe.resume
 async def resume():
+    logger.warning('*************** hook.subscribe.resume - def resume')
     subprocess.run(["xrandr", "--auto"])  # to activate all connected devices
     await asyncio.sleep(1)
     subprocess.run(["autorandr", "--change"])
@@ -48,21 +49,26 @@ async def resume():
 
 # from https://github.com/ramnes/qtile-config/blob/98e097cfd8d5dd1ab1858c70babce141746d42a7/config.py#L108
 # https://docs.qtile.org/en/latest/manual/ref/hooks.html#libqtile.hook.subscribe.screen_change
-#@hook.subscribe.screen_change
-def set_screens(event):
+@hook.subscribe.screen_change
+async def set_screens(event):
     """
     Called when the output configuration is changed (e.g. via randr in X11).
+    Called several times when starting
     """
-    logger.info('set_screens %s', qtile)
-    # subprocess.run(["autorandr", "--change"])
-    # qtile.restart()
+    logger.warning('****************** hook.subscribe.screen_change - set_screens %s', qtile)
+    # To show the bar correctly:
+    subprocess.run(["autorandr", "--change"])  # Automatically configure screens
+    # subprocess.run(['xrandr', '--auto'])  # Automatically configure screens
+    await asyncio.sleep(1)
     qtile.reload_config()
-    # qtile.reconfigure_screens()
+    # send_notification("qtile", "Screens have been reconfigured.")
+    # qtile.restart()  infinite loop
     # qtile.reconfigure_screens()
 
 
 #@hook.subscribe.screens_reconfigured
 async def outputs_changed():
+    logger.warning('***************** hook.subscribe.screens_reconfigured  def outputs_changed')
     logger.warning('Screens reconfigured')
     await asyncio.sleep(1)
     logger.warning('Reloading config...')
@@ -93,6 +99,7 @@ def start_once():
 
 @hook.subscribe.client_new
 def libreoffice(window):
+    logger.warning('**************** hook.subscribe.client_new - def libreoffice')
     wm_class = window.get_wm_class()
     if wm_class is None:
         wm_class = []
@@ -100,14 +107,16 @@ def libreoffice(window):
         window.disable_floating()
 
 
-@hook.subscribe.client_new
+#@hook.subscribe.client_new
 def slight_delay(window):
+    logger.warning('**************** hook.subscribe.client_new - def slight_delay')
     time.sleep(0.04)
 
 
 # When application launched automatically focus it's group
-@hook.subscribe.client_new
+#@hook.subscribe.client_new
 def modify_window(client):
+    logger.warning('**************** hook.subscribe.client_new - def modify_window')
     for group in groups:  # follow on auto-move
         match = next((m for m in group.matches if m.compare(client)), None)
         if match:

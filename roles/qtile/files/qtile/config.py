@@ -31,7 +31,7 @@ from libqtile import qtile
 from libqtile.log_utils import logger
 from modules import hooks  # noqa
 from modules.groups import groups  # noqa
-from modules.keys import mod, keys  # noqa
+from modules.keys import define_help_key, mod, keys  # noqa
 from modules.mouse import mouse  # noqa
 from modules.layouts import floating_layout, layouts  # noqa
 from modules.screens import screens  # noqa
@@ -41,6 +41,9 @@ from modules.widgets import widget_defaults
 # https://github.com/m-col/qtile-config/blob/master/config.py
 IS_WAYLAND: bool = qtile.core.name == "wayland"
 IS_XEPHYR: bool = int(os.environ.get("QTILE_XEPHYR", 0)) > 0
+
+
+keys.append(define_help_key(keys))
 
 
 if qtile.core.name == 'x11':

@@ -4,6 +4,7 @@ from libqtile import qtile
 from libqtile.config import Key, KeyChord
 from libqtile.layout import TreeTab
 from libqtile.lazy import lazy
+from libqtile.log_utils import logger
 
 
 mod = "mod4"  # Sets mod key to SUPER/WINDOW
@@ -124,22 +125,22 @@ keys = [
 
     # screenshot
     # Key([mod], "Print", lazy.spawn(home + "/.config/qtile/scripts/screenshot.sh")),
-    Key([mod], "Print", lazy.spawn("xfce4-screenshooter")),
+    Key([mod], "Print", lazy.spawn("xfce4-screenshooter"), desc='Launch xfce4-screenshooter'),
 
     # Volume
-    Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master toggle")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse set Master 5%+")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse set Master 5%-")),
+    Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master toggle"), desc='Mute audio'),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse set Master 5%+"), desc='Raise audio volume'),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse set Master 5%-"), desc='Lower audio volume'),
 
     # Brightness
-    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl -q s +20%')),
-    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl -q s 20%-')),
+    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl -q s +20%'), desc='Up brightness'),
+    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl -q s 20%-'), desc='Down brightness'),
 
     # ScratchPad
     KeyChord([mod], "s", [
-        Key([], "k", lazy.group["scratchpad"].dropdown_toggle("keepass")),
-        Key([], "g", lazy.group["scratchpad"].dropdown_toggle("gstm")),
-    ]),
+        Key([], "k", lazy.group["scratchpad"].dropdown_toggle("keepass"), desc='Launch Keepass'),
+        Key([], "g", lazy.group["scratchpad"].dropdown_toggle("gstm"), desc='Launch gSTM'),
+    ], desc='Scratchpad group'),
 
     # Emacs programs launched using the key chord CTRL+e followed by 'key'
     KeyChord([mod], "e", [
@@ -154,7 +155,7 @@ keys = [
         Key([], "F4", lazy.spawn("killall emacs"),
             lazy.spawn("/usr/bin/emacs --daemon"),
             desc='Kill/restart the Emacs daemon')
-    ]),
+    ], desc='Emacs group'),
     # Dmenu/rofi scripts launched using the key chord SUPER+p followed by 'key'
     KeyChord([mod], "p", [
         Key([], "h", lazy.spawn("dm-hub -r"), desc='List all dmscripts'),
@@ -174,22 +175,31 @@ keys = [
         # Key([], "r", lazy.spawn("dm-radio -r"), desc='Listen to online radio'),
         Key([], "s", lazy.spawn("dm-websearch -r"), desc='Search various engines'),
         # Key([], "t", lazy.spawn("dm-translate -r"), desc='Translate text')
-    ])
+    ], desc='Scritps group')
 ]
 
 
-help_key = 'slash'
-help_desc = 'Show qtile keys in rofi'
-keys_str = ''
-for key in keys:
-    keypress = key.modifiers + [key.key]
-    keypress_str = '-'.join(keypress)
-    keys_str += keypress_str + ': ' + key.desc + '\n'
-keys_str += f'{mod}-{help_key}: {help_desc}'
+def modifier_name(key: str) -> str:
+    if key == 'mod4':
+        return 'Super'
+    else:
+        return key
 
-launcher = 'rofi -show run -matching fuzzy'
-keys.extend([
-    Key([mod], help_key,
-        lazy.spawn(f"echo -en '{keys_str}' | {launcher} -dmenu -p 'Qtile keys'"),
+
+def define_help_key(keys: list[Key]) -> Key:
+    help_key = 'w'
+    help_desc = 'Show qtile keys in rofi'
+    keys_str = ''
+    for key in keys:
+        keypress = list(map(modifier_name, key.modifiers)) + [key.key]
+        keypress_str = '-'.join(keypress)
+        keys_str += keypress_str + ': ' + key.desc + '\n'
+        if isinstance(key, KeyChord):
+            for sub_key in key.submappings:
+                keys_str += keypress_str + ', ' + sub_key.key + ': ' + sub_key.desc + '\n'
+    keys_str += f'{modifier_name(mod)}-{help_key}: {help_desc}'
+
+    launcher = 'rofi -show run -matching fuzzy'
+    return Key([mod], help_key,
+        lazy.spawn(f"echo -en '{keys_str}' | {launcher} -dmenu -p 'Qtile keys'", shell=True),
         desc=help_desc)
-])
