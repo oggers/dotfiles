@@ -1,16 +1,21 @@
+import locale
+import os
 from pathlib import Path
 
+from gettext import gettext as _
 from libqtile import qtile
 from libqtile.config import Key, KeyChord
 from libqtile.layout import TreeTab
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 
+locale.setlocale(locale.LC_ALL, '')
+os.environ['LANG'] = 'es_ES.UTF-8'
 
-mod = "mod4"  # Sets mod key to SUPER/WINDOW
-my_term = "alacritty"  # My terminal of choice
-my_browser = "firefox"  # My browser of choice
-my_emacs = "emacsclient -c -a 'emacs' "  # The space at the end is IMPORTANT!
+mod = 'mod4'  # Sets mod key to SUPER/WINDOW
+my_term = 'alacritty'  # My terminal of choice
+my_browser = 'firefox'  # My browser of choice
+my_emacs = 'emacsclient -c -a \'emacs\' '  # The space at the end is IMPORTANT!
 # Get home path
 home = str(Path.home())
 
@@ -42,9 +47,10 @@ def maximize_by_switching_layout(qtile) -> None:
 
 keys = [
     # The essentials
-    Key([mod], "Return", lazy.spawn(my_term), desc="Terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
-    Key([mod], "b", lazy.spawn(my_browser), desc='Web browser'),
+    Key([mod], "Return", lazy.spawn(my_term), desc=_("Terminal")),
+    Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun -show-icons"),
+        desc=_("Run Launcher")),
+    Key([mod], "b", lazy.spawn(my_browser), desc=_("Web browser")),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),

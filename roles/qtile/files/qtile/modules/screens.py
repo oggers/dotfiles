@@ -12,10 +12,12 @@ screens = [
         top=bar.Bar(
             widgets=primary_widgets,
             size=26,
+            margin=(8, 12, 4, 12),
             background="#00000000")),
     Screen(
         top=bar.Bar(
             widgets=secondary_widgets,
             size=26,
+            margin=(8, 12, 4, 12),
             background="#00000000")),
     ]

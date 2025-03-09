@@ -67,16 +67,16 @@ primary_widgets = [
         # custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
         foreground=colors[1],
         padding=4,
-        scale=0.6
+        scale=0.8
         ),
-    # widget.CurrentLayout(
-    #     font='Ubuntu Mono',
-    #     fontsize=16,
-    #     foreground=colors[1],
-    #     padding=14,
-    #     **decoration_group,
-    #     background=colors[6],
-    #     ),
+    widget.CurrentLayout(
+        font='Ubuntu Mono',
+        fontsize=12,
+        foreground=colors[1],
+        padding=14,
+        **decoration_group,
+        #background=colors[6],
+        ),
     widget.TaskList(
         font='Ubuntu Mono',
         fontsize=12,
@@ -89,8 +89,6 @@ primary_widgets = [
         spacing=-2,
         borderwidth=1,
         max_title_width=100,
-        ),
-    widget.Spacer(
         ),
     widget.GroupBox(
         font='Ubuntu Mono',
@@ -113,7 +111,11 @@ primary_widgets = [
         **decoration_group,
         background=colors[0],
         ),
-    widget.Spacer(
+    widget.Spacer(),  # to center the groupbox
+    widget.Volume(
+        emoji=True,
+        emoji_list=['', '󰕿', '󰖀', '󰕾'],
+        mouse_callbacks={'Button3': lambda: qtile.cmd_spawn("pavucontrol")},
         ),
     widget.PulseVolume(
         mode='icon',
@@ -122,10 +124,11 @@ primary_widgets = [
         bar_width=50,
         bar_height=75,
         channel='Master',
-        icon_size=32,
-        padding=14,
-        volume_down_command='XF86AudioLowerVolume',
-        volume_up_command='XF86AudioRaiseVolume',
+        icon_size=50,
+        padding=4,
+        volume_down_command='pactl set-sink-volume @DEFAULT_SINK@ -10%',
+        volume_up_command='pactl set-sink-volume @DEFAULT_SINK@ +10%',
+        mute_command='pactl set-sink-mute @DEFAULT_SINK@ toggle',
         mouse_callbacks={'Button3': lambda: qtile.cmd_spawn("pavucontrol")},
         **decoration_group,
         background=colors[0],
@@ -167,6 +170,7 @@ primary_widgets = [
         format="⏱  %a, %b %d - %H:%M",
         mouse_callbacks={
             "Button1": lazy.group['scratchpad'].dropdown_toggle('khal')},
+        padding=5,
         decorations=[
             BorderDecoration(
                 colour=colors[8],
@@ -191,11 +195,9 @@ primary_widgets = [
     #     mouse_callbacks={"Button1": lambda: qtile.spawn("blueman-manager")},
     # ),
     # only show systray on screen 0 becuase it cannot be displayed on mora than 1 screen
-    widget.Spacer(length=8),
     widget.Systray(padding=3),
-    widget.Spacer(length=8),
     widget.TextBox(
-        padding=5,
+        padding=10,
         text=" ",
         fontsize=20,
         # mouse_callbacks={"Button1": lambda: qtile.spawn(home + "/.config/qtile/scripts/powermenu.sh")},
@@ -205,4 +207,4 @@ primary_widgets = [
 ]
 
 
-secondary_widgets = primary_widgets[:-4] + primary_widgets[-2:]
+secondary_widgets = primary_widgets[:-2] + primary_widgets[-1:]

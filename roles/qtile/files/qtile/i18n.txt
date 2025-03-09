@@ -1,0 +1,12 @@
+To tranlatable strings:
+
+xgettext -d qtile -o locales/qtile.pot --from-code=UTF-8 --language=Python $(find . -name "*.py") $(find ./modules -name "*.py")
+
+Create a .po file for each language
+
+mkdir -p locales/es/LC_MESSAGES
+msginit -i locales/qtile.pot -o locales/es/LC_MESSAGES/qtile.po -l es,UTF-8
+
+To compile all .po files
+
+find locales -name "*.po" -exec sh -c 'msgfmt -o "${0%.po}.mo" "$0"' {} \;
