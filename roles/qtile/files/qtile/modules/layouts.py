@@ -1,3 +1,5 @@
+import re
+
 from libqtile import layout
 from libqtile.config import Match
 from .colors import colors
@@ -73,10 +75,12 @@ floating_layout = layout.Floating(
         Match(wm_class="makebranch"),     # gitk
         Match(wm_class="maketag"),        # gitk
         Match(wm_class="megasync"),       # megasync
+        Match(wm_class="nm-connection-editor"),       # network manager editor
         Match(wm_class="notification"),   # notifications
         Match(wm_class="pavucontrol"),    # pavucontrol
         Match(wm_class='pinentry-gtk-2'), # GPG key password entry
         Match(wm_class="ssh-askpass"),    # ssh-askpass
+        Match(wm_class="Syncthing GTK"),  #
         Match(wm_class="toolbar"),        # toolbars
         Match(wm_class="Yad"),            # yad boxes
         Match(title="branchdialog"),      # gitk
@@ -87,5 +91,11 @@ floating_layout = layout.Floating(
         Match(title="tastytrade"),        # tastytrade pop-out side gutter
         Match(title="tastytrade - Portfolio Report"), # tastytrade pop-out allocation
         Match(wm_class="tasty.javafx.launcher.LauncherFxApp"), # tastytrade settings
+        # Match DBeaver windows where wm_class is "DBeaver" but name has "DBeaver"
+        Match(
+            wm_class="DBeaver",
+            # The main window has name "DBeaver..."
+            title=re.compile(r"^(?!.*DBeaver).*$"),  # Only float if name has not DBeaver in it
+        ),
     ]
 )
