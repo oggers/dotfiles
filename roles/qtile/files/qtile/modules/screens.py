@@ -13,7 +13,9 @@ screens = [
             widgets=primary_widgets,
             size=26,
             margin=(8, 12, 4, 12),
-            background="#00000000")),
+            background="#00000000"),
+        wallpaper='~/.wallpapers/0193.jpg',
+        wallpaper_mode='stretch'),
     Screen(
         top=bar.Bar(
             widgets=secondary_widgets,
