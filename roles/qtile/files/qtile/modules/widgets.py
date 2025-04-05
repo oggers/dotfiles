@@ -116,6 +116,11 @@ primary_widgets = [
         emoji=True,
         emoji_list=['', '󰕿', '󰖀', '󰕾'],
         mouse_callbacks={'Button3': lambda: qtile.cmd_spawn("pavucontrol")},
+        volume_down_command='pactl set-sink-volume @DEFAULT_SINK@ -10%',
+        volume_up_command='pactl set-sink-volume @DEFAULT_SINK@ +10%',
+        mute_command='pactl set-sink-mute @DEFAULT_SINK@ toggle',
+        mute_foreground='ff0000',
+        fontsize=20,
         ),
     widget.PulseVolume(
         mode='icon',
