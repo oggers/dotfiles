@@ -1,0 +1,7 @@
+---
+# file: gnome-browser-connector/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-browser-connector package"
+  ansible.builtin.pacman:
+    name: gnome-browser-connector
+    state: present
+  become: yes

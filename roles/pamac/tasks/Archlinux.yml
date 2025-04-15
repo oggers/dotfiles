@@ -1,0 +1,6 @@
+---
+# file: pamac/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install pamac-aur packages"
+  kewlfft.aur.aur:
+    name: pamac-aur
+    state: present

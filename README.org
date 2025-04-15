@@ -2,14 +2,50 @@
 
 A lot of parts borrowed from [[https://github.com/TechDufus/dotfiles][GitHub - TechDufus/dotfiles: Fully automated development environment for Tech...]]
 
-* Reqirements
+* Requirements
 ** Operating System
-This ansible playbook only supports =Ubuntu|Debian|Arch|Manjaro= distribution. This is by
-design to provide a consistent development experience across hosts.
+This ansible playbook only supports OS's on a per-role basis. This gives a high level of flexibility to
+each role.
+
+This means that you can run a role, and it will only run if your current OS is configured for that role.
+
+This is accomplished with this =template  main.yml= task in each role:
+
+#+begin_src yaml
+---
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: distribution_config
+
+- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists
+#+end_src
+
+The first task checks for the existence of a =roles/<target role>/tasks/<current_distro>.yml= file. If that file
+exists (example =current_distro:Archlinux= and a =Archlinux.yml= file exists) it will be run automatically. This keeps
+roles from breaking if you run a role that isn't yet supported or configured for the system you are running
+=dotfiles= on.
+
+Currently configured 'bootstrap-able' OS's:
+- Archlinux
+
+=bootstrap-able= means the pre-dotfiles setup is configured and performed automatically by this project. For
+example, before we can run this ansible project, we must first install ansible on each OS type.
+
+To see details, see the =__task "Loading Setup for detected OS: $ID"= section of the ~bin/dotfiles~ script to
+see how each OS type is being handled.
 
 ** System Upgrade
-Verify your =Ubuntu|Debian|Arch|Manjaro= installation has all latest packages
-installed before running the playbook.
+Verify your =supported OS= installation has all latest packages installed before running the playbook.
+
+#+begin_src bash
+# Arch
+sudo pacman -Syu
+#+end_src
+
+NOTE: This may take some time...
 
 * Setup
 ** all.yml values file
@@ -30,122 +66,58 @@ values will break the playbook if not properly set.
 | bash_public    | dict (see Environment below)   | no       |
 | bash_private   | dict (see Environment below)   | no       |
 
-*** Environment
-Manage environment variables by configuring the =bash_public= and =bash_private=
-values in =values.yaml=.
+** Pass Integration
+This project depends on pass https://www.passwordstore.org. This means you must have
+a pass store already setup.
 
-**** bash_public
-The =bash_public= value allows you to include a dictionary of generic and
-unsecure key-value pairs that will be stored in a ~~/.bash_public~.
+https://michael.mulqueen.me.uk/2018/02/using-ansible-with-pass-for-secrets/
 
-#+begin_src yaml
----
-bash_public:
-  MY_ENV_VAR: something
-#+end_src
+*** Setting Up Pass
+First you need to install pass. =bin/dotfiles= will this make for you.
 
-**** bash_private
-The =bash_private= value allows you to include a dictionary of secure key-value
-pairs that will be stored in a ~~/.bash_private~.
+Before you can make a password vault with =Pass=, you'll need a GPG key. If you don't already have one, you
+can generate one with ~gpg --generate-key~. Bear in mind that if you don't set a passphrase, you're not really
+gaining any protection.
 
-#+begin_src yaml
----
-bash_private:
-  MY_ENV_VAR_SECRET: !vault |
-    $ANSIBLE_VAULT;1.1;AES256
-    62333533626436313366316235626561626635396233303730343332666466393561346462303163
-    3666636638613437353663356563656537323136646137630a336332303030323031376164316562
-    65333963633339323382938472963766303966643035303234376163616239663539366564396166
-    3830376265316231630a623834333061393138306331653164626437623337366165636163306237
-    3437
-#+end_src
+Then you can run ~pass init "Juan Carlos Coruña"~ , changing my name to match whatever name you're using for your GPG
+key. If you're not sure, you can run ~gpg -k~ to see what name you've used.
 
-*** SSH Keys
-Manage SSH keys be setting the =ssh_key= value in ~values.yaml~ shown as example below:
+*** Storing Passwords in Pass
+You can store passwords in pass by running ~pass insert servers/example.com/postgresql~. You can use whatever
+convention you like for structuring your passwords in pass.
 
-#+begin_src yaml
----
-ssh_key:
-  <filename>: !vault |
-    $ANSIBLE_VAULT;1.1;AES256
-    62333533626436313366316235626561626635396233303730343332666466393561346462303163
-    3666636638613437483928376563656537323136646137630a336332303030323031376164316562
-    65333963633339323762663865363766303966643035303234376163616239663539366564396166
-    3830376265316231630a623834333061393138306331653164626437623337366165636163306237
-    3437
-#+end_src
-
-NOTE: All ssh keys will be stored at ~$HOME/.ssh/<filename>~.
-
-*** System Hosts
-Manage ~/etc/hosts~ by setting the =system_host= value in ~values.yaml~.
-
-#+begin_src yaml
----
-system_host:
-  127.0.0.1: foobar.localhost
-#+end_src
-
-** Examples
-Below includes minimal and advanced configuration examples.
-
-*** Minimal
-Below is a minimal example of ~values.yaml~ file:
-
-#+begin_src yaml
----
-git_user_email: foo@bar.com
-git_user_name: Foo Bar
-#+end_src
-
-*** Advanced
-Below is a more advanced example of ~values.yaml~ file:
-
-#+begin_src yaml
----
-git_user_email: foo@bar.com
-git_user_name: Foo Bar
-exclude_roles:
-  - slack
-ssh_key: !vault |
-  $ANSIBLE_VAULT;1.1;AES256
-  62333533626436313366316235626561626635396233303730343332666466393561346462303163
-  3666636638613437353663356563656537323136646137630a336332303030323031376164316562
-  65333963633339323762663865363766303966643035303234376163616239663539366564396166
-  3830376265316231630a623834333061393138306331653164626437623337366165636163306237
-  3437
-system_host:
-  127.0.0.1: foobar.localhost
-bash_public:
-  MY_PUBLIC_VAR: foobar
-bash_private:
-  MY_SECRET_VAR: !vault |
-    $ANSIBLE_VAULT;1.1;AES256
-    62333533626436313366316235626561626635396233303730343332666466393561346462303163
-    3666636638613437353663356563656537323136646137630a336332303030323031376164316562
-    65333963633339323762663865363766303966643035303234376163616239663539366564396166
-    3830376265316231630a623834333061393138306331653164626437623337366165636163306237
-    3437
-#+end_src
-
-** vault.secret
-The ~vault.secret~ file allows you to encrypt values with =Ansible vault= and
-store them securely in source control. Create a file located at
-~~/.config/ansible-vault/dotfiles.secret~ with a secure password in it.
+To store a key that is already in a file you can use:
 
 #+begin_src bash
-vim ~/.ansible-vault/dotfiles.secret
+pass insert -m personal/ssh/id_rsa/private_key < ~/.ssh/id_rsa
 #+end_src
 
-To then encrypt values with your vault password use the following:
+Passwords can be edited by running ~pass edit servers/example.com/postgresql~
 
-#+begin_src bash
-$ ansible-vault encrypt_string --vault-password-file $HOME/.ansible-vault/dotfiles.secret "mynewsecret" --name "MY_SECRET_VAR"
-$ cat myfile.conf | ansible-vault encrypt_string --vault-password-file $HOME/.ansible-vault/dotfiles.secret --stdin-name "myfile"
+Retrieving a password is as simple as ~pass show servers/example.com/postgresql~
+
+*** Accessing Passwords from Ansible
+Passwords stored in Pass can be accessed using Ansible's pipe module.
+
+For example like this from an inventory file:
+
+#+begin_src yaml
+example.com ansible_become=True ansible_become_pass="{{ lookup('pipe', 'pass show servers/example.com/ssh') }}" ansible_user=ansible
 #+end_src
 
-NOTE: This file will automatically be detected be the playbook when running
-=dotfiles= command to decrypt values. Read more on Ansible Vault [[https://docs.ansible.com/ansible/latest/user_guide/vault.html][here]].
+Or like this as a task:
+
+#+begin_src yaml
+- postgresql_user:
+    name: postgres
+    password: "{{ lookup('pipe', 'pass show servers/example.com/postgresql') }}"
+#+end_src
+
+Pass will need to be unlocked before running the Ansible playbook because otherwise it may try (and fail) to
+interactively prompt for a password. This is as simple as showing one of the passwords before running Ansible - you
+could create a dummy password for this purpose if you like and then run ~pass show dummy~. This shouldn't be a problem if
+you're using a GPG implementation that usually prompts with a graphical popup to ask for a passphrase (or PIN for a
+hardware key).
 
 * Usage
 ** Install
@@ -153,21 +125,21 @@ This playbook includes a custom shell script located at ~bin/dotfiles~. This
 script is added to your $PATH after installation and can be run multiple times
 while making sure any Ansible dependencies are installed and updated.
 
-This shell script is also used to initialize your environment after installing
-=Ubuntu|Debian|Arch= and performing a full system upgrade as mentioned above.
+This shell script is also used to initialize your environment after bootstrapping
+ your =supported-OS= and performing a full system upgrade as mentioned above.
 
 NOTE: You must follow required steps before running this command or things may
 become unusable until fixed.
 
 #+begin_src bash
-bash -c "$(curl -fsSL https://github.com/oggers/dotfiles.git  bin/dotfiles)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/oggers/dotfiles/main/bin/dotfiles)"
 #+end_src
 
 If you want to run only a specific role, you can specify the following bash
 command:
 
 #+begin_src bash
-curl -fsSL https://github.com/oggers/dotfiles.git bin/dotfiles | bash -s -- --tags comma,separated,tags
+curl -fsSL https://raw.githubusercontent.com/oggers/dotfiles/main/bin/dotfiles | bash -s -- --tags comma,separated,tags
 #+end_src
 
 ** Update
@@ -183,7 +155,6 @@ dotfiles
 This will handle the following tasks:
 
 - Verify Ansible is up-to-date.
-- Generate SSH keys and add to ~~/.ssh/authorized_keys~
 - Clone this repository locally to ~~/.dotfiles~
 - Verify any ~ansible-galaxy~ plugins are updated
 - Run this playbook with the values in ~~/.config/dotfiles/group_vars/all.yaml~
@@ -199,4 +170,12 @@ For example: running the emacs tag with verbosity:
 
 #+begin_src bash
 dotfiles -t emacs -vvv
+#+end_src
+
+As an added bonus, the tags have tab completion!
+
+#+begin_src bash
+dotfiles -t <tab><tab>
+dotfiles -t t<tab>
+dotfiles -t ne<tab>
 #+end_src

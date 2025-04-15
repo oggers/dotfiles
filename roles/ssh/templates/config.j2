@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+AddKeysToAgent yes
+
+{% for host in ssh.config.hosts %}
+Host {{ host.name }}
+{% for item in host | dict2items | rejectattr('key', 'eq', 'name') %}
+  {{ item.key }} {{ item.value }}
+{% endfor %}
+{% endfor %}

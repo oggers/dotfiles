@@ -1,0 +1,12 @@
+---
+- name: Detect pass
+  ansible.builtin.command:
+    cmd: which pass
+  changed_when: false
+  failed_when: false
+  register: pass_installed
+
+- name: Register pass
+  ansible.builtin.set_fact:
+    pass_installed: "{{ pass_installed.rc == 0 }}"
+  when: pass_installed.rc == 0

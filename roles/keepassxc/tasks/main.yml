@@ -1,5 +1,4 @@
 ---
-# file: syncthing/tasks/main.yml
 - name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
@@ -9,9 +8,7 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Enable syncthing service for user"
-  ansible.builtin.systemd:
-    name: syncthing.service
-    scope: user
-    state: started
-    enabled: yes
+- name: "{{ role_name }} | Deploy key files from vault"
+  ansible.builtin.include_tasks: key_files.yml
+  when: pass_installed
+  with_items: "{{ keepassxc.pass.key_files }}"

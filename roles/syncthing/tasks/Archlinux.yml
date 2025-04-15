@@ -1,0 +1,17 @@
+---
+# file: syncthing/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install syncthing and dependency packages"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - syncthing
+    - yay
+
+#- name: "{{ role_name }} | Install aur packages"
+#  kewlfft.aur.aur:
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - syncthing-gtk

@@ -1,0 +1,7 @@
+---
+# file: zsh/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install zsh package"
+  ansible.builtin.pacman:
+    name: zsh
+    state: present
+  become: yes

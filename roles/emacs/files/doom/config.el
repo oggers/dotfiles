@@ -130,3 +130,6 @@
 
 ;; add Zope PageTemplates to mhtml mode
 (add-to-list 'auto-mode-alist '("\\.pt\\'" . mhtml-mode))
+
+(unless (member "Symbols Nerd Font Mono" (font-family-list))
+  (nerd-icons-install-fonts t))

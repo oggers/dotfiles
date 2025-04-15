@@ -1,0 +1,5 @@
+- name: "fastfetch | Install"
+  ansible.builtin.pacman:
+    name: "fastfetch"
+    state: present
+  become: true

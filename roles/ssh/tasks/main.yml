@@ -1,0 +1,21 @@
+---
+- name: "{{ role_name }} | Ensure .ssh directory exists"
+  ansible.builtin.file:
+    path: "~/.ssh"
+    mode: "0755"
+    state: directory
+
+- name: "{{ role_name }} | Deploy ssh keys from vault"
+  ansible.builtin.include_tasks: ssh_keys.yml
+  when: pass_installed
+  with_items: "{{ ssh.pass.ssh_keys }}"
+
+- name: "{{ role_name }} | Deploy ssh config"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/config.j2"
+    dest: "{{ ansible_user_dir }}/.ssh/config"
+
+- name: "{{ role_name }} | Deploy authorized keys from vault"
+  ansible.builtin.include_tasks: authorized_keys.yml
+  when: pass_installed
+  with_items: "{{ ssh.pass.authorized_keys }}"

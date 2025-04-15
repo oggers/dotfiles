@@ -34,13 +34,12 @@ WARNING="${RED}\xF0\x9F\x9A\xA8${NC}"
 RIGHT_ANGLE="${GREEN}\xE2\x88\x9F${NC}"
 
 
-DOTFILES_LOG="$HOME/.dotfiles.log"
 
 set -e
 
 # Paths
-CONFIG_DIR="$HOME/.config/dotfiles"
-VAULT_SECRET="$HOME/.ansible-vault/vault.secret"
+ID=""
+DOTFILES_LOG="$HOME/.dotfiles.log"
 DOTFILES_DIR="$HOME/.dotfiles"
 SSH_DIR="$HOME/.ssh"
 IS_FIRST_RUN="$HOME/.dotfiles_run"
@@ -96,6 +95,7 @@ function ubuntu_setup() {
     _cmd "sudo apt-add-repository -y ppa:ansible/ansible"
     _cmd "sudo apt-get update"
     _cmd "sudo apt-get install -y ansible"
+    _cmd "sudo apt-get install pass"
     _cmd "sudo apt-get install python3-argcomplete"
     _cmd "sudo activate-global-python-argcomplete3"
   fi
@@ -123,6 +123,7 @@ function arch_setup() {
     _cmd "sudo pacman -Sy --noconfirm"
     _cmd "sudo pacman -S --noconfirm ansible"
     _cmd "sudo pacman -S --noconfirm python-argcomplete"
+    _cmd "sudo pacman -S --noconfirm pass"
     # _cmd "sudo activate-global-python-argcomplete3"
   fi
   if ! pacman -Q python3 >/dev/null 2>&1; then
@@ -144,7 +145,7 @@ function arch_setup() {
   fi
 
   __task "Setting Locale"
-  _cmd "sudo localectl set-locale LANG=en_US.UTF-8"
+  _cmd "sudo localectl set-locale LANG=es_ES.UTF-8"
 }
 
 update_ansible_galaxy() {
@@ -154,13 +155,28 @@ update_ansible_galaxy() {
   if [ -f "$DOTFILES_DIR/requirements/$os.yml" ]; then
     __task "${OVERWRITE}Updating Ansible Galaxy with OS Config: $os"
     os_requirements="$DOTFILES_DIR/requirements/$os.yml"
+    _cmd "ansible-galaxy install -r $os_requirements"
   fi
-  _cmd "ansible-galaxy install -r $DOTFILES_DIR/requirements/common.yml $os_requirements"
+  _cmd "ansible-galaxy install -r $DOTFILES_DIR/requirements/common.yml"
 }
 
-source /etc/os-release
-__task "Loading Setup for detected OS: ${ID_LIKE:-${ID:-default}}"
-case ${ID_LIKE:-${ID:-default}} in
+function confirmPassAccess() {
+  __task "Accessing Pass store"
+  pass show dummy > /dev/null
+}
+
+detect_os() {
+  if [ -f /etc/os-release ]; then
+    source /etc/os-release
+    echo $ID
+  else
+    echo $(uname -s | tr '[:upper:]' '[:lower:]')
+  fi
+}
+
+dotfiles_os=$(detect_os)
+__task "Loading Setup for detected OS: $dotfiles_os"
+case $dotfiles_os in
   ubuntu)
     ubuntu_setup
     ;;
@@ -168,6 +184,9 @@ case ${ID_LIKE:-${ID:-default}} in
     arch_setup
     ;;
   manjaro)
+    arch_setup
+    ;;
+  endeavouros)
     arch_setup
     ;;
   *)
@@ -185,6 +204,7 @@ if ! [[ -f "$SSH_DIR/authorized_keys" ]]; then
   _cmd "cat $SSH_DIR/id_rsa.pub >> $SSH_DIR/authorized_keys"
 fi
 
+eval `ssh-agent -s`
 if ! [[ -d "$DOTFILES_DIR" ]]; then
   __task "Cloning repository"
   _cmd "git clone --quiet https://github.com/oggers/dotfiles.git $DOTFILES_DIR"
@@ -194,15 +214,11 @@ else
 fi
 
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
-update_ansible_galaxy ${ID_LIKE:-${ID:-default}}
+update_ansible_galaxy $dotfiles_os
 
-__task "Running playbook"; _task_done
-if [[ -f $VAULT_SECRET ]]; then
-  printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}Running playbook with vault secret${NC}\n"
-  ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
-else
-  ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
-fi
+confirmPassAccess
+
+ansible-playbook --ask-become "$DOTFILES_DIR/main.yml" "$@"
 
 popd 2>&1 > /dev/null
 

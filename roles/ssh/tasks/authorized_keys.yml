@@ -1,0 +1,6 @@
+---
+- name: "{{ role_name }} | Deploy authorized_key [{{ item.name }}]"
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user_id }}"
+    state: present
+    key: "{{ lookup('pipe', 'pass show ' + item.vault_path + '/public_key') }}"

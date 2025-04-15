@@ -1,0 +1,5 @@
+- name: "{{ role_name }} | Install amdgpu_top"
+  ansible.builtin.pacman:
+    name: amdgpu_top
+    state: present
+  become: true

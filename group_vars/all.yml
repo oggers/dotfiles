@@ -1,8 +1,62 @@
 default_roles:
-  - packages
-  - syncthing
+  - amdgpu_top
+  - bash
+  - bpytop
   - emacs
-
-packages_install_packages_base:
-  - mc
+  - fastfetch
+  - git
+  - gnome-browser-connector
+  - gnome-shell-extensions
   - keepassxc
+  - mc
+  - neofetch
+  - pamac
+  - starship
+  - syncthing
+  - zsh
+
+desktops:
+  - gnome
+  #- plasma
+
+user_shell: zsh
+amdgpu_top: yes
+
+ssh:
+  pass:
+    ssh_keys:
+      - name: id_rsa
+        vault_path: "personal/ssh/id_rsa"
+      - name: id_ed25519
+        vault_path: "personal/ssh/id_ed25519"
+    authorized_keys:
+      - name: id_ed25519
+        vault_path: "personal/ssh/id_ed25519"
+  config:
+    hosts:
+      - name: apym4
+        hostname: apym4.apanymantel.com
+        port: 22222
+      - name: apym5
+        hostname: apym5.apanymantel.com
+        port: 22222
+      - name: hockenheim.oggers.com.es
+        hostname: hockenheim.oggers.com.es
+        port: 22222
+      - name: bitbucket.org
+        HostkeyAlgorithms: +ssh-rsa
+        PubkeyAcceptedAlgorithms: +ssh-rsa
+
+git:
+  user_name: "Juan Carlos Coruña"
+  user_email: oggers@gmail.com
+
+keepassxc:
+  pass:
+    key_files:
+      - name: .keepass.oggers
+        vault_path: "personal/keepassxc/key_file_oggers"
+      - name: .keepass.clara
+        vault_path: "personal/keepassxc/key_file_clara"
+      - name: .keepass.bizak
+        vault_path: "personal/keepassxc/key_file_bizak"

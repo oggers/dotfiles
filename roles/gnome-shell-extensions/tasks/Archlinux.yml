@@ -1,0 +1,7 @@
+---
+# file: gnome-shell-extensions/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-shell-extensions package"
+  ansible.builtin.pacman:
+    name: gnome-shell-extensions
+    state: present
+  become: yes

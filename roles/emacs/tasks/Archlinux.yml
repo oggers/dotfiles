@@ -1,0 +1,23 @@
+---
+# file: emacs/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install emacs package and dependencies"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - emacs-wayland
+    - ripgrep
+    - fd
+    - shellcheck
+    - make  # needed to compile vterm-module
+    - cmake  # needed to compile vterm-module
+    - python-lsp-server
+    - python-pylint
+    - flake8
+    - texlive-bin
+    - texlive-core
+    - texlive-science
+    - keychain
+    #- haskell-language-server  # haskell
+    #- hoogle  # haskell

@@ -1,0 +1,20 @@
+---
+# file: bash/tasks/main.yml
+- name: "{{ role_name }} | Copy .bashrc"
+  ansible.builtin.copy:
+    src: ".bashrc"
+    dest: "{{ ansible_user_dir }}/.bashrc"
+    mode: "0644"
+
+- name: "{{ role_name }} | Copy .profile"
+  ansible.builtin.copy:
+    src: ".bash_profile"
+    dest: "{{ ansible_user_dir }}/.bash_profile"
+    mode: "0644"
+
+- name: "{{ role_name }} | Set bash shell for user {{ ansible_user_id }}"
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/bash
+  when: "{{ user_shell == 'bash' }}"
+  become: yes
