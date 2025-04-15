@@ -1,0 +1,29 @@
+---
+# file: syncthing/tasks/main.yml
+- name: Syncthing | Set linux distribution specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Syncthing | Install syncthing and dependency packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items: "{{ packages }}"
+
+- name: Syncthing | Enable syncthing service for user
+  ansible.builtin.systemd:
+    name: syncthing.service
+    scope: user
+    state: started
+    enabled: yes
+
+- name: Syncthing | Install aur packages
+  kewlfft.aur.aur:
+    name: "{{ item }}"
+    state: present
+  when: aur_packages is defined
+  with_items: "{{ aur_packages }}"

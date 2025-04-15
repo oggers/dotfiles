@@ -65,11 +65,21 @@
 
   when: ansible_os_family == 'Archlinux'
 
-- name: Emacs | Update EDITOR
-  ansible.builtin.lineinfile:
+- name: Emacs | Update EDITOR in .bashrc
+  ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
-    regexp: '^EDITOR='
-    line: 'EDITOR="emacs"  # ansible_managed'
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs EDITOR"
+    block: |
+      export EDITOR="emacs"  # ansible_managed
+      export VISUAL="$EDITOR"  # ansible_managed
+
+- name: Emacs | Update EDITOR in .zshrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs EDITOR"
+    block: |
+      export EDITOR="emacs"  # ansible_managed
+      export VISUAL="$EDITOR"  # ansible_managed
 
 - name: Emacs | ~./emacs and ~/.emacs.d not present
   ansible.builtin.file:
@@ -110,6 +120,15 @@
       [ -f $HOME/.keychain/$HOSTNAME-sh ] \
         && . $HOME/.keychain/$HOSTNAME-sh
 
+- name: Emacs | Config keychain .zshrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - emacs keychain"
+    block: |
+      # keychain keeps track of ssh-agents
+      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
+        && . $HOME/.keychain/$HOSTNAME-sh
+
 - block:
   - name: Emacs | Enable and start emacs server
     ansible.builtin.systemd:
@@ -118,8 +137,13 @@
       state: started
       scope: user
 
-  - name: Emacs | Add alias for emacsclient
+  - name: Emacs | Add alias for emacsclient in .bashrc
     ansible.builtin.lineinfile:
       path: ~/.bashrc
-      line: "alias e=\"emacsclient -t -a ''\""
+      line: "alias e=\"emacsclient -t -a ''\"  # ansible_managed"
+
+  - name: Emacs | Add alias for emacsclient in .zshrc
+    ansible.builtin.lineinfile:
+      path: ~/.zshrc
+      line: "alias e=\"emacsclient -t -a ''\"  # ansible_managed"
   when: ansible_os_family == 'Archlinux'

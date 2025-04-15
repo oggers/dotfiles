@@ -1,4 +1,8 @@
 default_roles:
-  - alacritty
+  - packages
+  - syncthing
   - emacs
-  - qtile
+
+packages_install_packages_base:
+  - mc
+  - keepassxc

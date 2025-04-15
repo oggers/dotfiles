@@ -1,9 +1,10 @@
 ---
 packages:
-  - emacs
+  - emacs-wayland
   - ripgrep
   - fd
   - shellcheck
+  - make  # needed to compile vterm-module
   - cmake  # needed to compile vterm-module
   - python-lsp-server
   - python-pylint

@@ -1,0 +1,7 @@
+---
+# file: packages/tasks/main.yml
+- name: Packages | Install packages
+  package:
+    name: "{{ item }}"
+  with_items: "{{ packages_install_packages_base + packages_install_packages }}"
+  become: yes
