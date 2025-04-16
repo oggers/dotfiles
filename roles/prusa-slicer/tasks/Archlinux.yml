@@ -1,0 +1,7 @@
+---
+# file: prusa-slicer/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install prusa-slicer package"
+  ansible.builtin.pacman:
+    name: prusa-slicer
+    state: present
+  become: yes

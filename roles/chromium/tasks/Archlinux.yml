@@ -1,0 +1,7 @@
+---
+# file: chromium/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install chromium package"
+  ansible.builtin.pacman:
+    name: chromium
+    state: present
+  become: yes

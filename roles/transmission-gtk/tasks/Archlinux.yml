@@ -1,0 +1,7 @@
+---
+# file: transmission-gtk/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install transmission-gtk package"
+  ansible.builtin.pacman:
+    name: transmission-gtk
+    state: present
+  become: yes

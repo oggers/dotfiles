@@ -1,0 +1,43 @@
+---
+# file: remmina/tasks/remmina_file.yml
+- name: "{{ role_name }} | Compose remmina filename"
+  block:
+    - name: "{{ role_name }} | Check if file {{ filename }} exists"
+      ansible.builtin.stat:
+        path: "{{ filepath }}"
+      register: file_exists
+
+    - name: "{{ role_name }} | Create remmina file {{ filename }}"
+      ansible.builtin.copy:
+        dest: "{{ filepath }}"
+        content: "[remmina]"
+      when: not file_exists.stat.exists
+
+    - name: "{{ role_name }} | Set value"
+      ansible.builtin.lineinfile:
+        dest: "{{ filepath }}"
+        state: present
+        regexp: "^{{ property.name }}.*"
+        line: "{{ property.name }}={{ property.value }}"
+      when: property.value | default(False)
+      loop_control:
+        loop_var: property
+      loop:
+        - name: name
+          value: "{{ item.name }}"
+        - name: ssh_privatekey
+          value: "{{ item.ssh_privatekey | default(None) }}"
+        - name: group
+          value: "{{ item.group | default(None) }}"
+        - name: server
+          value: "{{ item.server }}"
+        - name: protocol
+          value: "{{ item.protocol }}"
+        - name: username
+          value: "{{ item.username | default(None) }}"
+        - name: domain
+          value: "{{ item.domain | default(None) }}"
+
+  vars:
+    filename: "{{ item.group | default('group') | lower | regex_replace('[\\s\\.,]', '-') | lower }}_{{ item.protocol | lower }}_{{ item.name | lower | regex_replace('[\\s\\.,]', '-') }}_{{ item.server | lower | regex_replace('[\\s\\.,]', '-') }}.remmina"
+    filepath: "{{ ansible_user_dir }}/.local/share/remmina/{{ filename }}"

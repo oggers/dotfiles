@@ -1,0 +1,6 @@
+---
+# file: telegram/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install telegram package"
+  kewlfft.aur.aur:
+    name: telegram-desktop
+    state: present

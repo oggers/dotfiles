@@ -1,0 +1,7 @@
+---
+# file: inkscape/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install inkscape package"
+  ansible.builtin.pacman:
+    name: inkscape
+    state: present
+  become: yes

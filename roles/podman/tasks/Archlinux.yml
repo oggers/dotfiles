@@ -1,0 +1,7 @@
+---
+# file: podman/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install podman package"
+  ansible.builtin.pacman:
+    name: podman
+    state: present
+  become: yes

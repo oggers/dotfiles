@@ -1,0 +1,7 @@
+---
+# file: virt-manager/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install virt-manager package"
+  ansible.builtin.pacman:
+    name: virt-manager
+    state: present
+  become: yes

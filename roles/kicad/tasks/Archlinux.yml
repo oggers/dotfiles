@@ -1,0 +1,11 @@
+---
+# file: kicad/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install kicad packages"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - kicad
+    - kicad-library
+    - kicad-library-3d

@@ -1,0 +1,7 @@
+---
+# file: gimp/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gimp package"
+  ansible.builtin.pacman:
+    name: gimp
+    state: present
+  become: yes

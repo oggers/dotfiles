@@ -1,0 +1,7 @@
+---
+# file: freecad/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install freecad package"
+  ansible.builtin.pacman:
+    name: freecad
+    state: present
+  become: yes

@@ -1,0 +1,7 @@
+---
+# file: dbeaver/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install dbeaver package"
+  ansible.builtin.pacman:
+    name: dbeaver
+    state: present
+  become: yes

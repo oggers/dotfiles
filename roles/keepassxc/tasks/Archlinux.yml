@@ -1,7 +1,7 @@
-- name: "{{ role_name }} | Install"
+---
+# file: keepassxc/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install keepassxc package"
   ansible.builtin.pacman:
-    name: "{{ item }}"
+    name: keepassxc
     state: present
   become: true
-  loop:
-    - keepassxc

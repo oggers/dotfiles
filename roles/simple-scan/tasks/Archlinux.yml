@@ -1,0 +1,7 @@
+---
+# file: simple-scan/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install simpe-scan package"
+  ansible.builtin.pacman:
+    name: simple-scan
+    state: present
+  become: yes

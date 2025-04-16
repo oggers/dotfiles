@@ -1,0 +1,7 @@
+---
+# file: obs-studio/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install obs-studio package"
+  ansible.builtin.pacman:
+    name: obs-studio
+    state: present
+  become: yes

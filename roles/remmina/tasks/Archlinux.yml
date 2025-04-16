@@ -1,0 +1,10 @@
+---
+# file: remmina/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install remmina package"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - remmina
+    - freerdp

@@ -1,0 +1,7 @@
+---
+# file: openscad/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install openscad package"
+  ansible.builtin.pacman:
+    name: openscad
+    state: present
+  become: yes

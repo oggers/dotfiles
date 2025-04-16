@@ -1,0 +1,7 @@
+---
+# file: calibre/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install calibre package"
+  ansible.builtin.pacman:
+    name: calibre
+    state: present
+  become: yes

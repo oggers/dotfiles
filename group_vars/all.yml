@@ -2,17 +2,39 @@ default_roles:
   - amdgpu_top
   - bash
   - bpytop
+  - brave
+  - calibre
+  - chromium
+  - dbeaver
   - emacs
   - fastfetch
+  - firefox
+  - freecad
+  - gimp
   - git
   - gnome-browser-connector
   - gnome-shell-extensions
+  - inkscape
   - keepassxc
+  - kicad
+  - ledger-live
+  - libreoffice-still
   - mc
   - neofetch
+  - obs-studio
+  - openscad
   - pamac
+  - podman
+  - prusa-slicer
+  - remmina
+  - simple-scan
   - starship
   - syncthing
+  - telegram-desktop
+  - tmuxp
+  - transmission-gtk
+  - virt-manager
+  - vlc
   - zsh
 
 desktops:
@@ -20,6 +42,7 @@ desktops:
   #- plasma
 
 user_shell: zsh
+
 amdgpu_top: yes
 
 ssh:
@@ -60,3 +83,12 @@ keepassxc:
         vault_path: "personal/keepassxc/key_file_clara"
       - name: .keepass.bizak
         vault_path: "personal/keepassxc/key_file_bizak"
+
+remmina:
+  connections:
+    - name: adminbizak@proteo
+      group: "Servidores Windows"
+      server: "newproteo.local.zabik"
+      protocol: RDP
+      username: bizaksgacom
+      domain: DOMGSMNT

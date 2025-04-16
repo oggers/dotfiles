@@ -1,0 +1,9 @@
+---
+# file: firefox/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install firefox packages"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - firefox

@@ -1,0 +1,6 @@
+---
+# file: ledger-live/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install ledger-live package"
+  kewlfft.aur.aur:
+    name: ledger-live
+    state: present

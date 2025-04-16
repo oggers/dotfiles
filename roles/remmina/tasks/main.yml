@@ -1,0 +1,26 @@
+---
+# file: remmina/tasks/main.yml
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: distribution_config
+
+- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists
+
+# - name: "{{ role_name }} | Create remmina confs"
+#   ansible.builtin.template:
+#     src: remmina.j2
+#     dest: "{{ ansible_user_dir }}/.local/remmina/{{ item.group | default('group') | lower | regex_replace('[\s\.,] | lower }}_{{ item.name | lower | regex_replace('[\s\.,] ', '-') }}_{{ item.server | lower | regex_replace('[\s\.,]', '-') }}.remmina"
+#   loop: "{{ remmina.connections }}"
+
+- name: "{{ role_name }} | Create remmina config directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/remmina"
+    state: directory
+    mode: "0750"
+
+- name: "{{ role_name }} | Create remmina files"
+  ansible.builtin.include_tasks: remmina_file.yml
+  loop: "{{ remmina.connections }}"
