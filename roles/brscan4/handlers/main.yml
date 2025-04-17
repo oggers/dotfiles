@@ -1,0 +1,9 @@
+---
+# file: brscan4/handlers/main.yml
+- name: Restart saned
+  ansible.builtin.systemd:
+    name: saned.socket
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  become: yes

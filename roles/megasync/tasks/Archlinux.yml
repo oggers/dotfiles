@@ -1,0 +1,6 @@
+---
+# file: megasync/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install megasync package"
+  kewlfft.aur.aur:
+    name: megasync
+    state: present

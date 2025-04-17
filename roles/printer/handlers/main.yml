@@ -1,0 +1,8 @@
+---
+# file: printer/handlers/main.yml
+- name: cups.socker running
+  ansible.builtin.systemd:
+    name: cups.socket
+    state: started
+    enabled: true
+  become: true

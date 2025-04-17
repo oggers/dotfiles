@@ -1,0 +1,7 @@
+---
+# file: signal-desktop/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install signal-desktop package"
+  ansible.builtin.pacman:
+    name: signal-desktop
+    state: present
+  become: true

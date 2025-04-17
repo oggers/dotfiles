@@ -1,0 +1,7 @@
+---
+# file: rclone/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install rclone package"
+  ansible.builtin.pacman:
+    name: rclone
+    state: present
+  become: true

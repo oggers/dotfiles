@@ -1,0 +1,11 @@
+---
+# file: brscan4/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install sane package"
+  ansible.builtin.pacman:
+    name: sane
+    state: present
+  become: true
+- name: "{{ role_name }} | Install brscan4 package"
+  kewlfft.aur.aur:
+    name: brscan4
+    state: present

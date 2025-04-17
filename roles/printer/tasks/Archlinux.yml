@@ -1,0 +1,14 @@
+---
+# file: printer/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install cups package"
+  ansible.builtin.pacman:
+    name: cups
+    state: present
+  become: true
+  notify: cups.socker running
+
+- name: "{{ role_name }} | Install ghostscritp package"
+  ansible.builtin.pacman:
+    name: ghostscript
+    state: present
+  become: true

@@ -3,6 +3,7 @@ default_roles:
   - bash
   - bpytop
   - brave
+  - brscan4
   - calibre
   - chromium
   - dbeaver
@@ -14,19 +15,24 @@ default_roles:
   - git
   - gnome-browser-connector
   - gnome-shell-extensions
+  - gstm
   - inkscape
   - keepassxc
   - kicad
   - ledger-live
   - libreoffice-still
   - mc
+  - megasync
   - neofetch
   - obs-studio
   - openscad
   - pamac
   - podman
+  - printer
   - prusa-slicer
+  - rclone
   - remmina
+  - signal-desktop
   - simple-scan
   - starship
   - syncthing
@@ -44,6 +50,38 @@ desktops:
 user_shell: zsh
 
 amdgpu_top: yes
+
+brscan4:
+  ip: "192.168.1.199"
+  model: "DCP-J552DW"
+  name: Brother
+
+git:
+  user_name: "Juan Carlos Coruña"
+  user_email: oggers@gmail.com
+
+keepassxc:
+  pass:
+    key_files:
+      - name: .keepass.oggers
+        vault_path: "personal/keepassxc/key_file_oggers"
+      - name: .keepass.clara
+        vault_path: "personal/keepassxc/key_file_clara"
+      - name: .keepass.bizak
+        vault_path: "personal/keepassxc/key_file_bizak"
+
+printer:
+  name: "Brother_DCP-J552DW"
+  ipv4_address: "192.168.1.199"
+
+remmina:
+  connections:
+    - name: adminbizak@proteo
+      group: "Servidores Windows"
+      server: "newproteo.local.zabik"
+      protocol: RDP
+      username: bizaksgacom
+      domain: DOMGSMNT
 
 ssh:
   pass:
@@ -69,26 +107,3 @@ ssh:
       - name: bitbucket.org
         HostkeyAlgorithms: +ssh-rsa
         PubkeyAcceptedAlgorithms: +ssh-rsa
-
-git:
-  user_name: "Juan Carlos Coruña"
-  user_email: oggers@gmail.com
-
-keepassxc:
-  pass:
-    key_files:
-      - name: .keepass.oggers
-        vault_path: "personal/keepassxc/key_file_oggers"
-      - name: .keepass.clara
-        vault_path: "personal/keepassxc/key_file_clara"
-      - name: .keepass.bizak
-        vault_path: "personal/keepassxc/key_file_bizak"
-
-remmina:
-  connections:
-    - name: adminbizak@proteo
-      group: "Servidores Windows"
-      server: "newproteo.local.zabik"
-      protocol: RDP
-      username: bizaksgacom
-      domain: DOMGSMNT
