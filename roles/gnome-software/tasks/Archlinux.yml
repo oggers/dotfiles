@@ -1,0 +1,10 @@
+---
+# file: gnome-software/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-software with flatpak"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_item:
+    - gnome-software
+    - flatpak

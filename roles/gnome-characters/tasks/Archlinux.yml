@@ -1,0 +1,7 @@
+---
+# file: gnome-characters/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-characters"
+  ansible.builtin.pacman:
+    name: gnome-characters
+    state: present
+  become: true

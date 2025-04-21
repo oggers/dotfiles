@@ -1,0 +1,7 @@
+---
+# file: gnome-logs/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-logs"
+  ansible.builtin.pacman:
+    name: gnome-logs
+    state: present
+  become: true

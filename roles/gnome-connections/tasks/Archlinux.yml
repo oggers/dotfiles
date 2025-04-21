@@ -1,0 +1,7 @@
+---
+# file: gnome-connections/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-connections"
+  ansible.builtin.pacman:
+    name: gnome-connections
+    state: present
+  become: true

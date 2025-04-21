@@ -1,0 +1,7 @@
+---
+# file: gnome-calendar/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-calendar"
+  ansible.builtin.pacman:
+    name: gnome-calendar
+    state: present
+  become: true

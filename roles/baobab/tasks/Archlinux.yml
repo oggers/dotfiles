@@ -1,0 +1,7 @@
+---
+# file: baobab/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install baobab"
+  ansible.builtin.pacman:
+    name: baobab
+    state: present
+  become: true

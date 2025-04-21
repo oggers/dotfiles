@@ -1,0 +1,7 @@
+---
+# file: gnome-font-viewer/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install gnome-font-viewer"
+  ansible.builtin.pacman:
+    name: gnome-font-viewer
+    state: present
+  become: true

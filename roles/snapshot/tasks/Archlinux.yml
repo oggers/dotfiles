@@ -1,0 +1,7 @@
+---
+# file: snapshot/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install snapshot"
+  ansible.builtin.pacman:
+    name: snapshot
+    state: present
+  become: true
