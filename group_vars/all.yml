@@ -37,6 +37,7 @@ default_roles:
   - podman
   - printer
   - prusa-slicer
+  - pyenv
   - rclone
   - remmina
   - signal-desktop
@@ -47,6 +48,7 @@ default_roles:
   - telegram-desktop
   - tmuxp
   - transmission-gtk
+  - uv
   - virt-manager
   - vlc
   - zsh

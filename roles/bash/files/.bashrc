@@ -12,13 +12,18 @@ PS1='[\u@\h \W]\$ '
 
 alias e="emacsclient -t -a ''"  # ansible_managed
 
-# ANSIBLE MANAGED BLOCK - emacs keychain"
 # keychain keeps track of ssh-agents
 [ -f $HOME/.keychain/$HOSTNAME-sh ] \
     && . $HOME/.keychain/$HOSTNAME-sh
 
-# ANSIBLE MANAGED BLOCK - emacs EDITOR"
 export EDITOR="e"  # ansible_managed
 export VISUAL="$EDITOR"  # ansible_managed
 
+# starship
 eval "$(starship init bash)"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+eval "$(pyenv virtualenv-init -)"

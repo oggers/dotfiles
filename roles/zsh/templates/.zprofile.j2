@@ -1,9 +1,4 @@
-#
-# ~/.bash_profile
-#
-## ansible_managed
-
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+# {{ ansible_managed }}
 
 # https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
 # keychain manages ssh-agents
@@ -13,5 +8,5 @@ type keychain >&/dev/null \
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
+eval "$(pyenv init - zsh)"
 eval "$(pyenv virtualenv-init -)"

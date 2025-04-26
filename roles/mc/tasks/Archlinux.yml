@@ -1,4 +1,6 @@
-- name: "mc | Install"
+---
+# file: mc/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install"
   ansible.builtin.pacman:
     name: "{{ item }}"
     state: present
@@ -7,7 +9,7 @@
     - mc
     - aspell-en  # to avoid error message when opening a file
 
-- name: "mc | Ensure mc directory structure exists"
+- name: "{{ role_name }} | Ensure mc directory structure exists"
   ansible.builtin.file:
     path: "{{ item }}"
     mode: "0755"

@@ -1,0 +1,12 @@
+---
+# file: pyenv/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install pyenv"
+  ansible.builtin.pacman:
+    name: pyenv
+    state: present
+  become: true
+
+- name: "{{ role_name }} | Install pyenv-virtualenv"
+  kewlfft.aur.aur:
+    name: pyenv-virtualenv
+    state: present
