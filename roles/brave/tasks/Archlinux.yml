@@ -2,5 +2,5 @@
 # file: brave/tasks/Archlinux.yml
 - name: "{{ role_name }} | Install brave package"
   kewlfft.aur.aur:
-    name: brave
+    name: brave-bin
     state: present
