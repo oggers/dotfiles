@@ -22,7 +22,6 @@ default_roles:
   - gnome-logs
   - gnome-shell-extensions
   - gnome-software
-  - gstm
   - inkscape
   - keepassxc
   - kicad
@@ -212,9 +211,33 @@ ssh:
       - name: apym4
         hostname: apym4.apanymantel.com
         port: 22222
+        LocalForward:
+          - "43002 localhost:3002  # Volto Test localhost"
+          - "43003 localhost:3003"
+          - "44200 localhost:4200  # Angular dev"
+          - "45555 localhost:5555  # Flower Airflow"
+          - "45556 localhost:5556  # Flower Plone"
+          - "48009 localhost:8009  # Dozzle"
+          - "48040 localhost:8040  # Plone Backend Prod"
+          - "48080 localhost:8080  # Plone Backend Test"
+          - "49080 localhost:9080  # DAGs Airflow"
+          - "49999 localhost:9999  # Jupyterlab Airflow"
+          - "45672 localhost:15672  # rabbitmq management"
       - name: apym5
         hostname: apym5.apanymantel.com
         port: 22222
+        LocalForward:
+          - "53002 localhost:3002  # Volto Test localhost"
+          - "53003 localhost:3003"
+          - "54200 localhost:4200  # Angular dev"
+          - "55555 localhost:5555  # Flower Airflow"
+          - "55556 localhost:5556  # Flower Plone"
+          - "58009 localhost:8009  # Dozzle"
+          - "58040 localhost:8040  # Plone Backend Prod"
+          - "58080 localhost:8080  # Plone Backend Test"
+          - "59080 localhost:9080  # DAGs Airflow"
+          - "59999 localhost:9999  # Jupyterlab Airflow"
+          - "55672 localhost:15672  # rabbitmq management"
       - name: hockenheim.oggers.com.es
         hostname: hockenheim.oggers.com.es
         port: 22222

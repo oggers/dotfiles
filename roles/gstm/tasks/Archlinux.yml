@@ -1,6 +1,0 @@
----
-# file: gstm/tasks/Archlinux.yml
-- name: "{{ role_name }} | Install gstm package"
-  kewlfft.aur.aur:
-    name: gstm
-    state: present

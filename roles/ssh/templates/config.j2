@@ -4,6 +4,12 @@ AddKeysToAgent yes
 {% for host in ssh.config.hosts %}
 Host {{ host.name }}
 {% for item in host | dict2items | rejectattr('key', 'eq', 'name') %}
+{% if item.value is sequence and item.value is not string and item.value is not mapping %}
+{% for item2 in item.value %}
+  {{ item.key }} {{ item2 }}
+{% endfor %}
+{% else %}
   {{ item.key }} {{ item.value }}
+{% endif %}
 {% endfor %}
 {% endfor %}
