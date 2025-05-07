@@ -9,15 +9,6 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Copy .zshrc and .zprofile"
-  ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: "{{ ansible_user_dir }}/{{ item }}"
-    mode: "0644"
-  loop:
-    - .zshrc
-    - .zprofile
-
 - name: "{{ role_name }} | Copy .zcompdump"
   ansible.builtin.copy:
     src: ".zcompdump"

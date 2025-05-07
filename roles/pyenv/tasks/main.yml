@@ -7,3 +7,42 @@
 - name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
+
+- name: "{{ role_name }} | update .zshrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zshrc"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - zsh)"
+      eval "$(pyenv virtualenv-init -)"
+
+- name: "{{ role_name }} | update .zprofile"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zprofile"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - zsh)"
+      eval "$(pyenv virtualenv-init -)"
+
+- name: "{{ role_name }} | update .bashrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - bash)"
+      eval "$(pyenv virtualenv-init -)"

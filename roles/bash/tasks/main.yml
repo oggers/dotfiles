@@ -1,20 +1,34 @@
 ---
 # file: bash/tasks/main.yml
-- name: "{{ role_name }} | Copy .bashrc"
-  ansible.builtin.copy:
-    src: ".bashrc"
-    dest: "{{ ansible_user_dir }}/.bashrc"
-    mode: "0644"
-
-- name: "{{ role_name }} | Copy .profile"
-  ansible.builtin.copy:
-    src: ".bash_profile"
-    dest: "{{ ansible_user_dir }}/.bash_profile"
-    mode: "0644"
-
 - name: "{{ role_name }} | Set bash shell for user {{ ansible_user_id }}"
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /bin/bash
   when: "{{ user_shell == 'bash' }}"
   become: yes
+
+- name: "{{ role_name }} | update .bashrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role bashrc"
+    block: |
+      # If not running interactively, don't do anything
+      [[ $- != *i* ]] && return
+      alias ls='ls --color=auto'
+      alias grep='grep --color=auto'
+      PS1='[\u@\h \W]\$ '
+      # Add ~/.local/bin to PATH
+      export PATH="$HOME/.local/bin:$PATH"
+
+- name: "{{ role_name }} | update .bash_profile"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role bashrc"
+    block: |
+      [[ -f ~/.bashrc ]] && . ~/.bashrc

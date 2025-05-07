@@ -68,6 +68,49 @@
     - org
     - org-roam
 
+- name: "{{ role_name }} | update .zshrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zshrc"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role emacs"
+    block: |
+      alias e="emacsclient -t -a ''"
+      export EDITOR="e"
+      export VISUAL="$EDITOR"
+      # keychain keeps track of ssh-agents
+      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
+        && . $HOME/.keychain/$HOSTNAME-sh
+
+- name: "{{ role_name }} | update .zprofile"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zprofile"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role emacs"
+    block: |
+      # https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
+      # keychain manages ssh-agents
+      type keychain >&/dev/null \
+          && keychain --agents ssh
+
+- name: "{{ role_name }} | update .bashrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: yes
+    append_newline: yes
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK role emacs"
+    block: |
+      alias e="emacsclient -t -a ''"
+      export EDITOR="e"
+      export VISUAL="$EDITOR"
+      # keychain keeps track of ssh-agents
+      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
+          && . $HOME/.keychain/$HOSTNAME-sh
+
 - name: "{{ role_name }} | Enable and start emacs server"
   ansible.builtin.systemd:
     name: emacs
