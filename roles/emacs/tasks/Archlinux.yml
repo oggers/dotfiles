@@ -1,12 +1,30 @@
 ---
 # file: emacs/tasks/Archlinux.yml
+- name: "{{ role_name }} | Check if session type is x11 or wayland"
+  ansible.builtin.command: echo $XDG_SESSION_TYPE
+  register: session_type
+  changed_when: false
+
+- name: "{{ role_name }} | Install emacs x11"
+  ansible.builtin.pacman:
+    name: emacs
+    state: present
+  become: yes
+  when: "'x11' in session_type.stdout.lower()"
+
+- name: "{{ role_name }} | Install emacs wayland"
+  ansible.builtin.pacman:
+    name: emacs-wayland
+    state: present
+  become: yes
+  when: "'wayland' in session_type.stdout.lower()"
+
 - name: "{{ role_name }} | Install emacs package and dependencies"
   ansible.builtin.pacman:
     name: "{{ item }}"
     state: present
   become: yes
   loop:
-    - emacs-wayland
     - ripgrep
     - fd
     - shellcheck
