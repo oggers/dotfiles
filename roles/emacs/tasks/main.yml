@@ -68,6 +68,16 @@
     - org
     - org-roam
 
+- name: "{{ role_name }} | Check if basedpyright is already installed"
+  ansible.builtin.command: which basedpyright
+  register: pyright_installed
+  ignore_errors: yes
+  changed_when: false
+
+- name: "{{ role_name }} | Install basedpyright"
+  ansible.builtin.command: uv tool install basedpyright
+  when: pyright_installed.rc != 0
+
 - name: "{{ role_name }} | update .zshrc"
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.zshrc"

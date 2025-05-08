@@ -30,9 +30,11 @@
     - shellcheck
     - make  # needed to compile vterm-module
     - cmake  # needed to compile vterm-module
-    - python-lsp-server
-    - python-pylint
-    - flake8
+    # - python-lsp-server  # substituted be pyright
+    # - python-pylint  # substituted by ruff
+    # - python-pyflakes  # substituted by ruff
+    # - python-flake8  # substituted by ruff
+    # - flake8  # substituted by ruff
     - texlive-bin
     - texlive-core
     - texlive-science

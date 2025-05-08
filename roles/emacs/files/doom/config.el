@@ -133,3 +133,16 @@
 
 (unless (member "Symbols Nerd Font Mono" (font-family-list))
   (nerd-icons-install-fonts t))
+
+;; Use flycheck with ruff
+(use-package! flycheck
+  :config
+  (setq flycheck-python-ruff-executable "ruff"))
+;; Set ruff as the primary linter
+(setq-hook! 'python-mode-hook
+  flycheck-checker 'python-ruff)
+;; disable mypy in flycheck
+;; (after! flycheck
+;;   (setq flycheck-python-mypy-executable nil))
+(after! flycheck
+  (setq flycheck-disabled-checkers '(python-mypy)))
