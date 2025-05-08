@@ -8,3 +8,29 @@
 - name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
+
+- name: "{{ role_name }} | Add user to group kvm and libvirt"
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: libvirt,kvm
+    append: yes
+  become: yes
+
+- name: "{{ role_name }} | Edit libvirtd.conf"
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/libvirtd.conf
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  loop:
+    - regexp: '#unix_sock_group = "libvirt"'
+      line: 'unix_sock_group = "libvirt"'
+    - regexp: '#unix_sock_rw_perms = "0770"'
+      line: 'unix_sock_rw_perms = "0770"'
+  become: yes
+
+- name: "{{ role_name }} | Enable and start service libvirtd"
+  ansible.builtin.service:
+    name: libvirtd.service
+    enabled: yes
+    state: started
+  become: yes

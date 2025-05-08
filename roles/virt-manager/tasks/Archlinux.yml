@@ -2,6 +2,19 @@
 # file: virt-manager/tasks/Archlinux.yml
 - name: "{{ role_name }} | Install virt-manager package"
   ansible.builtin.pacman:
-    name: virt-manager
+    name: "{{ item }}"
     state: present
   become: yes
+  loop:
+    - qemu-full
+    - virt-manager
+    - virt-viewer
+    - dnsmasq
+    - bridge-utils
+    - openbsd-netcat
+    - vde2
+    - ebtables
+    - iptables-nft
+    - nftables
+    - ovmf
+    - swtpm
