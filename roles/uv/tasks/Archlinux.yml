@@ -1,7 +1,7 @@
 ---
 # file: uv/tasks/Archlinux.yml
-- name: "{{ role_name }} | Install uv"
+- name: "{{ role_name }} | Install curl needed to install uv"
   ansible.builtin.pacman:
-    name: uv
+    name: curl
     state: present
   become: true
