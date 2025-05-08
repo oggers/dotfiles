@@ -1,0 +1,7 @@
+---
+# file: git/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install direnv"
+  ansible.builtin.pacman:
+    name: direnv
+    state: present
+  become: true
