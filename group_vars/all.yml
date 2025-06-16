@@ -244,6 +244,8 @@ ssh:
       - name: hockenheim.oggers.com.es
         hostname: hockenheim.oggers.com.es
         port: 22222
+        LocalForward:
+          - "58384 localhost:8384  # syncthing"
       - name: bitbucket.org
         HostkeyAlgorithms: +ssh-rsa
         PubkeyAcceptedAlgorithms: +ssh-rsa
