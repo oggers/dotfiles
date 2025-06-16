@@ -246,6 +246,7 @@ ssh:
         port: 22222
         LocalForward:
           - "58384 localhost:8384  # syncthing"
+          - "58888 localhost:8888  # jupyterlab"
       - name: bitbucket.org
         HostkeyAlgorithms: +ssh-rsa
         PubkeyAcceptedAlgorithms: +ssh-rsa
