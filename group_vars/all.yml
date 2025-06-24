@@ -2,6 +2,7 @@ default_roles:
   - amdgpu_top
   - baobab
   - bash
+  - blender
   - bpytop
   - brave
   - brscan4

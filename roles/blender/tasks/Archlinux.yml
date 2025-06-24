@@ -1,0 +1,9 @@
+---
+# file: blender/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: true
+  loop:
+    - blender
