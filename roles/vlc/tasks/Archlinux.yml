@@ -2,6 +2,10 @@
 # file: vlc/tasks/Archlinux.yml
 - name: "{{ role_name }} | Install vlc package"
   ansible.builtin.pacman:
-    name: vlc
+    name: "{{ item }}"
     state: present
   become: yes
+  with_items:
+    - vlc
+    - vlc-plugin-gstreamer
+    - vlc-plugin-ffmpeg
