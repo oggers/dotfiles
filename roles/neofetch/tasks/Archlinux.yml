@@ -1,5 +1,0 @@
-- name: "neofetch | Install"
-  ansible.builtin.pacman:
-    name: "neofetch"
-    state: present
-  become: true

@@ -31,7 +31,6 @@ default_roles:
   - libreoffice-still
   - mc
   - megasync
-  - neofetch
   - obs-studio
   - openscad
   - pamac
