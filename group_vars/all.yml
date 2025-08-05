@@ -241,7 +241,7 @@ ssh:
           - "59080 localhost:9080  # DAGs Airflow"
           - "59999 localhost:9999  # Jupyterlab Airflow"
           - "55672 localhost:15672  # rabbitmq management"
-      - name: hockenheim.oggers.com.es
+      - name: hockenheim.oggers.com.es hockenheim
         hostname: hockenheim.oggers.com.es
         port: 22222
         LocalForward:
