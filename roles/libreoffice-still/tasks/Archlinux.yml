@@ -2,6 +2,9 @@
 # file: libreoffice-still/tasks/Archlinux.yml
 - name: "{{ role_name }} | Install libreoffice-still packages"
   ansible.builtin.pacman:
-    name: libreoffice-still
+    name: "{{ item }}"
     state: present
   become: yes
+  loop:
+    - libreoffice-still
+    - libreoffice-still-es
