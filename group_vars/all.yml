@@ -247,6 +247,7 @@ ssh:
         LocalForward:
           - "58384 localhost:8384  # syncthing"
           - "58888 localhost:8888  # jupyterlab"
+          - "55006 localhost:5006  # bokeh"
       - name: bitbucket.org
         HostkeyAlgorithms: +ssh-rsa
         PubkeyAcceptedAlgorithms: +ssh-rsa
