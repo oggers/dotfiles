@@ -19,3 +19,9 @@
   ansible.builtin.include_tasks: authorized_keys.yml
   when: pass_installed
   with_items: "{{ ssh.pass.authorized_keys }}"
+
+- name: "{{ role_name }} | Enable sshd"
+  ansible.builtin.systemd:
+    name: sshd
+    enabled: yes
+    state: started
