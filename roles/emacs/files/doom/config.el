@@ -146,3 +146,4 @@
 ;;   (setq flycheck-python-mypy-executable nil))
 (after! flycheck
   (setq flycheck-disabled-checkers '(python-mypy)))
+(setq lsp-pyright-langserver-command "basedpyright")
