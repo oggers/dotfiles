@@ -146,3 +146,10 @@
 ;;   (setq flycheck-python-mypy-executable nil))
 (after! flycheck
   (setq flycheck-disabled-checkers '(python-mypy)))
+
+;; Set SSH_AUTH_SOCK from keychain
+(let ((ssh-auth-sock (string-trim
+                      (shell-command-to-string
+                       "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
+  (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
+    (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
