@@ -147,6 +147,8 @@
 (after! flycheck
   (setq flycheck-disabled-checkers '(python-mypy)))
 
+(setq lsp-pyright-langserver-command "basedpyright")
+
 ;; Set SSH_AUTH_SOCK from keychain
 (let ((ssh-auth-sock (string-trim
                       (shell-command-to-string
