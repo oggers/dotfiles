@@ -52,7 +52,6 @@
 
 ;; https://github.com/alexluigit/dirvish/blob/main/CUSTOMIZING.org
 ;;(unpin! dirvish)
-(package! keychain-environment)
 (package! org-super-agenda)
 (package! org-modern)
 (package! org-auto-tangle)

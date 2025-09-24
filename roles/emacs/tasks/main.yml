@@ -89,22 +89,6 @@
       alias e="emacsclient -t -a ''"
       export EDITOR="e"
       export VISUAL="$EDITOR"
-      # keychain keeps track of ssh-agents
-      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
-        && . $HOME/.keychain/$HOSTNAME-sh
-
-- name: "{{ role_name }} | update .zprofile"
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.zprofile"
-    prepend_newline: yes
-    append_newline: yes
-    create: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK role emacs"
-    block: |
-      # https://stackoverflow.com/questions/42136745/using-an-ssh-agent-from-emacs-in-server-mode
-      # keychain manages ssh-agents
-      type keychain >&/dev/null \
-          && keychain --agents ssh
 
 - name: "{{ role_name }} | update .bashrc"
   ansible.builtin.blockinfile:
@@ -117,13 +101,23 @@
       alias e="emacsclient -t -a ''"
       export EDITOR="e"
       export VISUAL="$EDITOR"
-      # keychain keeps track of ssh-agents
-      [ -f $HOME/.keychain/$HOSTNAME-sh ] \
-          && . $HOME/.keychain/$HOSTNAME-sh
+
+- name: Create user systemd directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/systemd/user"
+    state: directory
+    mode: '0755'
+
+- name: "{{ role_name }} | Copy unit file"
+  ansible.builtin.copy:
+    src: files/my-emacs.service
+    dest: "{{ ansible_user_dir}}/.config/systemd/user/my-emacs.service"
+    mode: '0644'
 
 - name: "{{ role_name }} | Enable and start emacs server"
-  ansible.builtin.systemd:
-    name: emacs
-    enabled: yes
+  ansible.builtin.systemd_service:
+    name: my-emacs
+    daemon_reload: true
+    enabled: true
     state: started
     scope: user

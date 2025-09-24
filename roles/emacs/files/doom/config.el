@@ -105,9 +105,6 @@
 (setq-default js-indent-level 2)
 (setq-default typescript-indent-level 2)
 
-;; keychain ssh-agent for emacs server
-(keychain-refresh-environment)
-
 ;; enable beacon
 (beacon-mode 1)
 
@@ -149,9 +146,12 @@
 
 (setq lsp-pyright-langserver-command "basedpyright")
 
-;; Set SSH_AUTH_SOCK from keychain
-(let ((ssh-auth-sock (string-trim
-                      (shell-command-to-string
-                       "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
-  (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
-    (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
+;; Set SSH_AUTH_SOCK from keychain if SSH_AUTH_SOCK does not exist or is invalid
+(when (or (not (getenv "SSH_AUTH_SOCK"))
+          (not (file-exists-p (getenv "SSH_AUTH_SOCK"))))
+  (let ((ssh-auth-sock (string-trim
+                        (shell-command-to-string
+                         "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
+    (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
+      (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
+)
