@@ -213,8 +213,8 @@ ssh:
         hostname: apym4.apanymantel.com
         port: 22222
         LocalForward:
-          - "43002 localhost:3002  # Volto Test localhost"
-          - "43003 localhost:3003"
+          - "43002 localhost:43002  # Volto Test localhost"
+          - "43003 localhost:43003  # Volto Test loopback"
           - "44200 localhost:4200  # Angular dev"
           - "45555 localhost:5555  # Flower Airflow"
           - "45556 localhost:5556  # Flower Plone"
