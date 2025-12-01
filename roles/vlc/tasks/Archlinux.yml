@@ -7,5 +7,4 @@
   become: yes
   with_items:
     - vlc
-    - vlc-plugin-gstreamer
-    - vlc-plugin-ffmpeg
+    - vlc-plugin-all
