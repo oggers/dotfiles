@@ -204,7 +204,9 @@ if ! [[ -f "$SSH_DIR/authorized_keys" ]]; then
   _cmd "cat $SSH_DIR/id_rsa.pub >> $SSH_DIR/authorized_keys"
 fi
 
-eval `ssh-agent -s`
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval `ssh-agent -s`
+fi
 if ! [[ -d "$DOTFILES_DIR" ]]; then
   __task "Cloning repository"
   _cmd "git clone --quiet https://github.com/oggers/dotfiles.git $DOTFILES_DIR"
@@ -218,7 +220,16 @@ update_ansible_galaxy $dotfiles_os
 
 confirmPassAccess
 
-ansible-playbook --ask-become "$DOTFILES_DIR/main.yml" "$@"
+# Ensure an askpass provider is set if on a graphical environment
+if [ -z "$SSH_ASKPASS" ]; then
+  if [ -x "/usr/lib/gcr4-ssh-askpass" ]; then
+    export SSH_ASKPASS="/usr/lib/gcr4-ssh-askpass"
+  elif [ -x "/usr/lib/gcr-ssh-askpass" ]; then
+    export SSH_ASKPASS="/usr/lib/gcr-ssh-askpass"
+  fi
+fi
+
+ansible-playbook --ask-become-pass "$DOTFILES_DIR/main.yml" "$@"
 
 popd 2>&1 > /dev/null
 

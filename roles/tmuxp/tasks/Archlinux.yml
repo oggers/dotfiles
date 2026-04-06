@@ -1,7 +1,0 @@
----
-# file: tmuxp/tasks/Archlinux.yml
-- name: "{{ role_name }} | Install tmuxp package"
-  ansible.builtin.pacman:
-    name: tmuxp
-    state: present
-  become: yes

@@ -13,7 +13,7 @@
 - name: "{{ role_name }} | Deploy ssh config"
   ansible.builtin.template:
     src: "{{ role_path }}/templates/config.j2"
-    dest: "{{ ansible_user_dir }}/.ssh/config"
+    dest: "{{ ansible_facts['user_dir'] }}/.ssh/config"
 
 - name: "{{ role_name }} | Deploy authorized keys from vault"
   ansible.builtin.include_tasks: authorized_keys.yml

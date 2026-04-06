@@ -3,7 +3,7 @@
   block:
     - name: "ssh | Deploy [{{ item.name }}] private key"
       ansible.builtin.copy:
-        dest: "{{ ansible_user_dir }}/.ssh/{{ item.name }}"
+        dest: "{{ ansible_facts['user_dir'] }}/.ssh/{{ item.name }}"
         content: |
           {{ lookup('pipe', 'pass show ' + item.vault_path + '/private_key') }}
         mode: "0600"
@@ -11,7 +11,7 @@
 
     - name: "ssh | Deploy [{{ item.name }}] public key"
       ansible.builtin.copy:
-        dest: "{{ ansible_user_dir }}/.ssh/{{ item.name }}.pub"
+        dest: "{{ ansible_facts['user_dir'] }}/.ssh/{{ item.name }}.pub"
         content: |
           {{ lookup('pipe', 'pass show ' + item.vault_path + '/public_key') }}
         mode: "0644"

@@ -1,18 +1,18 @@
 ---
 # file: roles/emacs/tasks/main.yml
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts['distribution'] }}"
   ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+    path: "{{ role_path }}/tasks/{{ ansible_facts['distribution'] }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+- name: "{{ role_name }} | Run Tasks: {{ ansible_facts['distribution'] }}"
+  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
 
 - name: "{{ role_name }} | Link home doom"
   ansible.builtin.file:
     src: "{{ role_path }}/files/doom/"
-    dest: "{{ ansible_user_dir }}/.config/doom"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/doom"
     state: link
   register: result_doom_dir
 
@@ -20,15 +20,15 @@
   ansible.builtin.git:
     repo: "https://github.com/doomemacs/doomemacs"
     depth: 1
-    dest: "{{ ansible_user_dir }}/.config/emacs"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/emacs"
   register: result_download_doom
 
 - name: "{{ role_name }} | Install doom"
-  ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom --force install"
+  ansible.builtin.command: "{{ ansible_facts['user_dir'] }}/.config/emacs/bin/doom --force install"
   when: result_doom_dir.changed
 
 - name: "{{ role_name }} | Sync doom"
-  ansible.builtin.command: "{{ ansible_user_dir }}/.config/emacs/bin/doom sync"
+  ansible.builtin.command: "{{ ansible_facts['user_dir'] }}/.config/emacs/bin/doom sync"
   when: result_doom_dir.changed or result_download_doom.changed
 
 - name: "{{ role_name }} | Create desktop directory"
@@ -55,13 +55,13 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "{{ ansible_user_dir }}/.emacs"
-    - "{{ ansible_user_dir }}/.emacs.d"
+    - "{{ ansible_facts['user_dir'] }}/.emacs"
+    - "{{ ansible_facts['user_dir'] }}/.emacs.d"
 
 - name: "{{ role_name }} | link org directory"
   ansible.builtin.file:
-    src: "{{ ansible_user_dir }}/Sync/{{ item }}"
-    dest: "{{ ansible_user_dir}}/{{ item }}"
+    src: "{{ ansible_facts['user_dir'] }}/Sync/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
     force: yes
     state: link
   with_items:
@@ -80,7 +80,7 @@
 
 - name: "{{ role_name }} | update .zshrc"
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.zshrc"
+    path: "{{ ansible_facts['user_dir'] }}/.zshrc"
     prepend_newline: yes
     append_newline: yes
     create: yes
@@ -92,7 +92,7 @@
 
 - name: "{{ role_name }} | update .bashrc"
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts['user_dir'] }}/.bashrc"
     prepend_newline: yes
     append_newline: yes
     create: yes
@@ -104,14 +104,14 @@
 
 - name: Create user systemd directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/systemd/user"
+    path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
     state: directory
     mode: '0755'
 
 - name: "{{ role_name }} | Copy unit file"
   ansible.builtin.copy:
     src: files/my-emacs.service
-    dest: "{{ ansible_user_dir}}/.config/systemd/user/my-emacs.service"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/my-emacs.service"
     mode: '0644'
 
 - name: "{{ role_name }} | Enable and start emacs server"

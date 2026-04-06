@@ -1,0 +1,28 @@
+---
+# file: shell/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install shell packages"
+  ansible.builtin.pacman:
+    name:
+      - zsh
+      - zoxide
+      - fzf
+      - mc
+      - aspell-en
+      - tmuxp
+      - bpytop
+      - direnv
+      - starship
+      - fastfetch
+      - bat
+      - ripgrep
+      - eza
+      - acl
+    state: present
+  become: yes
+
+- name: "{{ role_name }} | Install JetBrains Mono Nerd Font (Archlinux Graphical)"
+  ansible.builtin.pacman:
+    name: ttf-jetbrains-mono-nerd
+    state: present
+  become: yes
+  when: (ansible_facts['env']['DISPLAY'] is defined or ansible_facts['env']['WAYLAND_DISPLAY'] is defined) or (ansible_facts['distribution'] == 'Archlinux' and (ansible_facts['packages']['gnome-shell'] is defined or ansible_facts['packages']['plasma-desktop'] is defined))

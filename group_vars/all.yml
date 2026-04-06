@@ -1,17 +1,13 @@
 default_roles:
   - amdgpu_top
   - baobab
-  - bash
   - blender
-  - bpytop
   - brave
   - brscan4
   - calibre
   - chromium
   - dbeaver
-  - direnv
   - emacs
-  - fastfetch
   - firefox
   - freecad
   - gimp
@@ -29,7 +25,6 @@ default_roles:
   - kicad
   - ledger-live
   - libreoffice-still
-  - mc
   - megasync
   - obs-studio
   - openscad
@@ -40,18 +35,16 @@ default_roles:
   - pyenv
   - rclone
   - remmina
+  - shell
   - signal-desktop
   - simple-scan
   - snapshot
-  - starship
   - syncthing
   - telegram-desktop
-  - tmuxp
   - transmission-gtk
   - uv
   - virt-manager
   - vlc
-  - zsh
 
 desktops:
   - gnome

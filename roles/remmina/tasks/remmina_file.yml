@@ -40,4 +40,4 @@
 
   vars:
     filename: "{{ item.group | default('group') | lower | regex_replace('[\\s\\.,]', '-') | lower }}_{{ item.protocol | lower }}_{{ item.name | lower | regex_replace('[\\s\\.,]', '-') }}_{{ item.server | lower | regex_replace('[\\s\\.,]', '-') }}.remmina"
-    filepath: "{{ ansible_user_dir }}/.local/share/remmina/{{ filename }}"
+    filepath: "{{ ansible_facts['user_dir'] }}/.local/share/remmina/{{ filename }}"

@@ -13,13 +13,13 @@ This is accomplished with this =template  main.yml= task in each role:
 
 #+begin_src yaml
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts['distribution }}"
+ ']' ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_facts['distribution }}']'.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+- name: "{{ role_name }} | Run Tasks: {{ ansible_facts['distribution }}"
+ ']' ansible.builtin.include_tasks: "{{ ansible_facts['distribution }}']'.yml"
   when: distribution_config.stat.exists
 #+end_src
 
@@ -179,3 +179,30 @@ dotfiles -t <tab><tab>
 dotfiles -t t<tab>
 dotfiles -t ne<tab>
 #+end_src
+
+** Remote Installation
+You can use this playbook to configure a remote server (currently supporting Archlinux, Ubuntu, and Debian for specific roles like =zsh=).
+
+To run a specific role on a remote server, you can use the ~dotfiles~ command (or ~ansible-playbook~ directly) by overriding the target hosts and connection type.
+
+#+begin_src bash
+bin/dotfiles -i <server_ip>, -u <remote_user> --tags shell -e "target_hosts=all target_connection=ssh" -k
+#+end_src
+
+*** Parameters:
+- =-i <server_ip>,=: The IP or hostname of the remote server (the trailing comma is required if not using an inventory file).
+- =-u <remote_user>=: The user on the remote server you want to configure.
+- =--tags zsh=: Limits the execution to the specified role.
+- =-e "target_hosts=all target_connection=ssh"=: Tells the playbook to target the remote host via SSH instead of the local machine.
+
+NOTE: You will be prompted for the remote user's sudo password to install necessary packages.
+
+*** Configuring a restricted user (different from login user)
+If you need to configure a user that cannot login via SSH, you can connect as an administrative user and specify the target user and their home directory via variables.
+
+#+begin_src bash
+bin/dotfiles -i <server_ip>, -u <admin_user> --tags shell \
+  -e "target_hosts=all target_connection=ssh zsh_user=restricted_user zsh_home=/home/restricted_user" -k
+#+end_src
+
+The playbook will use =become= to switch to the administrative user (root) for package installation and the specified =zsh_user= for home directory configuration.

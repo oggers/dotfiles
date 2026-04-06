@@ -1,0 +1,40 @@
+---
+# file: shell/tasks/Debian.yml
+- name: "{{ role_name }} | Install shell packages"
+  ansible.builtin.apt:
+    name:
+      - curl
+      - zsh
+      - zoxide
+      - fzf
+      - git
+      - mc
+      - tmuxp
+      - direnv
+      - neofetch
+      - bat
+      - ripgrep
+      - acl
+    state: present
+
+    update_cache: yes
+  become: yes
+
+- name: "{{ role_name }} | Check if starship is installed"
+  ansible.builtin.command: which starship
+  changed_when: false
+  failed_when: false
+  register: starship_check
+
+- name: "{{ role_name }} | Install starship via official script (Debian/Ubuntu)"
+  ansible.builtin.shell: |
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+  become: yes
+  when: starship_check.rc != 0
+
+- name: "{{ role_name }} | Install JetBrains Mono Font (Debian/Ubuntu Graphical)"
+  ansible.builtin.apt:
+    name: fonts-jetbrains-mono
+    state: present
+  become: yes
+  when: (ansible_facts['env']['DISPLAY'] is defined or ansible_facts['env']['WAYLAND_DISPLAY'] is defined)

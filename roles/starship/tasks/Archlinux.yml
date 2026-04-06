@@ -1,5 +1,0 @@
-- name: "{{ role_name }} | Install starship package"
-  ansible.builtin.pacman:
-    name: starship
-    state: present
-  become: true
