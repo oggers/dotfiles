@@ -44,7 +44,7 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zshenv"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
     block: |
       # Add ~/.local/bin to PATH
@@ -60,7 +60,7 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zsh"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
     block: |
       export ZSH="{{ shell_home }}/.oh-my-zsh"
@@ -86,7 +86,7 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
     block: |
       # If not running interactively, don't do anything
@@ -109,7 +109,7 @@
     create: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
     block: |
       [[ -f ~/.bashrc ]] && . ~/.bashrc
@@ -129,7 +129,7 @@
     mode: "0755"
     state: directory
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
   loop:
     - mc
     - btop
@@ -141,7 +141,7 @@
     src: btop.conf
     dest: "{{ shell_home }}/.config/btop/btop.conf"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
   become: yes
 
@@ -150,6 +150,6 @@
     src: catppuccin_mocha.theme
     dest: "{{ shell_home }}/.config/btop/themes/catppuccin_mocha.theme"
     owner: "{{ shell_user }}"
-    group: "{{ shell_user }}"
+    group: "{{ shell_group }}"
     mode: "0644"
   become: yes
