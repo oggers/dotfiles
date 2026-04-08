@@ -18,6 +18,16 @@
   become: yes
   become_user: "{{ emacs_user }}"
   register: result_doom_dir
+  when: inventory_hostname == 'localhost'
+
+- name: "{{ role_name }} | Copy home doom"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/doom"
+    dest: "{{ emacs_home }}/.config/doom/"
+  become: yes
+  become_user: "{{ emacs_user }}"
+  register: result_doom_dir
+  when: inventory_hostname != 'localhost'
 
 - name: "{{ role_name }} | Download doom"
   ansible.builtin.git:
@@ -132,28 +142,33 @@
   become: yes
   become_user: "{{ emacs_user }}"
 
-- name: Create user systemd directory
-  ansible.builtin.file:
-    path: "{{ emacs_home }}/.config/systemd/user"
-    state: directory
-    mode: '0755'
-  become: yes
-  become_user: "{{ emacs_user }}"
+- name: "{{ role_name }} systemd"
+  block:
+    
+    - name: Create user systemd directory
+      ansible.builtin.file:
+        path: "{{ emacs_home }}/.config/systemd/user"
+        state: directory
+        mode: '0755'
+      become: yes
+      become_user: "{{ emacs_user }}"
 
-- name: "{{ role_name }} | Copy unit file"
-  ansible.builtin.copy:
-    src: files/my-emacs.service
-    dest: "{{ emacs_home }}/.config/systemd/user/my-emacs.service"
-    mode: '0644'
-  become: yes
-  become_user: "{{ emacs_user }}"
+    - name: "{{ role_name }} | Copy unit file"
+      ansible.builtin.copy:
+        src: files/my-emacs.service
+        dest: "{{ emacs_home }}/.config/systemd/user/my-emacs.service"
+        mode: '0644'
+      become: yes
+      become_user: "{{ emacs_user }}"
 
-- name: "{{ role_name }} | Enable and start emacs server"
-  ansible.builtin.systemd_service:
-    name: my-emacs
-    daemon_reload: true
-    enabled: true
-    state: started
-    scope: user
-  become: yes
-  become_user: "{{ emacs_user }}"
+    - name: "{{ role_name }} | Enable and start emacs server"
+      ansible.builtin.systemd_service:
+        name: my-emacs
+        daemon_reload: true
+        enabled: true
+        state: started
+        scope: user
+      become: yes
+      become_user: "{{ emacs_user }}"
+
+  when: inventory_hostname == 'localhost'

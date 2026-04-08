@@ -138,20 +138,119 @@
 ;; Set ruff as the primary linter
 (setq-hook! 'python-mode-hook
   flycheck-checker 'python-ruff)
-;; disable mypy in flycheck
-;; (after! flycheck
-;;   (setq flycheck-python-mypy-executable nil))
-(after! flycheck
-  (setq flycheck-disabled-checkers '(python-mypy)))
 
-;; (setq lsp-pyright-langserver-command "basedpyright")
-;; Use astral's ty
+;; disable mypy in flycheck
+(after! flycheck
+  (setq flycheck-python-mypy-executable nil)
+  (global-flycheck-mode) ;; Forzar modo global si no viene por defecto
+  (map! :map flycheck-mode-map
+        "M-n" #'flycheck-next-error
+        "M-p" #'flycheck-previous-error))
+;;(after! flycheck
+;;  (setq flycheck-disabled-checkers '(python-mypy)))
+
+
+;; We use 'after!' to configure lsp-mode when it is already loaded by Doom.
 (after! lsp-mode
- (lsp-register-client
-  (make-lsp-client
-   :new-connection (lsp-stdio-connection '("uvx" "ty" "server"))
-   :activation-fn (lsp-activate-on "python")
-   :server-id 'ty)))
+  :init
+  ;; La optimización de plists debe establecerse antes de que lsp inicie completamente
+  (setq lsp-use-plists t)
+
+  :config
+  ;; Hooks para activar LSP en los modos Tree-sitter
+  (add-hook! '(tsx-ts-mode-hook
+               typescript-ts-mode-hook
+               js-ts-mode-hook)
+             #'lsp-deferred)
+
+  ;; (setq lsp-pyright-langserver-command "basedpyright")
+  ;; Use astral's ty
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("uvx" "ty" "server"))
+    :activation-fn (lsp-activate-on "python")
+    :major-modes '(python-mode)
+    :priority 1
+    :server-id 'ty))
+  (set-lsp-priority! 'ty 1)
+
+  ;; activate completion
+  (add-hook 'lsp-mode-hook #'lsp-completion-mode)
+
+  ;; Integraciones básicas
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+
+  ;; Configuration variables (using setq! to override defaults)
+  (setq! lsp-keymap-prefix "C-c l"           ; Prefijo (OJO: Doom usa SPC c / SPC l por defecto)
+         lsp-completion-provider :none       ; Usamos Corfu
+         lsp-diagnostics-provider :flycheck
+         lsp-session-file (locate-user-emacs-file ".lsp-session")
+         lsp-log-io nil                      ; Rendimiento: mantener nil
+         lsp-keep-workspace-alive nil
+         lsp-idle-delay 0.5
+
+         ;; Core & Features
+         lsp-enable-xref t
+         lsp-auto-configure t
+         lsp-eldoc-enable-hover t
+         lsp-enable-dap-auto-configure t
+         lsp-enable-file-watchers nil        ; Rendimiento
+         lsp-enable-folding nil              ; Usas origami
+         lsp-enable-imenu t
+         lsp-enable-indentation nil          ; Usas prettier
+         lsp-enable-links nil
+         lsp-enable-on-type-formatting nil   ; Usas prettier
+         lsp-enable-suggest-server-download t
+         lsp-enable-symbol-highlighting t
+         lsp-enable-text-document-color nil  ; Trabajo de Treesitter
+
+         ;; Completion options
+         lsp-completion-enable t
+         lsp-completion-enable-additional-text-edit t
+         lsp-enable-snippet t
+         lsp-completion-show-kind t
+
+         ;; Headerline (Breadcrumbs)
+         lsp-headerline-breadcrumb-enable t
+         lsp-headerline-breadcrumb-enable-diagnostics nil
+         lsp-headerline-breadcrumb-enable-symbol-numbers nil
+         lsp-headerline-breadcrumb-icons-enable nil
+
+         ;; Modeline
+         lsp-modeline-code-actions-enable nil
+         lsp-modeline-diagnostics-enable nil
+         lsp-modeline-workspace-status-enable nil
+         lsp-signature-doc-lines 1
+         lsp-eldoc-render-all nil
+
+         ;; Lens & Semantic
+         lsp-lens-enable nil
+         lsp-semantic-tokens-enable nil))
+
+
+(after! lsp-ui
+  :config
+  ;; Configuración de variables visuales
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-show-with-cursor nil      ; No mostrar doc automáticamente al mover el cursor (distrae)
+        lsp-ui-doc-include-signature t       ; Mostrar la firma de la función
+        lsp-ui-doc-position 'at-point)       ; Mostrar en la posición del cursor
+
+  ;; Integración con Evil
+  ;; Esto hace que la tecla 'K' (en modo normal) use lsp-ui-doc-glance
+  (setq evil-lookup-func #'lsp-ui-doc-glance)
+
+  ;; Atajos de teclado
+  ;; Usamos map! que es la macro de Doom para definir teclas
+  (map! :map lsp-mode-map
+        "C-c C-d" #'lsp-ui-doc-glance)
+
+  (setq! lsp-ui-sideline-enable t
+         lsp-ui-sideline-show-diagnostics t
+         lsp-ui-sideline-show-hover nil
+         lsp-ui-sideline-diagnostic-max-lines 20
+         lsp-ui-doc-use-childframe t))
+
 
 ;; set SSH_AUTH_SOCK from keychain if SSH_AUTH_SOCK does not exist or is invalid
 (when (or (not (getenv "SSH_AUTH_SOCK"))
@@ -162,3 +261,10 @@
     (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
       (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
 )
+
+
+;; Hook the LSP server to web-mode (which handles .jsx, .js, etc.)
+(add-hook 'web-mode-hook #'lsp)
+
+(after! python
+  (setq-hook! 'python-mode-hook flycheck-checker 'lsp))

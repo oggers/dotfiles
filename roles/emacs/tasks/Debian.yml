@@ -30,7 +30,7 @@
   ansible.builtin.apt:
     name:
       - ripgrep
-      - fg-find
+      - fd-find
       - shellcheck
       - make
       - cmake

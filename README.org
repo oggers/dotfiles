@@ -192,7 +192,7 @@ bin/dotfiles -i <server_ip>, -u <remote_user> --tags shell -e "target_hosts=all 
 *** Parameters:
 - =-i <server_ip>,=: The IP or hostname of the remote server (the trailing comma is required if not using an inventory file).
 - =-u <remote_user>=: The user on the remote server you want to configure.
-- =--tags zsh=: Limits the execution to the specified role.
+- =--tags shell=: Limits the execution to the specified role.
 - =-e "target_hosts=all target_connection=ssh"=: Tells the playbook to target the remote host via SSH instead of the local machine.
 
 NOTE: You will be prompted for the remote user's sudo password to install necessary packages.
@@ -205,4 +205,4 @@ bin/dotfiles -i <server_ip>, -u <admin_user> --tags shell \
   -e "target_hosts=all target_connection=ssh restricted_user=restricted_user restricted_group=restricted_group restricted_home=/home/restricted_user" -k
 #+end_src
 
-The playbook will use =become= to switch to the administrative user (root) for package installation and the specified =zsh_user= for home directory configuration.
+The playbook will use =become= to switch to the administrative user (root) for package installation and the specified =restricted_user= for home directory configuration.
