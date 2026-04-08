@@ -1,0 +1,4 @@
+---
+# file: emacs/defaults/main.yml
+emacs_user: "{{ restricted_user | default(ansible_facts['user_id']) }}"
+emacs_home: "{{ restricted_home | default(ansible_facts['user_dir']) }}"

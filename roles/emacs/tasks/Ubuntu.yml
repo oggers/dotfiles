@@ -1,0 +1,4 @@
+---
+# file: emacs/tasks/Ubuntu.yml
+- name: "{{ role_name }} | Run Tasks: Debian"
+  ansible.builtin.include_tasks: Debian.yml

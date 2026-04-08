@@ -144,9 +144,16 @@
 (after! flycheck
   (setq flycheck-disabled-checkers '(python-mypy)))
 
-(setq lsp-pyright-langserver-command "basedpyright")
+;; (setq lsp-pyright-langserver-command "basedpyright")
+;; Use astral's ty
+(after! lsp-mode
+ (lsp-register-client
+  (make-lsp-client
+   :new-connection (lsp-stdio-connection '("uvx" "ty" "server"))
+   :activation-fn (lsp-activate-on "python")
+   :server-id 'ty)))
 
-;; Set SSH_AUTH_SOCK from keychain if SSH_AUTH_SOCK does not exist or is invalid
+;; set SSH_AUTH_SOCK from keychain if SSH_AUTH_SOCK does not exist or is invalid
 (when (or (not (getenv "SSH_AUTH_SOCK"))
           (not (file-exists-p (getenv "SSH_AUTH_SOCK"))))
   (let ((ssh-auth-sock (string-trim
