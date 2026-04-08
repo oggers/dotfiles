@@ -1,8 +1,8 @@
 ---
 # file: shell/defaults/main.yml
-shell_user: "{{ zsh_user | default(ansible_facts['user_id']) }}"
-shell_group: "{{ zsh_group | default(ansible_facts['group_id']) }}"
-shell_home: "{{ zsh_home | default(ansible_facts['user_dir']) }}"
+shell_user: "{{ restricted_user | default(ansible_facts['user_id']) }}"
+shell_group: "{{ restricted_group | default(ansible_facts['group_id']) }}"
+shell_home: "{{ restricted_home | default(ansible_facts['user_dir']) }}"
 shell_zsh_theme: "robbyrussell"
 shell_zsh_plugins:
   - git

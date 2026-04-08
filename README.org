@@ -202,7 +202,7 @@ If you need to configure a user that cannot login via SSH, you can connect as an
 
 #+begin_src bash
 bin/dotfiles -i <server_ip>, -u <admin_user> --tags shell \
-  -e "target_hosts=all target_connection=ssh zsh_user=restricted_user zsh_group=restricted_group zsh_home=/home/restricted_user" -k
+  -e "target_hosts=all target_connection=ssh restricted_user=restricted_user restricted_group=restricted_group restricted_home=/home/restricted_user" -k
 #+end_src
 
 The playbook will use =become= to switch to the administrative user (root) for package installation and the specified =zsh_user= for home directory configuration.
