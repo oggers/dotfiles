@@ -66,8 +66,6 @@
       export ZSH="{{ shell_home }}/.oh-my-zsh"
       ZSH_THEME="{{ shell_zsh_theme }}"
       plugins=({{ shell_zsh_plugins | join(' ') }})
-      # Prevent tmux/tmuxp from showing "Please set DISABLE_AUTO_TITLE=true" warnings
-      export DISABLE_AUTO_TITLE="true"
       source $ZSH/oh-my-zsh.sh
       alias cat="{{ shell_bat_command }}"
       # Use eza for ls if available
