@@ -69,6 +69,7 @@
 (setq current-language-environment "Spanish")
 (setq org-export-default-language "es")
 
+;; org
 (after! org
     (setq org-hide-leading-stars t)
     (setq org-ellipsis " \u2026")
@@ -102,8 +103,12 @@
   :config
   (setq org-auto-tangle-default t))
 
+;; javascript
 (setq-default js-indent-level 2)
 (setq-default typescript-indent-level 2)
+
+;; keychain ssh-agent for emacs server
+(keychain-refresh-environment)
 
 ;; enable beacon
 (beacon-mode 1)
@@ -149,6 +154,70 @@
 ;;(after! flycheck
 ;;  (setq flycheck-disabled-checkers '(python-mypy)))
 
+;; require dirvish package first
+(use-package! dirvish
+  :config
+  (dirvish-override-dired-mode))  ; This replaces dired with dirvish transparently
+
+;; tree-sitter
+;; (use-package! treesit
+;;   :when
+;;   (fboundp 'treesit-install-language-grammar) ;; install only if emacs supports treesit (v29+)
+;;   :mode
+;;   (("\\.tsx\\'" . tsx-ts-mode)
+;;    ("\\.js\\'" . typescript-ts-mode)
+;;    ("\\.mjs\\'" . typescript-ts-mode)
+;;    ("\\.mts\\'" . typescript-ts-mode)
+;;    ("\\.cjs\\'" . typescript-ts-mode)
+;;    ("\\.ts\\'" . typescript-ts-mode)
+;;    ("\\.jsx\\'" . typescript-ts-mode)
+;;    ("\\.json\\'" . typescript-ts-mode)
+;;    ("\\.Dockerfile\\'" . dockerfile-ts-mode))
+;;   :init
+;;   ;; The remap must be made in :init so that emacs knows
+;;   ;; what to use before loading the actual mode
+;;   (dolist (mapping
+;;            '((python-mode . python-ts-mode)
+;;              (css-mode . css-ts-mode)
+;;              (typescript-mode . typescript-ts-mode)
+;;              (js-mode . typescript-ts-mode)
+;;              (c-mode . c-ts-mode)
+;;              (c-or-c++-mode . c-or-c++-ts-mode)
+;;              (bash-mode . bash-ts-mode)
+;;              (sh-mode . bash-ts-mode)
+;;              (sh-base-mode . bash-ts-mode)
+;;              (json-mode . json-ts-mode)
+;;              (js-json-mode . json-ts-mode)))
+;;     (add-to-list 'major-mode-remap-alist mapping))
+;;   :config
+;;   (defun os/setup-install-grammars ()
+;;     "Install Tree-sitter grammars if they are absent."
+;;     (interactive)
+;;     (dolist (grammar
+;;              '((css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
+;;                (bash "https://github.com/tree-sitter/tree-sitter-bash")
+;;                (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
+;;                (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.21.2" "src"))
+;;                (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
+;;                (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
+;;                (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.20.0"))
+;;                (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+;;                (make "https://github.com/alemuller/tree-sitter-make")
+;;                (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+;;                (cmake "https://github.com/uyha/tree-sitter-cmake")
+;;                (c "https://github.com/tree-sitter/tree-sitter-c")
+;;                (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+;;                (toml "https://github.com/tree-sitter/tree-sitter-toml")
+;;                (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
+;;                (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+;;                (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
+;;                (prisma "https://github.com/victorhqc/tree-sitter-prisma")))
+;;       (add-to-list 'treesit-language-source-alist grammar)
+;;       ;; only install if it is not available
+;;       (unless (treesit-language-available-p (car grammar))
+;;         (treesit-install-language-grammar (car grammar)))))
+;;   ;; execute grammar setup when loading setup
+;;   (os/setup-install-grammars))
 
 ;; We use 'after!' to configure lsp-mode when it is already loaded by Doom.
 (after! lsp-mode

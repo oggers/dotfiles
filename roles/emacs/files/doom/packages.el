@@ -58,3 +58,6 @@
 
 ;; nvm
 (package! nvm)
+
+;; keychain
+(package! keychain-environment)
