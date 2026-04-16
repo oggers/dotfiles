@@ -1,0 +1,4 @@
+---
+# file: roles/emacs/meta/main.yml
+dependencies:
+  - role: uv

@@ -10,6 +10,26 @@
   ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
 
+- name: "{{ role_name }} | Check if ruff command exists"
+  ansible.builtin.command: ruff --version
+  register: ruff_check
+  ignore_errors: true
+  changed_when: false
+
+- name: "{{ role_name }} | Install ruff"
+  ansible.builtin.command: "uv tool install ruff"
+  when: ruff_check.rc != 0
+
+- name: "{{ role_name }} | Check if ty command exists"
+  ansible.builtin.command: ty --version
+  register: ty_check
+  ignore_errors: true
+  changed_when: false
+
+- name: "{{ role_name }} | Install ty"
+  ansible.builtin.command: "uv tool install ty"
+  when: ty_check.rc != 0
+
 - name: "{{ role_name }} | Link home doom"
   ansible.builtin.file:
     src: "{{ role_path }}/files/doom/"
