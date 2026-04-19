@@ -1,0 +1,4 @@
+---
+# file: roles/uv/defaults/main.yml
+uv_user: "{{ restricted_user | default(ansible_facts['user_id']) }}"
+uv_home: "{{ restricted_home | default(ansible_facts['user_dir']) }}"

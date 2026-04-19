@@ -10,6 +10,7 @@
     name: emacs
     state: present
   become: yes
+  become_user: root
   when: "'x11' in session_type.stdout.lower()"
 
 - name: "{{ role_name }} | Install emacs wayland"
@@ -17,6 +18,7 @@
     name: emacs-wayland
     state: present
   become: yes
+  become_user: root
   when: "'wayland' in session_type.stdout.lower()"
 
 - name: "{{ role_name }} | Install emacs nox"
@@ -24,6 +26,7 @@
     name: emacs-nox
     state: present
   become: yes
+  become_user: root
   when: "session_type.stdout.lower() == ''"
 
 - name: "{{ role_name }} | Install shell packages"
@@ -41,3 +44,4 @@
     state: present
     update_cache: yes
   become: yes
+  become_user: root

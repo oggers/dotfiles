@@ -1,4 +1,6 @@
 ---
 # file: emacs/defaults/main.yml
 emacs_user: "{{ restricted_user | default(ansible_facts['user_id']) }}"
+emacs_group: "{{ restricted_group | default(ansible_facts['user_gid']) }}"
 emacs_home: "{{ restricted_home | default(ansible_facts['user_dir']) }}"
+user_bin: "{{ emacs_home }}/.local/bin"

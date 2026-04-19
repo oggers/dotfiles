@@ -1,0 +1,5 @@
+---
+# file: roles/uv/meta/main.yml
+dependencies:
+  - role: shell
+

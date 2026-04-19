@@ -1,0 +1,53 @@
+---
+# file: roles/node/main.yml
+
+- name: "{{ role_name }} | Execute as user {{ node_user }}"
+  become: yes
+  become_user: "{{ node_user }}"
+  block:
+    - name: "{{ role_name }} | Check if fnm command exists"
+      ansible.builtin.stat:
+        path: "{{ fnm_path }}/fnm"
+      register: fnm_check
+      changed_when: false
+
+    - name: "{{ role_name }} | Install fnm"
+      ansible.builtin.shell: |
+        curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+      when: not fnm_check.stat.exists
+
+    - name: "{{ role_name }} | Setup zsh"
+      ansible.builtin.blockinfile:
+        path: "{{ node_home }}/.zshrc"
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role node"
+        block: |
+          FNM_PATH="{{ fnm_path }}"
+          if [ -d "$FNM_PATH" ]; then
+            export PATH="$FNM_PATH:$PATH"
+            eval "$(fnm env --use-on-cd --shell zsh)"
+          fi
+
+    - name: "{{ role_name }} | Setup bash"
+      ansible.builtin.blockinfile:
+        path: "{{ node_home }}/.bashrc"
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role node"
+        block: |
+          FNM_PATH="{{ fnm_path }}"
+          if [ -d "$FNM_PATH" ]; then
+            export PATH="$FNM_PATH:$PATH"
+            eval "$(fnm env --use-on-cd --shell bash)"
+          fi
+
+    # - name: "{{ role_name }} | Enable zsh completion"
+    #   ansible.builtin.shell: "{{ fnm_path }}/fnm completions --shell zsh"
+    #   when: not fnm_check.stat.exists
+
+    # - name: "{{ role_name }} | Enable bash completion"
+    #   ansible.builtin.command: "{{ fnm_path }}/fnm completions --shell bash"
+    #   when: not fnm_check.stat.exists

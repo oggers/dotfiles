@@ -1,0 +1,4 @@
+---
+node_user: "{{ restricted_user | default(ansible_facts['user_id']) }}"
+node_home: "{{ restricted_home | default(ansible_facts['user_dir']) }}"
+fnm_path: "$HOME/.local/share/fnm"

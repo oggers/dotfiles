@@ -2,3 +2,5 @@
 # file: roles/emacs/meta/main.yml
 dependencies:
   - role: uv
+  - role: node
+  - role: shell

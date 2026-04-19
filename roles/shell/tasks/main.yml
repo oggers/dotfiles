@@ -10,144 +10,136 @@
   ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}.yml"
   when: distribution_config.stat.exists
 
-# --- ZSH / OH-MY-ZSH ---
-- name: "{{ role_name }} | Clone oh-my-zsh"
-  ansible.builtin.git:
-    repo: https://github.com/ohmyzsh/ohmyzsh.git
-    dest: "{{ shell_home }}/.oh-my-zsh"
-    depth: 1
+- name: "{{ role_name }} | Execute as user {{ shell_user }}"
   become: yes
   become_user: "{{ shell_user }}"
+  block:
+    # --- ZSH / OH-MY-ZSH ---
+    - name: "{{ role_name }} | Clone oh-my-zsh"
+      ansible.builtin.git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: "{{ shell_home }}/.oh-my-zsh"
+        depth: 1
 
-- name: "{{ role_name }} | Clone zsh-autosuggestions plugin"
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-    depth: 1
-  become: yes
-  become_user: "{{ shell_user }}"
+    - name: "{{ role_name }} | Clone zsh-autosuggestions plugin"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+        depth: 1
 
-- name: "{{ role_name }} | Clone zsh-completions plugin"
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-completions
-    dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-completions"
-    depth: 1
-  become: yes
-  become_user: "{{ shell_user }}"
+    - name: "{{ role_name }} | Clone zsh-completions plugin"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-completions
+        dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-completions"
+        depth: 1
 
-- name: "{{ role_name }} | update .zshenv"
-  ansible.builtin.blockinfile:
-    path: "{{ shell_home }}/.zshenv"
-    insertbefore: BOF
-    prepend_newline: yes
-    append_newline: yes
-    create: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zshenv"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-    block: |
-      # Add ~/.local/bin to PATH
-      export PATH="$HOME/.local/bin:$PATH"
-  become: yes
+    - name: "{{ role_name }} | update .zshenv"
+      ansible.builtin.blockinfile:
+        path: "{{ shell_home }}/.zshenv"
+        insertbefore: BOF
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zshenv"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
+        block: |
+          # Add ~/.local/bin to PATH
+          export PATH="$HOME/.local/bin:$PATH"
 
-- name: "{{ role_name }} | update .zshrc"
-  ansible.builtin.blockinfile:
-    path: "{{ shell_home }}/.zshrc"
-    insertbefore: BOF
-    prepend_newline: yes
-    append_newline: yes
-    create: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zsh"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-    block: |
-      export ZSH="{{ shell_home }}/.oh-my-zsh"
-      ZSH_THEME="{{ shell_zsh_theme }}"
-      plugins=({{ shell_zsh_plugins | join(' ') }})
-      source $ZSH/oh-my-zsh.sh
-      alias cat="{{ shell_bat_command }}"
-      # Use eza for ls if available
-      [ -x "$(command -v eza)" ] && alias ls="eza --icons"
-      eval "$(direnv hook zsh)"
-      eval "$(starship init zsh)"
-  become: yes
+    - name: "{{ role_name }} | update .zshrc"
+      ansible.builtin.blockinfile:
+        path: "{{ shell_home }}/.zshrc"
+        insertbefore: BOF
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-zsh"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
+        block: |
+          export ZSH="$HOME/.oh-my-zsh"
+          ZSH_THEME="{{ shell_zsh_theme }}"
+          plugins=({{ shell_zsh_plugins | join(' ') }})
+          source $ZSH/oh-my-zsh.sh
+          alias cat="{{ shell_bat_command }}"
+          # Use eza for ls if available
+          [ -x "$(command -v eza)" ] && alias ls="eza --icons"
+          eval "$(direnv hook zsh)"
+          eval "$(starship init zsh)"
 
-# --- BASH ---
-- name: "{{ role_name }} | update .bashrc"
-  ansible.builtin.blockinfile:
-    path: "{{ shell_home }}/.bashrc"
-    insertbefore: BOF
-    prepend_newline: yes
-    append_newline: yes
-    create: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-    block: |
-      # If not running interactively, don't do anything
-      [[ $- != *i* ]] && return
-      [ -x "$(command -v eza)" ] && alias ls='eza --icons'
-      alias grep='grep --color=auto'
-      PS1='[\u@\h \W]\$ '
-      alias cat="{{ shell_bat_command }}"
-      # Add ~/.local/bin to PATH
-      export PATH="$HOME/.local/bin:$PATH"
-      eval "$(direnv hook bash)"
-      eval "$(starship init bash)"
-  become: yes
+    # --- BASH ---
+    - name: "{{ role_name }} | update .bashrc"
+      ansible.builtin.blockinfile:
+        path: "{{ shell_home }}/.bashrc"
+        insertbefore: BOF
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
+        block: |
+          # If not running interactively, don't do anything
+          [[ $- != *i* ]] && return
+          [ -x "$(command -v eza)" ] && alias ls='eza --icons'
+          alias grep='grep --color=auto'
+          PS1='[\u@\h \W]\$ '
+          alias cat="{{ shell_bat_command }}"
+          # Add ~/.local/bin to PATH
+          export PATH="$HOME/.local/bin:$PATH"
+          eval "$(direnv hook bash)"
+          eval "$(starship init bash)"
 
-- name: "{{ role_name }} | update .bash_profile"
-  ansible.builtin.blockinfile:
-    path: "{{ shell_home }}/.bash_profile"
-    prepend_newline: yes
-    append_newline: yes
-    create: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-    block: |
-      [[ -f ~/.bashrc ]] && . ~/.bashrc
-  become: yes
+    - name: "{{ role_name }} | update .bash_profile"
+      ansible.builtin.blockinfile:
+        path: "{{ shell_home }}/.bash_profile"
+        prepend_newline: yes
+        append_newline: yes
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK role shell-bash"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
+        block: |
+          [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-# --- SHELL SELECTION ---
-- name: "{{ role_name }} | Set shell for user {{ shell_user }}"
-  ansible.builtin.user:
-    name: "{{ shell_user }}"
-    shell: "{{ (user_shell == 'zsh') | ternary('/bin/zsh', '/bin/bash') }}"
-  become: yes
+    # --- SHELL SELECTION ---
+    - name: "{{ role_name }} | Set shell for user {{ shell_user }}"
+      ansible.builtin.user:
+        name: "{{ shell_user }}"
+        shell: "{{ (user_shell == 'zsh') | ternary('/bin/zsh', '/bin/bash') }}"
+      become: yes
+      become_user: root
 
-# --- MC / BTOP ---
-- name: "{{ role_name }} | Ensure config directories exist"
-  ansible.builtin.file:
-    path: "{{ shell_home }}/.config/{{ item }}"
-    mode: "0755"
-    state: directory
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-  loop:
-    - mc
-    - btop
-    - btop/themes
-  become: yes
+    # --- MC / BTOP ---
+    - name: "{{ role_name }} | Ensure config directories exist"
+      ansible.builtin.file:
+        path: "{{ shell_home }}/.config/{{ item }}"
+        mode: "0755"
+        state: directory
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+      loop:
+        - mc
+        - btop
+        - btop/themes
 
-- name: "{{ role_name }} | Copy btop config"
-  ansible.builtin.copy:
-    src: btop.conf
-    dest: "{{ shell_home }}/.config/btop/btop.conf"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-  become: yes
+    - name: "{{ role_name }} | Copy btop config"
+      ansible.builtin.copy:
+        src: btop.conf
+        dest: "{{ shell_home }}/.config/btop/btop.conf"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
 
-- name: "{{ role_name }} | Copy btop colors"
-  ansible.builtin.copy:
-    src: catppuccin_mocha.theme
-    dest: "{{ shell_home }}/.config/btop/themes/catppuccin_mocha.theme"
-    owner: "{{ shell_user }}"
-    group: "{{ shell_group }}"
-    mode: "0644"
-  become: yes
+    - name: "{{ role_name }} | Copy btop colors"
+      ansible.builtin.copy:
+        src: catppuccin_mocha.theme
+        dest: "{{ shell_home }}/.config/btop/themes/catppuccin_mocha.theme"
+        owner: "{{ shell_user }}"
+        group: "{{ shell_group }}"
+        mode: "0644"
