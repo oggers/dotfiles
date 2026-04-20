@@ -20,18 +20,21 @@
         repo: https://github.com/ohmyzsh/ohmyzsh.git
         dest: "{{ shell_home }}/.oh-my-zsh"
         depth: 1
+        update: no
 
     - name: "{{ role_name }} | Clone zsh-autosuggestions plugin"
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-autosuggestions
         dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
         depth: 1
+        update: no
 
     - name: "{{ role_name }} | Clone zsh-completions plugin"
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-completions
         dest: "{{ shell_home }}/.oh-my-zsh/custom/plugins/zsh-completions"
         depth: 1
+        update: no
 
     - name: "{{ role_name }} | update .zshenv"
       ansible.builtin.blockinfile:
