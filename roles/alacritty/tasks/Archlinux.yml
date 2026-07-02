@@ -1,0 +1,9 @@
+---
+# file: alacritty/tasks/Archlinux.yml
+- name: "{{ role_name }} | Install alacritty package"
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - alacritty

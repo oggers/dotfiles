@@ -1,18 +1,66 @@
+# # General Window Settings
+# [window]
+# padding = { x = 10, y = 10 }
+# decorations = "full"
+# opacity = 1.0
+# blur = false
+
+# Font Configuration
+[font]
+size = 11.0
+
+[font.normal]
+family = "monospace" # Alacritty will fallback to your system's default mono font
+style = "Regular"
+
+[font.bold]
+family = "monospace"
+style = "Bold"
+
+# # Cursor Styling
+# [cursor]
+# style = { shape = "Block", blinking = "On" }
+# blink_interval = 750
+
+# # Performance & Terminal Behavior
+# [terminal]
+# osc52 = "CopyPaste"
+
+# [env]
+# TERM = "xterm-256color"
+
 [general]
 import = [
     "~/.config/alacritty/themes/themes/gnome_terminal.toml"
 ]
 
+[window]
+padding = { x = 10, y = 10 }
+decorations = "full"
+opacity = 1.0
+blur = false
+
+[terminal]
+osc52 = "CopyPaste"
+
 [env]
 TERM = "xterm-256color"
 
-[font]
-normal.family = "Source Code Pro"
-normal.style = "Regular"
-bold.family = "Source Code Pro"
-bold.style = "Bold"
-italic.family = "Source Code Pro"
-italic.style = "Italic"
-bold_italic.family = "Source Code Pro"
-bold_italic.style = "Bold Italic"
-size = 10.0
+# [font]
+# size = 10.0
+
+# [font.normal]
+# family = "Source Code Pro"
+# style = "Regular"
+
+# [font.bold]
+# family = "Source Code Pro"
+# style = "Bold"
+
+[font.italic]
+family = "monospace"
+style = "Italic"
+
+[font.bold_italic]
+family = "monospace"
+style = "Bold Italic"
